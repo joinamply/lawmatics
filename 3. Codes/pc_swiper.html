@@ -1,0 +1,288 @@
+<script>
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        if (!document.querySelector('[mod-swiper="comp"]')) return;
+        onLibrariesLoaded(["swiper"], function () {
+            const swiperByGroupId = {};
+
+            function reinitAllSwipers() {
+                // Clear all group arrays
+                Object.keys(swiperByGroupId).forEach(groupId => {
+                    swiperByGroupId[groupId] = [];
+                });
+                // (Re-)init all swipers
+                $('[mod-swiper="comp"]').each(function () {
+                    const element = this;
+                    if (!hasSlides(element)) return;
+
+                    // --- Breakpoint-based initialization ---
+                    const breakpointInit = $(element).attr('mod-swiper-breakpoint-init') || 'desktop';
+                    const shouldInit = () => {
+                        const w = window.innerWidth;
+                        if (breakpointInit === 'desktop') return true;
+                        if (breakpointInit === 'tablet') return w <= 991;
+                        if (breakpointInit === 'landscape') return w <= 767;
+                        if (breakpointInit === 'portrait') return w <= 479;
+                        return true;
+                    };
+
+                    // Store original HTML for restoration
+                    if (!$(element).data('original-html')) {
+                        $(element).data('original-html', $(element).html());
+                    }
+
+                    // Swiper instance storage
+                    element._modSwiperInstance = element._modSwiperInstance || null;
+                    element._modSwiperLastParamsKey = element._modSwiperLastParamsKey || null;
+
+                    // Swiper (re)init/destroy logic
+                    function manageSwiper() {
+                        const activeParams = getActiveParams(element);
+                        const paramsKey = activeParams ? JSON.stringify(activeParams.dataAttrs) : null;
+                        if (shouldInit()) {
+                            if (!element._modSwiperInstance || element._modSwiperLastParamsKey !== paramsKey) {
+                                if (element._modSwiperInstance) {
+                                    element._modSwiperInstance.destroy(true, true);
+                                    element._modSwiperInstance = null;
+                                    $(element).html($(element).data('original-html'));
+                                }
+                                if (activeParams) {
+                                    const config = buildSwiperConfigFromParams(element, activeParams);
+                                    const swiper = initSwiper(element, config);
+                                    element._modSwiperInstance = swiper;
+                                    element._modSwiperLastParamsKey = paramsKey;
+                                    handlePauseOnHover(element, swiper);
+                                    handleCustomButtons(element, swiper);
+                                    const groupId = getGroupId(element);
+                                    if (groupId) {
+                                        // Clear group before pushing new instance
+                                        swiperByGroupId[groupId] = swiperByGroupId[groupId] || [];
+                                        swiperByGroupId[groupId].push(swiper);
+                                    }
+                                    setupAutoplayVisibility(element, swiper, config);
+                                }
+                            }
+                        } else {
+                            if (element._modSwiperInstance) {
+                                element._modSwiperInstance.destroy(true, true);
+                                element._modSwiperInstance = null;
+                                element._modSwiperLastParamsKey = null;
+                                $(element).html($(element).data('original-html'));
+                            }
+                        }
+                    }
+
+                    // Initial check
+                    manageSwiper();
+                    // On resize
+                    $(window).off('resize.swiper').on('resize.swiper', reinitAllSwipers);
+                });
+                // After all swipers are (re-)initialized, set up group sync
+                setupGroupSynchronization(swiperByGroupId);
+            }
+
+            // Initial setup
+            reinitAllSwipers();
+
+            // 3. Accessibility
+            $(".swiper-slide").attr("role", "listitem");
+        });
+
+        // --- Helper Functions ---
+
+        function hasSlides(element) {
+            return $(element).find(".swiper-slide").length > 0;
+        }
+
+        function getGroupId(element) {
+            return $(element).attr("mod-swiper-group") || null;
+        }
+
+        // Returns the [mod-swiper="params"] element with the highest breakpoint <= window width
+        function getActiveParams(element) {
+            const paramComponents = $(element).find('[mod-swiper="params"]');
+            if (paramComponents.length === 0) return null;
+            const w = window.innerWidth;
+            let best = null;
+            let bestBreakpoint = -1;
+            paramComponents.each(function () {
+                const bpAttr = $(this).attr('breakpoint');
+                const bp = bpAttr !== undefined ? parseInt(bpAttr, 10) : 0;
+                if (bp <= w && bp >= bestBreakpoint) {
+                    best = this;
+                    bestBreakpoint = bp;
+                }
+            });
+            if (!best) best = paramComponents[0];
+            // Collect all data attributes for change detection
+            const dataAttrs = {};
+            $.each(best.attributes, function () {
+                if (this.specified) dataAttrs[this.name] = this.value;
+            });
+            return { el: best, dataAttrs };
+        }
+
+        // Build Swiper config from a single [mod-swiper="params"] element
+        function buildSwiperConfigFromParams(element, activeParams) {
+            const $param = $(activeParams.el);
+            let baseConfig = {
+                a11y: true,
+                loopAddBlankSlides: true,
+                keyboard: {
+                    enabled: true,
+                    onlyInViewport: true,
+                },
+                pagination: {
+                    el: $(element).find('[mod-swiper="bullets"]')[0],
+                    clickable: true,
+                    bulletClass: "swiper_nav-bullet",
+                    bulletActiveClass: "cc-active",
+                    bulletElement: "button"
+                },
+                navigation: {
+                    nextEl: $(element).find('[mod-swiper-btn="next"]')[0],
+                    prevEl: $(element).find('[mod-swiper-btn="prev"]')[0],
+                    disabledClass: "cc-disabled"
+                },
+                controller: { by: 'slide' }
+            };
+            baseConfig = {
+                ...baseConfig,
+                effect: parseParameterValue($param.attr("effect"), "slide"),
+                slidesPerView: parseParameterValue($param.attr("slides-per-view"), "auto"),
+                followFinger: parseParameterValue($param.attr("follow-finger"), true),
+                speed: parseInt(parseParameterValue($param.attr("speed"), 500)),
+                autoHeight: parseParameterValue($param.attr("auto-height"), false),
+                loop: parseParameterValue($param.attr("loop-slides"), false),
+                centeredSlides: parseParameterValue($param.attr("centered-slides"), false),
+                grabCursor: parseParameterValue($param.attr("grab-cursor"), false),
+            };
+            const autoPlay = parseParameterValue($param.attr("auto-play"), false);
+            if (autoPlay) {
+                baseConfig.autoplay = {
+                    delay: parseInt($param.attr("auto-play-delay") || 3000),
+                    disableOnInteraction: false
+                };
+                baseConfig.pauseOnHover = parseParameterValue($param.attr("pause-on-hover"), false);
+            } else {
+                baseConfig.autoplay = false;
+            }
+            configureSwiperEffect(baseConfig, baseConfig.effect);
+            return baseConfig;
+        }
+
+        function initSwiper(element, config) {
+            return new Swiper($(element).find(".swiper")[0], config);
+        }
+
+        function setupAutoplayVisibility(element, swiper, config) {
+            if (config.autoplay) {
+                const observer = new IntersectionObserver(
+                    ([entry]) => {
+                        if (entry.isIntersecting) {
+                            swiper.autoplay.start();
+                        } else {
+                            swiper.autoplay.stop();
+                        }
+                    },
+                    { threshold: 0.1 }
+                );
+                observer.observe(element);
+                let scrollTimeout;
+                window.addEventListener("scroll", () => {
+                    swiper.autoplay.stop();
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(() => {
+                        const rect = element.getBoundingClientRect();
+                        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+                        if (isVisible) {
+                            swiper.autoplay.start();
+                        }
+                    }, 300);
+                });
+            }
+        }
+
+        function setupGroupSynchronization(swiperByGroupId) {
+            Object.keys(swiperByGroupId).forEach(groupId => {
+                const group = swiperByGroupId[groupId];
+                if (group.length > 1) {
+                    group.forEach((sw, i) => {
+                        const controllingSwipers = group.filter((_, j) => j !== i);
+                        sw.controller.control = controllingSwipers;
+                    });
+                }
+            });
+        }
+
+        function handlePauseOnHover(element, swiper) {
+            if ($(element).attr("pause-on-hover") === "true" ||
+                (swiper.params.pauseOnHover && swiper.params.autoplay)) {
+                $(element).on("mouseenter", function () {
+                    stopAutoPlay(swiper);
+                });
+                $(element).on("mouseleave", function () {
+                    startAutoPlay(swiper);
+                });
+            }
+        }
+
+        function handleCustomButtons(element, swiper) {
+            $(element)
+                .find('[mod-swiper-btn="stop-autoplay"]')
+                .on('click', function () {
+                    stopAutoPlay(swiper);
+                });
+            $(element)
+                .find('[mod-swiper-btn="start-autoplay"]')
+                .on('click', function () {
+                    startAutoPlay(swiper);
+                });
+            $(element)
+                .find('[mod-swiper-btn="custom-next"]')
+                .on('click', function () {
+                    swiper.slideNext();
+                });
+            $(element)
+                .find('[mod-swiper-btn="custom-prev"]')
+                .on('click', function () {
+                    swiper.slidePrev();
+                });
+        }
+
+        function parseParameterValue(value, defaultValue) {
+            if (value === undefined || value === null) return defaultValue;
+            if (value === "true") return true;
+            if (value === "false") return false;
+            if (!isNaN(parseFloat(value))) return parseFloat(value);
+            return value;
+        }
+
+        function configureSwiperEffect(config, effect) {
+            if (effect === "fade") {
+                config.fadeEffect = { crossFade: true };
+            } else if (effect === "flip") {
+                config.flipEffect = { slideShadows: true, limitRotation: true };
+            } else if (effect === "cube") {
+                config.cubeEffect = { slideShadows: true, shadow: true, shadowOffset: 20, shadowScale: 0.94 };
+            } else if (effect === "coverflow") {
+                config.coverflowEffect = { rotate: 50, stretch: 0, depth: 100, modifier: 1, slideShadows: true };
+            } else if (effect === "cards") {
+                config.cardEffect = { slideShadows: true, modifier: 1, shadow: true, shadowOffset: 20, shadowScale: 0.94 };
+            }
+        }
+
+        function stopAutoPlay(swiper) {
+            const swiperTranslate = swiper.getTranslate();
+            swiper.setTranslate(swiperTranslate);
+            swiper.autoplay.stop();
+        }
+
+        function startAutoPlay(swiper) {
+            let speed = swiper.params.speed;
+            let activeIndex = swiper.activeIndex + 1;
+            swiper.slideTo(activeIndex, speed, false);
+            swiper.autoplay.start();
+        }
+    });
+</script>

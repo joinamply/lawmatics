@@ -1,0 +1,114 @@
+<script>
+    let loadedLibraries = {}; // Tracks loaded libraries
+    let requestedLibraries = new Set(); // Track which libraries were requested
+
+    function loadLibrary(librarySource, libraryName, callback = () => { }) {
+        if (loadedLibraries[libraryName]) return; // Prevent duplicate loads
+
+        // Check if script with this source is already loaded
+        const existingScript = document.querySelector(`script[src="${librarySource}"]`);
+        if (existingScript) {
+            // Script already exists, mark as loaded and execute callback
+            dispatchLibraryEvent(libraryName);
+            if (typeof callback === "function") callback();
+            return;
+        }
+
+        // Check if stylesheet with this source is already loaded
+        const existingStylesheet = document.querySelector(`link[href="${librarySource}"]`);
+        if (existingStylesheet) {
+            // Stylesheet already exists, mark as loaded and execute callback
+            dispatchLibraryEvent(libraryName);
+            if (typeof callback === "function") callback();
+            return;
+        }
+
+        // Determine if this is a CSS file
+        const isCSS = librarySource.toLowerCase().endsWith('.css');
+
+        if (isCSS) {
+            // Create and load the stylesheet
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = librarySource;
+            link.onload = () => {
+                dispatchLibraryEvent(libraryName);
+                if (typeof callback === "function") callback();
+            };
+            link.onerror = () => {
+                console.error(`Failed to load stylesheet: ${libraryName} from ${librarySource}`);
+            };
+
+            document.head.appendChild(link);
+        } else {
+            // Create and load the script
+            const script = document.createElement('script');
+            script.src = librarySource;
+            script.defer = true;
+            script.onload = () => {
+                dispatchLibraryEvent(libraryName);
+                if (typeof callback === "function") callback();
+            };
+            script.onerror = () => {
+                console.error(`Failed to load library: ${libraryName} from ${librarySource}`);
+            };
+
+            document.head.appendChild(script);
+        }
+    }
+
+    function dispatchLibraryEvent(library) {
+        if (!loadedLibraries[library]) { // Prevent duplicate dispatches
+            loadedLibraries[library] = true;
+            document.dispatchEvent(new Event(`${library}:loaded`));
+        }
+    }
+
+    function onLibrariesLoaded(requiredLibraries, callback) {
+        if (!requiredLibraries || requiredLibraries.length === 0) {
+            // console.log("✅ No libraries required. Running callback immediately.");
+            callback();
+            return;
+        }
+
+        let loaded = {}; // Track which required libraries have loaded
+        requiredLibraries.forEach(lib => requestedLibraries.add(lib)); // Track requests
+
+        function checkAllLoaded() {
+            return requiredLibraries.every(lib => loaded[lib]);
+        }
+
+        function libraryLoaded(event) {
+            const libName = event.type.replace(":loaded", ""); // Extract library name
+            if (!loaded[libName]) { // Prevent duplicate execution
+                loaded[libName] = true;
+                if (checkAllLoaded()) {
+                    callback();
+                }
+            }
+        }
+
+        requiredLibraries.forEach(lib => {
+            if (loadedLibraries[lib]) { // Check in `loadedLibraries`
+                loaded[lib] = true;
+            } else {
+                document.addEventListener(`${lib}:loaded`, libraryLoaded);
+            }
+        });
+
+        // Check for missing libraries after a delay (1 second)
+        setTimeout(() => {
+            requestedLibraries.forEach(lib => {
+                if (!loadedLibraries[lib]) {
+                    console.log(`⚠️ A component is requesting "${lib}", but the library is disabled. 
+    Select Project Settings and set it to Visible.`);
+                }
+            });
+        }, 1000);
+
+        if (checkAllLoaded()) {
+            // console.log("✅ All required libraries are already loaded. Running callback immediately.");
+            callback();
+        }
+    }
+</script>

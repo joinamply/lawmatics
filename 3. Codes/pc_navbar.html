@@ -1,0 +1,47 @@
+<script>
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        const searchToggle = $('.nav-search-dd_toggle');
+        const searchField = $('.nav-search-dd_search-input');
+        searchToggle.on('click', function () {
+            setTimeout(() => {
+                if (searchToggle.hasClass('w--open')) {
+                    searchField.focus();
+                }
+            }, 300);
+        });
+
+        function duplicateTabContent() {
+            $('.nav-dd-tabs_tab-link').each(function (index) {
+                let mobileParent = $(this).find('.nav-dd-tabs_mobile-content');
+                let content = $('.nav-dd-tabs_pane').eq(index).children().clone();
+                mobileParent.append(content);
+            });
+        }
+
+        function preventMenuClosingOnTabClick() {
+            $('.nav_dd').each(function () {
+                $(this).find('.w-tab-link').on('click', function (event) {
+                    event.stopPropagation();
+                });
+            });
+
+            $('.nav-dd-tabs_tab-link a').on('click', function (e) {
+                e.stopPropagation();
+            });
+        }
+
+        function resetMobileTabs() {
+            $('.nav-dd-tabs').each(function () {
+                let tabLinks = $(this).find('.w-tab-link');
+                let tabPanes = $(this).find('.w-tab-pane');
+                tabLinks.removeClass('w--current');
+                tabPanes.removeClass('w--tab-active');
+            });
+        }
+
+        duplicateTabContent();
+        preventMenuClosingOnTabClick();
+        resetMobileTabs();
+    });
+</script>

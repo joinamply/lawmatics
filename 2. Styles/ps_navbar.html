@@ -1,0 +1,54 @@
+<style>
+    /* Custom Breakpoints */
+    @media (min-width: 992px) and (max-width: 1082px) {
+        .nav_link-list {
+            column-gap: 1rem;
+        }
+
+        .nav_dd-toggle,
+        .navbar_link {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    /* Dropdown */
+    .nav_dd-toggle.w--open {
+        & .nav_dd-toggle-icon {
+            transform: rotate(180deg);
+        }
+    }
+
+    .nav_dd-list.w--open {
+        & .nav_dd-list-layout {
+            grid-template-rows: minmax(0px, 1fr);
+            opacity: 1;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .nav-dd-tabs_tab-link.w--current {
+            & .nav-dd-tabs_tab-link-icon {
+                transform: rotate(-90deg);
+            }
+
+            & .nav-dd-tabs_mobile-content {
+                grid-template-rows: minmax(0px, 1fr);
+            }
+        }
+    }
+
+    .nav_dd-link:hover {
+        & .nav_dd-link-icon {
+            filter: grayscale(0%);
+        }
+    }
+
+    /* Search */
+    .nav-search-dd_list.w--open {
+        & .nav-search-dd_list-layout {
+            grid-template-rows: minmax(0px, 1fr);
+            opacity: 1;
+        }
+    }
+</style>

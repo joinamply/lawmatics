@@ -2,10 +2,32 @@
     window.Webflow ||= [];
     window.Webflow.push(() => {
         const $marquees = $('[marquee="wrapper"]');
-        $marquees.forEach(($marquee) => {
-            const $marqueeList = $marquee.querySelector('[marquee="list"');
-            // Duplicate the list two times
 
+        $marquees.each(function () {
+            const $marquee = $(this);
+            const $marqueeList = $marquee.find('[marquee="list"]');
+            const $listParent = $marqueeList.parent();
+            const duration = $marquee.attr('marquee-duration') || 60;
+
+            // Duplicate the marquee list two times
+            $marqueeList.clone().appendTo($listParent);
+            $marqueeList.clone().appendTo($listParent);
+
+            // Get all lists
+            const $allLists = $marquee.find('[marquee="list"]');
+
+            // Animate from x: 0% to x: -100% and repeat infinitely
+            const tl = gsap.timeline({ repeat: -1 });
+
+            tl.fromTo(
+                $allLists,
+                { x: '0%' },
+                {
+                    x: '-100%',
+                    ease: "linear",
+                    duration: duration
+                }
+            );
         });
     });
 </script>

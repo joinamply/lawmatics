@@ -1,0 +1,155 @@
+<script>
+    (() => {
+        // --- Scroll Control Core ---
+        let scrollDisableCount = 0;
+        let originalBodyPaddingRight = '';
+        // Store original compensation for each element
+        const compensateElements = [];
+        function getScrollbarWidth() {
+            // Create a temporary div container and append it into the body
+            const scrollDiv = document.createElement('div');
+            scrollDiv.style.visibility = 'hidden';
+            scrollDiv.style.overflow = 'scroll';
+            scrollDiv.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
+            scrollDiv.style.position = 'absolute';
+            scrollDiv.style.top = '-9999px';
+            scrollDiv.style.width = '50px';
+            scrollDiv.style.height = '50px';
+            document.body.appendChild(scrollDiv);
+            // Add inner div
+            const innerDiv = document.createElement('div');
+            innerDiv.style.width = '100%';
+            innerDiv.style.height = '100px';
+            scrollDiv.appendChild(innerDiv);
+            // Calculate the width
+            const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+            // Remove the divs
+            document.body.removeChild(scrollDiv);
+            return scrollbarWidth;
+        }
+        function disableScroll() {
+            if (scrollDisableCount === 0) {
+                originalBodyPaddingRight = document.body.style.paddingRight || '';
+                const scrollBarWidth = window.innerWidth > document.documentElement.clientWidth ? getScrollbarWidth() : 0;
+                if (scrollBarWidth > 0) {
+                    document.body.style.paddingRight = scrollBarWidth + 'px';
+                    // Compensate fixed elements using padding-right
+                    document.querySelectorAll('[disablescroll-compensate]').forEach(el => {
+                        const original = el.style.paddingRight || '';
+                        compensateElements.push({ el, original });
+                        el.style.paddingRight = (parseInt(getComputedStyle(el).paddingRight || 0) + scrollBarWidth) + 'px';
+                    });
+                }
+                document.body.style.overflow = 'hidden';
+                document.body.style.touchAction = 'none';
+                // Enable scroll for preserve elements
+                document.querySelectorAll('[disablescroll="preserve"]').forEach(el => {
+                    el.style.overflow = 'auto';
+                    el.style.touchAction = 'auto';
+                });
+                // Prevent touchmove on body, allow on preserve
+                document.addEventListener('touchmove', preserveTouchHandler, { passive: false });
+            }
+            scrollDisableCount++;
+        }
+        function enableScroll() {
+            scrollDisableCount = Math.max(0, scrollDisableCount - 1);
+            if (scrollDisableCount === 0) {
+                document.body.style.overflow = '';
+                document.body.style.touchAction = '';
+                document.body.style.paddingRight = originalBodyPaddingRight;
+                // Restore compensated elements' padding-right
+                compensateElements.forEach(({ el, original }) => {
+                    el.style.paddingRight = original;
+                });
+                compensateElements.length = 0;
+                // Restore preserve elements
+                document.querySelectorAll('[disablescroll="preserve"]').forEach(el => {
+                    el.style.overflow = '';
+                    el.style.touchAction = '';
+                });
+                document.removeEventListener('touchmove', preserveTouchHandler, { passive: false });
+            }
+        }
+        // Allow touchmove on preserve elements
+        function preserveTouchHandler(e) {
+            let el = e.target;
+            while (el && el !== document.body) {
+                if (el.hasAttribute && el.hasAttribute('disablescroll')) {
+                    if (el.getAttribute('disablescroll') === 'preserve') return;
+                }
+                el = el.parentElement;
+            }
+            e.preventDefault();
+        }
+
+        // --- Helper: Check if element is visible (not display: none) ---
+        function isVisible(el) {
+            return !!(el.offsetParent || (el.getClientRects && el.getClientRects().length));
+        }
+
+        // --- smart-nav logic ---
+        function setupSmartNav(el) {
+            const navButton = el.querySelector('.w-nav-button');
+            if (!navButton) return;
+            let scrollDisabled = false;
+            function checkNavOpen() {
+                if (navButton.classList.contains('w--open')) {
+                    if (!scrollDisabled) {
+                        disableScroll();
+                        scrollDisabled = true;
+                    }
+                } else {
+                    if (scrollDisabled) {
+                        enableScroll();
+                        scrollDisabled = false;
+                    }
+                }
+            }
+            // Initial check
+            checkNavOpen();
+            // Observe class changes
+            const observer = new MutationObserver(checkNavOpen);
+            observer.observe(navButton, { attributes: true, attributeFilter: ['class'] });
+        }
+
+        // --- when-visibe logic ---
+        function setupWhenVisible(el) {
+            let scrollDisabled = false;
+            function checkVisibility() {
+                if (isVisible(el)) {
+                    if (!scrollDisabled) {
+                        disableScroll();
+                        scrollDisabled = true;
+                    }
+                } else {
+                    if (scrollDisabled) {
+                        enableScroll();
+                        scrollDisabled = false;
+                    }
+                }
+            }
+            // Initial check
+            checkVisibility();
+            // Observe style changes
+            const observer = new MutationObserver(checkVisibility);
+            observer.observe(el, { attributes: true, attributeFilter: ['style', 'class'] });
+        }
+
+        // --- Main: Scan and setup observers ---
+        function setupAll() {
+            document.querySelectorAll('[disablescroll="smart-nav"]').forEach(setupSmartNav);
+            document.querySelectorAll('[disablescroll="when-visibe"]').forEach(setupWhenVisible);
+        }
+
+        // Run on DOMContentLoaded and after Webflow ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', setupAll);
+        } else {
+            setupAll();
+        }
+        if (window.Webflow && Array.isArray(window.Webflow)) {
+            window.Webflow.push(setupAll);
+        }
+    })();
+</script>
