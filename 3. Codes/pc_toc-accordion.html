@@ -1,0 +1,34 @@
+<script>
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        const $accordions = $('.toc');
+
+        function handleAccordionToggle($accordion) {
+            if (window.innerWidth < 992) {
+                $accordion.toggleClass('cc-active');
+            }
+        }
+
+        $accordions.each(function () {
+            const $accordion = $(this);
+            const $toggle = $accordion.find('.toc_toggle');
+
+            $toggle.on('click', function () {
+                handleAccordionToggle($accordion);
+            });
+        });
+
+        // Remove cc-active if screen gets bigger than or equal to 992px
+        function removeActiveOnResize() {
+            if (window.innerWidth >= 992) {
+                $accordions.removeClass('cc-active');
+            }
+        }
+
+        // Initial check in case page loads at large size
+        removeActiveOnResize();
+
+        // Listen for resize events
+        $(window).on('resize', removeActiveOnResize);
+    });
+</script>

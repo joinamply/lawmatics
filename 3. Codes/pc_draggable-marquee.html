@@ -1,0 +1,74 @@
+<script>
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        $(".draggable-marquee").each(function () {
+            const $wrapper = $(this);
+            const $track = $wrapper.find(".draggable-marquee_slot");
+            const $items = $track.find(".draggable-marquee-card");
+
+            // Duplicate items for infinite scroll
+            $items.clone().appendTo($track);
+
+            let isHovered = false;
+            let xPos = 0;
+            const speed = 1;
+            const totalWidth = $track[0].scrollWidth / 2;
+
+            // Start in the middle to avoid an empty space in the beginning
+            gsap.set($track, { x: -totalWidth / 2 });
+            xPos = -totalWidth / 2;
+
+            // Drag the track not the items
+            const draggable = Draggable.create($track[0], {
+                type: "x",
+                inertia: true,
+                onDrag: () => {
+                    loopCheck();
+                    document.dispatchEvent(new CustomEvent("hideElement", {
+                        detail: { elementClass: ".mouse-follower_drag" }
+                    }));
+                },
+                onThrowUpdate: loopCheck,
+            })[0];
+
+            // Autoplay
+            gsap.ticker.add(() => {
+                if (!isHovered && !draggable.isDragging && !draggable.isThrowing) {
+                    xPos -= speed;
+                    if (Math.abs(xPos) >= totalWidth) {
+                        xPos = 0;
+                    }
+                    gsap.set($track, { x: xPos });
+                    draggable.update();
+                } else {
+                    xPos = draggable.x;
+                }
+            });
+
+            // Reset the position to keep the loop
+            function loopCheck() {
+                if (draggable.x <= -totalWidth) { draggable.x += totalWidth; gsap.set($track, { x: draggable.x }); draggable.update(); }
+                else if (draggable.x >= 0) {
+                    draggable.x -= totalWidth;
+                    gsap.set($track, { x: draggable.x });
+                    draggable.update();
+                }
+            }
+
+            // Pause on hover
+            $wrapper.on("mouseenter", () => {
+                isHovered = true;
+                document.dispatchEvent(new CustomEvent("showElement", {
+                    detail: { elementClass: ".mouse-follower_drag" }
+                }));
+            });
+
+            $wrapper.on("mouseleave", () => {
+                isHovered = false;
+                document.dispatchEvent(new CustomEvent("hideElement", {
+                    detail: { elementClass: ".mouse-follower_drag" }
+                }));
+            });
+        });
+    });
+</script>

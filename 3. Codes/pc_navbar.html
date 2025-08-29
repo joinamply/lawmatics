@@ -1,47 +1,81 @@
 <script>
     window.Webflow ||= [];
     window.Webflow.push(() => {
-        const searchToggle = $('.nav-search-dd_toggle');
-        const searchField = $('.nav-search-dd_search-input');
-        searchToggle.on('click', function () {
-            setTimeout(() => {
-                if (searchToggle.hasClass('w--open')) {
-                    searchField.focus();
-                }
-            }, 300);
-        });
+        // Check if Finsweet Attr is present on the page
+        const hasFinsweetFilter = $('[fs-list-element="list"]').length > 0;
 
-        function duplicateTabContent() {
-            $('.nav-dd-tabs_tab-link').each(function (index) {
-                let mobileParent = $(this).find('.nav-dd-tabs_mobile-content');
-                let content = $('.nav-dd-tabs_pane').eq(index).children().clone();
-                mobileParent.append(content);
-            });
+        if (hasFinsweetFilter) {
+            // Use Finsweet's callback system to load after filter is ready
+            window.FinsweetAttributes ||= [];
+            window.FinsweetAttributes.push([
+                'list',
+                (listInstances) => {
+                    // Load navbar functions after filter is ready
+                    initializeNavbar();
+                },
+            ]);
+        } else {
+            // Load navbar functions immediately if no filter is present
+            initializeNavbar();
         }
 
-        function preventMenuClosingOnTabClick() {
-            $('.nav_dd').each(function () {
-                $(this).find('.w-tab-link').on('click', function (event) {
-                    event.stopPropagation();
+        function initializeNavbar() {
+            const searchToggle = $('.nav-search-dd_toggle');
+            const searchField = $('.nav-search-dd_search-input');
+            searchToggle.on('click', function () {
+                setTimeout(() => {
+                    if (searchToggle.hasClass('w--open')) {
+                        searchField.focus();
+                    }
+                }, 300);
+            });
+
+            function duplicateTabContent() {
+                $('.nav-dd-tabs_tab-link').each(function (index) {
+                    let mobileParent = $(this).find('.nav-dd-tabs_mobile-content');
+                    let content = $('.nav-dd-tabs_pane').eq(index).children().clone();
+                    mobileParent.append(content);
                 });
-            });
+            }
 
-            $('.nav-dd-tabs_tab-link a').on('click', function (e) {
-                e.stopPropagation();
-            });
+            function preventMenuClosingOnTabClick() {
+                $('.nav_dd').each(function () {
+                    $(this).find('.w-tab-link').on('click', function (event) {
+                        event.stopPropagation();
+                    });
+                });
+
+                $('.nav-dd-tabs_tab-link a').on('click', function (e) {
+                    e.stopPropagation();
+                });
+            }
+
+            function resetMobileTabs() {
+                if (window.innerWidth <= 767) {
+                    $('.nav-dd-tabs').each(function () {
+                        let tabLinks = $(this).find('.w-tab-link');
+                        let tabPanes = $(this).find('.w-tab-pane');
+                        tabLinks.removeClass('w--current');
+                        tabPanes.removeClass('w--tab-active');
+                    });
+                }
+            }
+
+            function setAnnouncementBar() {
+                $('.announcements-bar_close').on('click', function () {
+                    $('.announcements-bar_accordion').removeClass('cc-active');
+                    // Set the offset-top to 0
+                    document.documentElement.style.setProperty('--offset-top', 0 + 'px');
+                });
+
+                // Update offset-top based on the .announcements-bar height
+                document.documentElement.style.setProperty('--offset-top', $('.announcements-bar').outerHeight() + 'px');
+            }
+
+            duplicateTabContent();
+            preventMenuClosingOnTabClick();
+            resetMobileTabs();
+            setAnnouncementBar();
         }
-
-        function resetMobileTabs() {
-            $('.nav-dd-tabs').each(function () {
-                let tabLinks = $(this).find('.w-tab-link');
-                let tabPanes = $(this).find('.w-tab-pane');
-                tabLinks.removeClass('w--current');
-                tabPanes.removeClass('w--tab-active');
-            });
-        }
-
-        duplicateTabContent();
-        preventMenuClosingOnTabClick();
-        resetMobileTabs();
     });
 </script>

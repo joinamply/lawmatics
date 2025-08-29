@@ -1,0 +1,35 @@
+<script>
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        const $wistiaInline = $('.wistia-inline');
+
+        $wistiaInline.each(function () {
+            $this = $(this);
+            $embed = $this.find('.wistia-inline_embed');
+            $thumbWrapper = $this.find('.wistia-inline_thumb');
+            $thumbImg = $this.find('.wistia-inline_thumb-img');
+            $thumbVideo = $this.find('.wistia-inline_thumb-video');
+            // If thumbImg and thumbVideo don't exist, set embed to opacity 1
+            if ($thumbImg.length === 0 && $thumbVideo.length === 0) {
+                gsap.set($thumbWrapper, { opacity: 0 });
+                gsap.set($embed, { opacity: 1 });
+                return;
+            }
+            // If thumb video exists, play the HTML video when the top of the element reaches the bottom of the screen using GSAP ScrollTrigger
+            if ($thumbVideo.length > 0) {
+                ScrollTrigger.create({
+                    trigger: $this[0],
+                    start: "center bottom",
+                    onEnter: function () {
+                        $thumbVideo[0].play();
+                    }
+                });
+            }
+            // Configures the click
+            $this.on('click', function () {
+                gsap.to($thumbWrapper, { opacity: 0 });
+                gsap.to($embed, { opacity: 1 });
+            });
+        });
+    });
+</script>

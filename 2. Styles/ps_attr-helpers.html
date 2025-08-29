@@ -1,26 +1,31 @@
 <style>
     /* Hide element if it has an empty collection inside */
     [hide-if="collection-empty"]:not(:has(.w-dyn-item)) {
-        display: none;
+        display: none !important;
     }
 
     /* Hide the element if it has no visible (non-.w-condition-invisible) children */
     [hide-if="child-empty"]:not(:has(> *:not(.w-condition-invisible))) {
-        display: none;
+        display: none !important;
     }
 
     /* Hide image elements that are displaying the default placeholder image */
     [hide-if="img-placeholder"][src="https://cdn.prod.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg"] {
-        display: none;
+        display: none !important;
+    }
+
+    /* Hide the parent element if it contains an image with the default placeholder src */
+    [hide-parent-if="img-placeholder"]:has(img[src="https://cdn.prod.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg"]) {
+        display: none !important;
     }
 
     /* Hide the element if it is empty */
     [hide-if="empty"]:empty {
-        display: none;
+        display: none !important;
     }
 
     /* Hide the parent element if all its [data-child] children are empty (but the parent itself is not empty) */
     [data-parent]:not(:has([data-child]:not(:empty))):not(:empty) {
-        display: none;
+        display: none !important;
     }
 </style>

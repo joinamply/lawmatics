@@ -1,0 +1,133 @@
+<style>
+    :root {
+        --lawmatics-blue-tints-shades-gradient-03: linear-gradient(142deg, #5EA3C2 31.02%, #94D0EC 142.33%);
+    }
+</style>
+
+<!-- FAQ -->
+<style>
+    .wf-design-mode .faq-accordion_paragraph {
+        grid-template-rows: minmax(0px, 1fr);
+    }
+
+    .faq-accordion.open .faq-accordion_paragraph {
+        grid-template-rows: minmax(0px, 1fr);
+    }
+
+    .faq-accordion.open .faq-accordion_icon_ver {
+        transform: rotate(90deg);
+        opacity: 0;
+    }
+</style>
+
+<!-- Bullet List dots -->
+<style>
+    .w-richtext ul {
+        list-style: none;
+        margin: 0;
+        padding: 0 0 0 0rem;
+    }
+
+    .w-richtext ul>li {
+        position: relative;
+    }
+
+    .w-richtext ul>li::before {
+        content: "";
+        position: absolute;
+        left: -1.25rem;
+        top: 50%;
+        width: 10px;
+        height: 2px;
+        background: #F37021;
+        border-radius: 2px;
+    }
+</style>
+
+<!-- Role / Company separator display -->
+<style>
+    [client="wrapper"]:has([client="role"]:empty) {
+
+        & [client="role"],
+        [client="role-separator"] {
+            display: none;
+            visibility: hidden;
+        }
+    }
+
+    [client="wrapper"]:has([client="company"]:empty) {
+
+        & [client="company"],
+        [client="role-separator"] {
+            display: none;
+            visibility: hidden;
+        }
+    }
+
+
+    [client="wrapper"]:has([client="role"]:empty):has([client="company"]:empty) {
+        display: none;
+        visibility: hidden;
+    }
+</style>
+
+<!-- Integrations Anim -->
+<style>
+    .integration-anim-item:hover .integration-anim-item_img {
+        filter: grayscale(0%);
+    }
+</style>
+
+<!-- Hero Content Bg Video -->
+<style>
+    .hero:has(.hero-bg-video) {
+        aspect-ratio: 16/9;
+    }
+</style>
+
+<!-- Sidebar Accordion -->
+<style>
+    .wf-design-mode .blog-sidebar_accordion_expand {
+        grid-template-rows: minmax(0px, 1fr);
+    }
+
+    .blog-sidebar_accordion.cc-active {
+        & .blog-sidebar_accordion_expand {
+            grid-template-rows: minmax(0px, 1fr);
+        }
+
+        & .blog-sidebar_accordion_icon {
+            transform: rotate(180deg);
+        }
+    }
+</style>
+
+<!-- TOC Accordion -->
+<style>
+    .wf-design-mode .toc_expand {
+        grid-template-rows: minmax(0px, 1fr);
+    }
+
+    .toc.cc-active {
+        & .toc_expand {
+            grid-template-rows: minmax(0px, 1fr);
+        }
+
+        & .toc_toggle-icon {
+            transform: rotate(180deg);
+        }
+    }
+</style>
+
+<!-- Dynamic commas between Blog Categories -->
+<style>
+    [blog-category="item"]::before {
+        content: ",";
+        margin-right: 0.35rem;
+    }
+
+    [blog-category="list"] [blog-category="item"]:first-child::before {
+        content: "";
+        display: none;
+    }
+</style>

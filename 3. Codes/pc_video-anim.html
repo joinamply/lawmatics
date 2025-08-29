@@ -1,0 +1,22 @@
+<script>
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        const $wistiaInline = $('.video-anim-card');
+
+        $wistiaInline.each(function () {
+            $this = $(this);
+            $video = $this.find('.video-anim-card_video');
+
+            // If thumb video exists, play the HTML video when the top of the element reaches the bottom of the screen using GSAP ScrollTrigger
+            if ($video.length > 0) {
+                ScrollTrigger.create({
+                    trigger: $this[0],
+                    start: "center bottom",
+                    onEnter: function () {
+                        $video[0].play();
+                    }
+                });
+            }
+        });
+    });
+</script>

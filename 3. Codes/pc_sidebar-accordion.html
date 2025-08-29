@@ -1,0 +1,16 @@
+<script>
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        const $accordions = $('.blog-sidebar_accordion');
+
+        $accordions.each(function () {
+            const $accordion = $(this);
+            const $toggle = $accordion.find('.blog-sidebar_accordion_toggle');
+            const $expand = $accordion.find('.blog-sidebar_accordion_expand');
+
+            $toggle.on('click', function () {
+                $accordion.toggleClass('cc-active');
+            });
+        });
+    });
+</script>

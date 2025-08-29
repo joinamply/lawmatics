@@ -1,0 +1,25 @@
+<script>
+    window.FinsweetAttributes ||= [];
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        // Check once if at least one [fs-readtime-element="contents"] exists
+        const hasReadtimeElement = $('[fs-readtime-element="contents"]').length > 0;
+        function restartReadtime() {
+            window.FinsweetAttributes?.modules?.readtime?.restart?.();
+        }
+        // Only add hooks if the readtime element exists
+        if (hasReadtimeElement) {
+            window.FinsweetAttributes.push([
+                'list',
+                (listInstances) => {
+                    listInstances.forEach((list) => {
+                        list.addHook('afterRender', restartReadtime);
+                        list.addHook('filter', restartReadtime);
+                        list.addHook('sort', restartReadtime);
+                        list.addHook('pagination', restartReadtime);
+                    });
+                },
+            ]);
+        }
+    });
+</script>

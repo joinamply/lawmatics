@@ -22,6 +22,11 @@
                     innerText: config.end,
                     modifiers: {
                         innerText: function (innerText) {
+                            // For the final value, return the exact end value
+                            if (Math.abs(innerText - config.end) < config.increment) {
+                                return config.end.toString().replace(/\B(?=(\d{3})+(?!\d))/g, config.separator);
+                            }
+                            // Otherwise, snap to the nearest increment
                             return gsap.utils.snap(config.increment, innerText).toString().replace(/\B(?=(\d{3})+(?!\d))/g, config.separator);
                         }
                     },
@@ -37,9 +42,10 @@
         $counters.each(function () {
             const $number = $(this).find('[counter="number"]');
             const separator = $(this).attr('counter-separator') || ",";
-            const increment = parseInt($(this).attr('counter-increment')) || 1;
+            const increment = parseFloat($(this).attr('counter-increment')) || 1;
             const duration = parseFloat($(this).attr('counter-duration')) || 1;
-            const endValue = parseInt($number.text().replace(/[^\d]/g, '')) || 0;
+            const endValue = parseFloat($number.text().replace(/[^0-9.\-]/g, '')) || 0;
+            const delay = parseFloat($(this).attr('counter-delay')) || 0;
 
             // Set the number to 0 when page loads
             $number.text('0');
@@ -50,11 +56,13 @@
                 start: "top 90%",
                 once: true,
                 onEnter: () => {
-                    gsap.effects.counter($number, {
-                        end: endValue,
-                        duration: duration,
-                        separator: separator,
-                        increment: increment
+                    gsap.delayedCall(delay, () => {
+                        gsap.effects.counter($number, {
+                            end: endValue,
+                            duration: duration,
+                            separator: separator,
+                            increment: increment
+                        });
                     });
                 }
             });

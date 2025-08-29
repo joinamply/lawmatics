@@ -1,0 +1,20 @@
+<script>
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        const $emailBtns = $('.blog-sidebar_social-link.cc-email');
+
+        $emailBtns.each(function () {
+            // Update the email button to include the current page link in the mailto
+            const $btn = $(this);
+            const currentUrl = window.location.href;
+            const subject = encodeURIComponent(document.title || 'Check this out');
+            const body = encodeURIComponent('I thought you might be interested in this page: ' + currentUrl);
+
+            // Find the <a> tag inside the button (or the button itself if it's an <a>)
+            let $a = $btn.is('a') ? $btn : $btn.find('a').first();
+            if ($a.length) {
+                $a.attr('href', `mailto:?subject=${subject}&body=${body}`);
+            }
+        });
+    });
+</script>

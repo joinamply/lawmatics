@@ -1,0 +1,223 @@
+<!--
+Global Styles that are bing used through the role project:
+- Tags, utilities classes, box shadows and more.
+-->
+
+<!-- Phosphor regular icons -->
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+
+<!-- Fluid Design -->
+<style>
+    html {
+        font-size: 1.125rem;
+    }
+
+    @media screen and (max-width:1920px) {
+        html {
+            font-size: calc(0.3749999999999999rem + 0.6250000000000001vw);
+        }
+    }
+
+    @media screen and (max-width:1440px) {
+        html {
+            font-size: calc(0.6565426638917794rem + 0.3121748178980229vw);
+        }
+    }
+
+    @media screen and (max-width:479px) {
+        html {
+            font-size: calc(0.7494769874476988rem + 0.8368200836820083vw);
+        }
+    }
+</style>
+
+<!-- Box Shadows -->
+<style>
+    :root {
+        --box-shadow: 0px 10px 20px 0px rgba(25, 25, 25, 0.08);
+    }
+
+    [box-shadow=""] {
+        box-shadow: var(--box-shadow);
+    }
+
+    [box-shadow="hover"],
+    [box-shadow="active"].w--current,
+    [box-shadow="active"].is-active {
+        transition-property: box-shadow;
+        transition-duration: 200ms;
+        transition-timing-function: ease;
+        box-shadow: 0px 0px 0px 0px transparent;
+    }
+
+    [box-shadow="hover"]:hover,
+    [box-shadow="active"].w--current,
+    [box-shadow="active"].is-active {
+        box-shadow: var(--box-shadow);
+    }
+</style>
+
+<!-- Cleaning element styles -->
+<style>
+    /* Get rid of top margin on first element in any rich text element */
+    .w-richtext> :not(div):first-child,
+    .w-richtext>div:first-child> :first-child {
+        margin-top: 0 !important;
+    }
+
+    /* Get rid of bottom margin on last element in any rich text element */
+    .w-richtext>:last-child,
+    .w-richtext ol li:last-child,
+    .w-richtext ul li:last-child {
+        margin-bottom: 0 !important;
+    }
+
+    /* Remove the blue color from the input when it gets autofilled */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus,
+    select:-webkit-autofill,
+    select:-webkit-autofill:hover,
+    select:-webkit-autofill:focus {
+        -webkit-text-fill-color: white !important;
+        -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+        box-shadow: 0 0 0px 1000px transparent inset;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    /* Adjust input autofill to brand colors */
+    input:-webkit-autofill,
+    input:-webkit-autofill:focus {
+        background-color: var(--_themes---background--primary) !important;
+        color: var(--_themes---typography--paragraph) !important;
+        -webkit-box-shadow: 0 0 0 50px var(--_themes---background--primary) inset;
+        -webkit-text-fill-color: var(--_themes---typography--paragraph);
+    }
+
+    /* Snippet prevents the browser to override the select input field layout */
+    input,
+    textarea,
+    select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: 0;
+        background-image: none;
+    }
+</style>
+
+<!-- Utilities -->
+<style>
+    /* Make text look crisper and more legible in all browsers */
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+    }
+
+    /* Focus state style for keyboard navigation for the focusable elements */
+    a:focus-visible,
+    *[tabindex]:focus-visible,
+    input[type="file"]:focus-visible {
+        outline: 0.125rem solid var(--_themes---button-primary--border);
+        outline-offset: 0.125rem;
+    }
+
+    /* Apply "..." after 1 lines of text */
+    .u-text-clamp-1 {
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
+
+    /* Apply "..." after 2 lines of text */
+    .u-text-clamp-2 {
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    /* Apply "..." after 3 lines of text */
+    .u-text-clamp-3 {
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    /* Apply "..." after 4 lines of text */
+    .u-text-clamp-4 {
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    /* Apply "..." after 5 lines of text */
+    .u-text-clamp-5 {
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+    }
+
+    /* Row/col gap modifiers */
+    .row.row-gap-none .col {
+        margin: 0;
+        padding: 0;
+    }
+
+    .row.row-gap-huge .col {
+        padding-left: calc(var(--_sizing---column-gap--huge) / 2);
+        padding-right: calc(var(--_sizing---column-gap--huge) / 2);
+    }
+
+    .row.row-gap-large .col {
+        padding-left: calc(var(--_sizing---column-gap--large) / 2);
+        padding-right: calc(var(--_sizing---column-gap--large) / 2);
+    }
+
+    .row.row-gap-medium .col {
+        padding-left: calc(var(--_sizing---column-gap--medium) / 2);
+        padding-right: calc(var(--_sizing---column-gap--medium) / 2);
+    }
+
+    .row.row-gap-small .col {
+        padding-left: calc(var(--_sizing---column-gap--small) / 2);
+        padding-right: calc(var(--_sizing---column-gap--small) / 2);
+    }
+
+    .row.row-gap-tiny .col {
+        padding-left: calc(var(--_sizing---column-gap--tiny) / 2);
+        padding-right: calc(var(--_sizing---column-gap--tiny) / 2);
+    }
+</style>
+
+<!-- Heading orange -->
+<style>
+    [class*="w-richtext"] :is(h1, h2, h3, h4, h5, h6) strong,
+    [class*="w-richtext"] :is(h1, h2, h3, h4, h5, h6) b {
+        color: var(--_color-palette---sunburst-orange) !important;
+    }
+</style>
+
+<!-- Integrations Section, toggle display -->
+<style>
+    .integrations_apps-wrapper:not(:has(.app-cards-wrapper .w-dyn-item)) {
+        display: none;
+    }
+
+    .wf-design-mode .integrations_apps-wrapper {
+        display: block !important;
+    }
+
+    .wf-design-modee .app-cards-wrapper.cc-display-none {
+        display: none;
+    }
+</style>

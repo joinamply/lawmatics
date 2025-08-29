@@ -1,0 +1,69 @@
+<script>
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        // Wait for DOM to be fully ready
+        setTimeout(() => {
+            const $entranceGroups = $('[motion-group="true"]');
+
+            if (!$entranceGroups.length) return;
+
+            $entranceGroups.each(function () {
+                const $group = $(this);
+                // Validate that the group element exists and is in the DOM
+                if (!$group.length || !document.contains($group[0])) return;
+                // Find all elements with a non-empty, non-'none' motion-element attribute
+                const $elements = $group.find('[motion-element]');
+                if (!$elements.length) return;
+                let mainTl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: $group[0],
+                        start: 'top 80%',
+                        once: true,
+                        // Add error handling for ScrollTrigger
+                        onRefresh: () => {
+                            // Ensure ScrollTrigger is properly initialized
+                            if (typeof gsap.ScrollTrigger !== 'undefined') {
+                                gsap.ScrollTrigger.refresh();
+                            }
+                        }
+                    }
+                });
+
+                $elements.each(function () {
+                    const $element = $(this);
+
+                    // Validate element exists and is in the DOM
+                    if (!$element.length || !document.contains($element[0])) return;
+
+                    const anim = $element.attr('motion-element');
+                    if (anim == '' || anim == 'none') return;
+
+                    let tl = gsap.timeline({
+                        defaults: {
+                            duration: 0.5,
+                            ease: 'power2.inOut'
+                        }
+                    });
+
+                    switch (anim) {
+                        case 'fade-in':
+                            gsap.set($element, { opacity: 0 });
+                            tl.to($element, {
+                                opacity: 1,
+                            });
+                            break;
+                        case 'slide-up':
+                            gsap.set($element, { opacity: 0, y: '2rem' });
+                            tl.to($element, {
+                                opacity: 1,
+                                y: 0,
+                            });
+                            break;
+                    }
+
+                    mainTl.add(tl, '<0.3');
+                });
+            });
+        }, 100); // Small delay to ensure DOM is fully ready
+    });
+</script>

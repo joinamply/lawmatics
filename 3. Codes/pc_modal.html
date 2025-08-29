@@ -1,0 +1,102 @@
+<script>
+    /* 	
+    1. Create a modal using <dialog> element instead of div with hidden class
+    2. Add [modal-open] attribute to the element that will open the modal. Also add [fs-scrolldisable-element=disable]
+    3. Add [modal-close] attribute to the element that will close the modal. Also add [fs-scrolldisable-element=enable]
+    4. Add [modal] attribute to the dialog element
+    5. Add the same value to all elements attributes to link them to the same modal and have multiple instances
+    6. Add [modal-exit-intent="true"] to dialog elements to enable exit intent detection
+    */
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        // Initialize regular modals
+        initializeModals();
+
+        // Initialize exit intent modals
+        initializeExitIntentModals();
+    });
+
+    function initializeModals() {
+        $('[modal-open]').each(function () {
+            const $openModal = $(this);
+            const attr = $openModal.attr('modal-open');
+            const $modal = $(`dialog[modal="${attr}"]`);
+            const $closeModal = $modal.find(`[modal-close="${attr}"]`);
+
+            $openModal.on('click', function () {
+                $modal[0].showModal();
+            });
+
+            $closeModal.on('click', function () {
+                $modal[0].close();
+            });
+
+            // Close modal when clicking backdrop
+            $modal.on('click', function (e) {
+                if (e.target === this) {
+                    this.close();
+                }
+            });
+
+            // Handle ESC key (built-in dialog behavior)
+            $modal.on('close', function () {
+                // Optional: Add any cleanup logic here
+                console.log('Modal closed');
+            });
+        });
+    }
+
+    function initializeExitIntentModals() {
+        const exitIntentTriggers = $('[modal-open][modal-exit-intent="true"]');
+
+        if (exitIntentTriggers.length === 0) return;
+
+        let hasTriggeredExitIntent = false;
+        let exitIntentThreshold = 50; // Distance from top to trigger exit intent
+
+        // Check for exit intent
+        $(document).on('mouseleave', function (e) {
+            if (hasTriggeredExitIntent || e.clientY > 0) return;
+
+            triggerExitIntentModals();
+        });
+
+        // Alternative: Check when mouse moves towards top
+        $(document).on('mousemove', function (e) {
+            if (hasTriggeredExitIntent) return;
+
+            // If mouse is within threshold of top, trigger exit intent
+            if (e.clientY <= exitIntentThreshold) {
+                triggerExitIntentModals();
+            }
+        });
+
+        function triggerExitIntentModals() {
+            hasTriggeredExitIntent = true;
+
+            exitIntentTriggers.each(function () {
+                const $trigger = $(this);
+                const attr = $trigger.attr('modal-open');
+                const $modal = $(`dialog[modal="${attr}"]`);
+
+                if ($modal.length > 0) {
+                    // Add a small delay for better UX
+                    setTimeout(() => {
+                        $modal[0].showModal();
+
+                        // Optional: Add entrance animation
+                        if (window.gsap) {
+                            gsap.fromTo($modal.find('[modal-content]'),
+                                { opacity: 0, y: 20 },
+                                { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }
+                            );
+                        }
+                    }, 100);
+                }
+            });
+
+            // Remove event listeners to prevent multiple triggers
+            $(document).off('mousemove mouseleave');
+        }
+    }
+</script>
