@@ -1,0 +1,63 @@
+<script>
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        // If component does not exist, return
+        if (!document.querySelector('[heading-anim="typewriter"]')) return;
+        $('[heading-anim="typewriter"]').each(function () {
+            const words = $(this).attr('heading-anim-words') !== undefined ? $(this).attr('heading-anim-words').split(',') : "";
+            let wordToAnim = $(this).find('sub');
+            // This is important to prevent the browser to remove the space
+            wordToAnim.css("white-space", "pre");
+            /* Check if the wordToAnim parent has a strong tag and if so, 
+            wrap the strong tag inside a span tag. This is important to 
+            prevent the text to unwrap when the word gets smaller
+            */
+            if (wordToAnim.parent().is('strong')) {
+                const strongTag = wordToAnim.parent();
+                const strongHtml = strongTag[0].outerHTML;
+                strongTag.replaceWith(`<span style="display: inline-block; min-width: 10ch; white-space: pre;">${strongHtml}</span>`);
+                // The wordToANim ref is lost let's grab it again
+                wordToAnim = $(this).find('sub');
+            }
+            else {
+                wordToAnim.wrap('<span style="display: inline-block; min-width: 10ch; white-space: pre;"></span>');
+            }
+            // Move blinking cursor inside the wrapper, after the animated word
+            let wrapper = wordToAnim.parent();
+            if (!wrapper.find('.typewriter-cursor').length) {
+                wordToAnim.after('<span class="typewriter-cursor">|</span>');
+            }
+
+            // Add blinking animation to the cursor
+            let cursor = wrapper.find('.typewriter-cursor');
+            gsap.to(cursor, {
+                opacity: 0,
+                duration: 0.2,
+                repeat: -1,
+                yoyo: true,
+                ease: "power2.inOut",
+                repeatDelay: 0.2
+            });
+            let typewriterTl = gsap.timeline({ repeat: -1, paused: true });
+            if (words.length < 1 || wordToAnim.length <= 0) return;
+            // Push the wordToAnim text to the first position of the words array
+            words.unshift(wordToAnim.text());
+            // Animate the words
+            words.forEach((word, index) => {
+                let wordsTl = gsap.timeline({ repeat: 1, yoyo: true, repeatDelay: 1, delay: index === 0 ? 1 : 0 });
+                wordsTl.fromTo(wordToAnim,
+                    { text: '' },
+                    { duration: 0.5, text: word, ease: "power1.inOut" });
+                typewriterTl.add(wordsTl, index === 0 ? 0 : `+=${wordsTl.duration() * 2 + 1}`);
+            });
+            /* We need the first word to be visible but to be deleted so let's 
+            set the progress to do that. We need to divide the result by 2 because the type in is half
+            and the type out is the other half of the result */
+            let progress = (1 / words.length) / 2;
+            typewriterTl.progress(progress);
+            setTimeout(() => {
+                typewriterTl.play();
+            }, 1000);
+        });
+    });
+</script>

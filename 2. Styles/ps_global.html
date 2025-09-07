@@ -199,11 +199,22 @@ Global Styles that are bing used through the role project:
     }
 </style>
 
-<!-- Heading orange -->
+<!-- Heading Highlight -->
 <style>
-    [class*="w-richtext"] :is(h1, h2, h3, h4, h5, h6) strong,
-    [class*="w-richtext"] :is(h1, h2, h3, h4, h5, h6) b {
-        color: var(--_color-palette---sunburst-orange) !important;
+    h1 strong,
+    h2 strong,
+    h3 strong,
+    h4 strong,
+    h5 strong,
+    h6 strong {
+        --start: var(--_themes---typography--heading-highlight-1);
+        --end: var(--_themes---typography--heading-highlight-2);
+        font-weight: inherit;
+        background: linear-gradient(90deg, var(--start), var(--end));
+        background-color: var(--title-blob-color);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 </style>
 

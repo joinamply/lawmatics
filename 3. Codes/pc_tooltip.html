@@ -1,0 +1,52 @@
+<!-- Pricing Tooltips -->
+<script>
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        onLibrariesLoaded(['popper', 'tippy'], function () {
+            const SELECTOR = '[tooltip="true"][tippy]';
+
+            function initTooltips(root = document) {
+                $(SELECTOR, root).each(function () {
+                    const $el = $(this);
+                    if ($el.data('tippyDone')) return;
+
+                    const content = this.getAttribute('tippy') || '';
+                    if (!content) return;
+
+                    const placement = this.getAttribute('tippy-placement') || 'top';
+
+                    tippy(this, {
+                        content,
+                        placement,
+                        arrow: true,
+                        allowHTML: true,
+                        interactive: true,
+                        delay: [0, 100],
+                        maxWidth: 300,
+                        appendTo: document.body,
+                        onTrigger(instance, event) {
+                            if (event.type === 'mouseenter') clearTimeout(instance._closeTimeout);
+                        },
+                        onHide(instance) {
+                            clearTimeout(instance._closeTimeout);
+                            instance._closeTimeout = setTimeout(() => instance.hide(), 300);
+                        }
+                    });
+
+                    $el.data('tippyDone', 1);
+                });
+
+                const tippyElements = document.querySelectorAll(SELECTOR);
+                if (tippyElements.length > 0) {
+                    window.TIPPY_SEO = Array.from(tippyElements)
+                        .map(el => ({ text: el.getAttribute('tippy'), placement: el.getAttribute('tippy-placement') || 'top' }));
+                }
+            }
+
+            initTooltips();
+
+            const mo = new MutationObserver(() => initTooltips());
+            mo.observe(document.body, { childList: true, subtree: true });
+        });
+    });
+</script>
