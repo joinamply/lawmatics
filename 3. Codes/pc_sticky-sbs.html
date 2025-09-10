@@ -1,6 +1,9 @@
 <script>
     window.Webflow ||= [];
     window.Webflow.push(() => {
+        // Only run on 768px and above
+        if (window.innerWidth < 768) return;
+
         const $section = $('.sticky-sbs');
         if ($section.length === 0) return;
 
