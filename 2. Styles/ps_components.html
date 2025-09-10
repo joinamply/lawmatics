@@ -25,22 +25,56 @@
     .w-richtext ul {
         list-style: none;
         margin: 0;
-        padding: 0 0 0 0rem;
-    }
-
-    .w-richtext ul>li {
-        position: relative;
+        padding: 0;
     }
 
     .w-richtext ul>li::before {
         content: "";
         position: absolute;
-        left: -1.25rem;
-        top: 50%;
-        width: 10px;
+        left: -1rem;
+        top: 0.6em;
+        width: 0.75rem;
         height: 2px;
         background: #F37021;
-        border-radius: 2px;
+    }
+
+    /* ORANGE CHECK */
+    .u-rich-text.cc-check-orange ul>li::before {
+        background: none;
+        left: -1.5rem;
+        top: -0.2rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        background-image: url("https://cdn.prod.website-files.com/688005f0c89682201c6776cf/68a8d709d5fccf7170a5d15e_check.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+
+    /* BLUE CHECK */
+    .u-rich-text.cc-check-blue ul>li::before {
+        background: none;
+        left: -1.5rem;
+        top: -0.2rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        background-image: url("https://cdn.prod.website-files.com/688005f0c89682201c6776cf/68adeaf9a3b9e5710cc2b7d4_check-blue.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+
+    /* GRAPHITE CHECK */
+    .u-rich-text.cc-check-graphite ul>li::before {
+        background: none;
+        left: -1.5rem;
+        top: -0.2rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        background-image: url("https://cdn.prod.website-files.com/688005f0c89682201c6776cf/68adeaf9c8e19135fcd97993_check-graphite.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
     }
 </style>
 
@@ -129,5 +163,19 @@
     [blog-category="list"] [blog-category="item"]:first-child::before {
         content: "";
         display: none;
+    }
+</style>
+
+<!-- Dynamic dividers on pricing table -->
+<style>
+    .pricing-table_group_features>.pricing-table-feature+.pricing-table-feature {
+        border-top: 2px solid #e5e5e5;
+    }
+</style>
+
+<!-- Section -->
+<style>
+    .section:has(.section_bg-slot:not(:empty)) .container {
+        position: relative;
     }
 </style>

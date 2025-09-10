@@ -1,0 +1,28 @@
+<script>
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        const $forms = $('[blog-search="form"]');
+
+        $forms.on('submit', function (event) {
+            event.preventDefault();
+
+            const $form = $(this);
+            const rawValue = $.trim(($form.find('[blog-search="field"]').val() || '').toString());
+            const basePath = '/blog';
+
+            if (!rawValue) {
+                window.location.href = basePath;
+                return;
+            }
+
+            // Encode for URL query and convert spaces to "+"
+            const encoded = encodeURIComponent(rawValue).replace(/%20/g, '+');
+
+            // Target: /blog?title%2C+category_contain=<encoded>
+            const paramName = '*_contain';
+            const url = `${basePath}?${paramName}=${encoded}`;
+
+            window.location.href = url;
+        });
+    });
+</script>

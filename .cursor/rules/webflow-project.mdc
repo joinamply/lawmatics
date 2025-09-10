@@ -1,8 +1,0 @@
----
-alwaysApply: true
----
-This is a webflow project, use jquery.
-
-Animations should be created using gsap and the respective plgings, alternatives should be considered only if gsap is not an option.
-
-Do not insert the gsap register plugin or the library at the top, because gsap is being added isnide webflow.

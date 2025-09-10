@@ -1,22 +1,31 @@
 <script>
     window.Webflow ||= [];
     window.Webflow.push(() => {
-        const $wistiaInline = $('.video-anim-card');
+        const $cards = $('.video-anim-card');
 
-        $wistiaInline.each(function () {
-            $this = $(this);
-            $video = $this.find('.video-anim-card_video');
+        $cards.each(function () {
+            const $card = $(this);
+            const videoEl = $card.find('.video-anim-card_video').get(0);
+            // playManually is true only if attribute is exactly "true", otherwise defaults to false
+            const playManually = $card.attr('play-manually') === 'true' ? true : false;
+            if (!videoEl) return;
 
-            // If thumb video exists, play the HTML video when the top of the element reaches the bottom of the screen using GSAP ScrollTrigger
-            if ($video.length > 0) {
-                ScrollTrigger.create({
-                    trigger: $this[0],
-                    start: "center bottom",
-                    onEnter: function () {
-                        $video[0].play();
-                    }
-                });
-            }
+            // Always pause initially
+            videoEl.pause();
+
+            // If playManually is true, do not set up ScrollTrigger (do nothing)
+            if (playManually) return;
+
+            // Otherwise, set up ScrollTrigger to control video playback
+            ScrollTrigger.create({
+                trigger: $card[0],
+                start: "top bottom",
+                end: "bottom top",
+                onEnter: () => videoEl.play(),
+                onEnterBack: () => videoEl.play(),
+                onLeave: () => videoEl.pause(),
+                onLeaveBack: () => videoEl.pause()
+            });
         });
     });
 </script>

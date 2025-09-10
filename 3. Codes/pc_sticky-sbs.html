@@ -1,0 +1,62 @@
+<script>
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        const $section = $('.sticky-sbs');
+        if ($section.length === 0) return;
+
+        const $contents = $section.find('.sticky-sbs-cont');
+        const $animWraps = $section.find('.sticky-sbs_anim-wrap');
+
+        // Helper: Play video in animWrap by index, pause all others
+        function playVideoByIndex(index) {
+            $animWraps.each(function (i) {
+                const $wrap = $(this);
+                const $video = $wrap.find('.video-anim-card_video').get(0);
+                if ($video) {
+                    if (i === index) {
+                        $video.play();
+                    } else {
+                        $video.pause();
+                        $video.currentTime = 0;
+                    }
+                }
+            });
+        }
+
+        // Helper: Animate animWraps opacity
+        function animateAnimWraps(activeIndex) {
+            $animWraps.each(function (i) {
+                if (i === activeIndex) {
+                    gsap.to(this, { opacity: 1, duration: 0.6, overwrite: 'auto', onStart: () => playVideoByIndex(i) });
+                } else {
+                    gsap.to(this, { opacity: 0, duration: 0.6, overwrite: 'auto' });
+                }
+            });
+        }
+
+        // Set initial state: only first animWrap visible
+        $animWraps.each(function (i) {
+            gsap.set(this, { opacity: i === 0 ? 1 : 0 });
+        });
+
+        // Create ScrollTriggers for each content block
+        $contents.each(function (idx) {
+            ScrollTrigger.create({
+                trigger: this,
+                start: "top center",
+                end: "bottom center",
+                onEnter: () => animateAnimWraps(idx),
+                onEnterBack: () => animateAnimWraps(idx)
+            });
+        });
+
+        // Optionally, pause all videos when leaving the section
+        ScrollTrigger.create({
+            trigger: $section[0],
+            start: "top bottom",
+            end: "bottom top",
+            onLeave: () => playVideoByIndex(-1),
+            onLeaveBack: () => playVideoByIndex(-1)
+        });
+    });
+</script>
