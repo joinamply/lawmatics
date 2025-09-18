@@ -1,0 +1,91 @@
+<script>
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        // 1. Check redirect URL first
+        function checkRedirect() {
+            const redirectUrl = '';
+
+            if (redirectUrl && redirectUrl.trim() !== '') {
+                window.location.href = redirectUrl;
+                return true; // Exit early if redirecting
+            }
+            return false;
+        }
+
+        // 2. URL parameter and cookie checker for webinar registration
+        function checkWebinarRegistration() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isRegistered = urlParams.get('registered') === 'true';
+
+            // Extract URL slug from the current path
+            const urlSlug = window.location.pathname.split('/').filter(segment => segment).pop() || 'default';
+            const cookieName = `webinar_registered_${urlSlug}`;
+
+            // Check if user is registered via URL parameter
+            if (isRegistered) {
+                // Set cookie to remember registration
+                document.cookie = `${cookieName}=true; path=/; max-age=${60 * 60 * 24 * 30}`; // 30 days
+                toggleWebinarDisplay(true);
+            } else {
+                // Check if user was previously registered via cookie
+                const cookieValue = document.cookie
+                    .split('; ')
+                    .find(row => row.startsWith(`${cookieName}=`));
+
+                if (cookieValue) {
+                    toggleWebinarDisplay(true);
+                } else {
+                    toggleWebinarDisplay(false);
+                }
+            }
+        }
+
+        function toggleWebinarDisplay(isRegistered) {
+            const registerElement = document.querySelector('.webinar-register');
+            const registeredElement = document.querySelector('.webinar-registered');
+
+            if (registerElement && registeredElement) {
+                if (isRegistered) {
+                    registerElement.style.display = 'none';
+                    registeredElement.style.display = 'block';
+                } else {
+                    registerElement.style.display = 'block';
+                    registeredElement.style.display = 'none';
+                }
+            }
+        }
+
+        // 3. CMS background handler
+        function applyCmsBackground() {
+            const cmsBackground = "{{wf {&quot;path&quot;:&quot;background-color&quot;,&quot;type&quot;:&quot;Option&quot;\} }}".trim();
+
+            const map = {
+                "Gradient Blue": "u-theme-gradient-blue",
+                "Gradient Dark": "u-theme-dark"
+            };
+
+            const hero = document.querySelector(".hero");
+
+            if (hero && cmsBackground && map[cmsBackground]) {
+                hero.classList.add(map[cmsBackground]);
+            }
+        }
+
+        // Main execution flow
+        function init() {
+            // 1. Check redirect first - exit if redirecting
+            if (checkRedirect()) {
+                return;
+            }
+
+            // 2. Check webinar registration
+            checkWebinarRegistration();
+
+            // 3. Apply CMS background
+            applyCmsBackground();
+        }
+
+        // Run initialization
+        init();
+    });
+</script>

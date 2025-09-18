@@ -1,0 +1,115 @@
+<script>
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        // Parse offset values supporting px, rem, and CSS variables
+        function parseOffsetValue(value) {
+            if (!value || value === '0') return 0;
+
+            // Handle CSS variables (e.g., var(--header-height))
+            if (value.startsWith('var(')) {
+                const cssVar = value.replace(/var\(--([^)]+)\)/, '$1');
+                const computedValue = getComputedStyle(document.documentElement).getPropertyValue(`--${cssVar}`).trim();
+                return parseOffsetValue(computedValue);
+            }
+
+            // Handle rem values
+            if (value.includes('rem')) {
+                const remValue = parseFloat(value);
+                const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+                return remValue * rootFontSize;
+            }
+
+            // Handle px values or plain numbers
+            if (value.includes('px')) {
+                return parseFloat(value);
+            }
+
+            // Handle plain numbers (assume px)
+            return parseFloat(value) || 0;
+        }
+
+        // Make scrollBtns globally accessible within this scope
+        const scrollBtns = $('[scroll-to]');
+
+        // Scroll to functionality with GSAP ScrollTo plugin using jQuery
+        function initScrollTo() {
+            if (scrollBtns.length === 0) return;
+
+            scrollBtns.on('click', function (e) {
+                e.preventDefault();
+
+                const $this = $(this);
+                const targetId = $this.attr('scroll-to');
+                const $targetElement = $(`[scroll-to-target="${targetId}"]`);
+                const offsetValue = $targetElement.attr('scroll-to-offset') || '0';
+                const offset = parseOffsetValue(offsetValue);
+
+                if ($targetElement.length) {
+                    gsap.to(window, {
+                        duration: 1.2,
+                        scrollTo: {
+                            y: $targetElement[0],
+                            offsetY: offset
+                        },
+                        ease: "power2.inOut"
+                    });
+                }
+            });
+        }
+
+        // Helper to update scroll button highlight state
+        function updateScrollBtnHighlight(sectionId, isActive) {
+            scrollBtns.each(function () {
+                const $btn = $(this);
+                if ($btn.attr('scroll-to') === sectionId) {
+                    $btn.toggleClass('w--current', isActive);
+                } else if (isActive) {
+                    $btn.removeClass('w--current');
+                }
+            });
+        }
+
+        // ScrollTrigger setup for section highlighting using jQuery
+        function initScrollTrigger() {
+            const $targetSections = $('[scroll-to-target]');
+
+            if ($targetSections.length === 0) return;
+
+            $targetSections.each(function () {
+                const section = this;
+                const sectionId = $(section).attr('scroll-to-target');
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: "top center",
+                    end: "bottom center",
+                    markers: false,
+                    onEnter: () => {
+                        console.log('onEnter', sectionId);
+                        updateScrollBtnHighlight(sectionId, true);
+                    },
+                    onLeave: () => {
+                        console.log('onLeave', sectionId);
+                        updateScrollBtnHighlight(sectionId, false);
+                    },
+                    onEnterBack: () => {
+                        console.log('onEnterBack', sectionId);
+                        updateScrollBtnHighlight(sectionId, true);
+                    },
+                    onLeaveBack: () => {
+                        console.log('onLeaveBack', sectionId);
+                        updateScrollBtnHighlight(sectionId, false);
+                    }
+                });
+            });
+        }
+
+        // Initialize both functions
+        initScrollTo();
+        initScrollTrigger();
+
+        // Refresh ScrollTrigger on window resize
+        $(window).on('resize', function () {
+            ScrollTrigger.refresh();
+        });
+    });
+</script>
