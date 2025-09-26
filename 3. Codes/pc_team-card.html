@@ -1,0 +1,43 @@
+<script>
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        function isTabletOrBelow() {
+            return window.matchMedia('(max-width: 991px)').matches;
+        }
+
+        function handleTeamCardClick(e) {
+            if (isTabletOrBelow()) {
+                $(this).toggleClass('cc-active');
+            }
+        }
+
+        function handleTeamCardMouseEnter() {
+            if (!isTabletOrBelow()) {
+                $(this).addClass('cc-active');
+            }
+        }
+
+        function handleTeamCardMouseLeave() {
+            if (!isTabletOrBelow()) {
+                $(this).removeClass('cc-active');
+            }
+        }
+
+        function bindTeamCardEvents() {
+            // Remove previous handlers to avoid duplicates
+            $('.team-card')
+                .off('click.teamCardToggle mouseenter.teamCardHover mouseleave.teamCardHover')
+                .on('click.teamCardToggle', handleTeamCardClick)
+                .on('mouseenter.teamCardHover', handleTeamCardMouseEnter)
+                .on('mouseleave.teamCardHover', handleTeamCardMouseLeave);
+        }
+
+        // Initial bind
+        bindTeamCardEvents();
+
+        // Re-bind on Webflow IX or DOM updates (for dynamic content)
+        $(document).on('DOMSubtreeModified', function () {
+            bindTeamCardEvents();
+        });
+    });
+</script>

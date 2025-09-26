@@ -1,0 +1,132 @@
+<script>
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        let yOffset = -2.5;
+        if (window.innerWidth <= 767) {
+            yOffset = 0;
+        }
+
+        $('[heading-anim="marquee"]').each(function () {
+            let words = $(this).attr('heading-anim-words') !== undefined ? $(this).attr('heading-anim-words').split(',') : "";
+            let wordToAnim = $(this).find('sub');
+            if (words.length < 1 || wordToAnim.length <= 0) return;
+
+            let parent = wordToAnim.parent();
+
+            let marqueeWrapper = $('<span></span>');
+            marqueeWrapper.css({
+                position: 'relative',
+                display: 'flex',
+                'flex-direction': 'column',
+                'align-items': 'flex-start',
+                'justify-content': 'flex-start',
+                'overflow': 'hidden',
+                width: '100%',
+                'line-height': wordToAnim.css('line-height') || 'normal',
+                'padding-bottom': '0.1em',
+                'margin-top': '0.1em',
+            });
+
+            // Measure tallest height (descenders included)
+            let testSpan = $('<span></span>').text(wordToAnim.text()).css({
+                visibility: 'hidden',
+                position: 'absolute',
+                'white-space': 'nowrap',
+                'font-family': wordToAnim.css('font-family'),
+                'font-size': wordToAnim.css('font-size'),
+                'font-weight': wordToAnim.css('font-weight'),
+                'line-height': wordToAnim.css('line-height'),
+                'letter-spacing': wordToAnim.css('letter-spacing'),
+                'text-transform': wordToAnim.css('text-transform'),
+                'font-variant': wordToAnim.css('font-variant'),
+                top: '-9999px',
+                left: '-9999px'
+            });
+            $('body').append(testSpan);
+
+            let testTexts = ['g', 'j', 'p', 'q', 'y', 'gjpqy'];
+            let maxHeight = 0;
+            let allTestWords = [wordToAnim.text(), ...words, ...testTexts];
+            for (let i = 0; i < allTestWords.length; i++) {
+                testSpan.text(allTestWords[i]);
+                let h = testSpan.outerHeight(true);
+                if (h > maxHeight) maxHeight = h;
+            }
+            testSpan.remove();
+
+            // Apply manual extra height
+            const computedHeight = Math.ceil(maxHeight);
+
+            // Set wrapper height
+            marqueeWrapper.css('height', `${computedHeight}px`);
+
+            // Build words
+            let wordsWrapper = document.createElement('span');
+            $(wordsWrapper).css({
+                display: 'flex',
+                'flex-direction': 'column',
+                'flex-grow': '0',
+                'flex-shrink': '0',
+                width: '100%',
+            });
+
+            // Helper to style each word span consistently
+            const styleWordSpan = (el) => {
+                $(el).css({
+                    'display': 'flex',
+                    'align-items': 'flex-start',
+                    'justify-content': 'flex-start',
+                    'height': `${computedHeight}px`,
+                    'line-height': '1',
+                    'padding-top': '0em'
+                });
+            };
+
+            let span = document.createElement('span');
+            span.textContent = wordToAnim.text();
+            styleWordSpan(span);
+            wordsWrapper.append(span);
+
+            for (let i = 0; i < words.length; i++) {
+                let w = document.createElement('span');
+                w.textContent = words[i];
+                styleWordSpan(w);
+                wordsWrapper.append(w);
+            }
+
+            let last = document.createElement('span');
+            last.textContent = wordToAnim.text();
+            styleWordSpan(last);
+            wordsWrapper.append(last);
+
+            wordToAnim.remove();
+            marqueeWrapper.append(wordsWrapper);
+            parent.empty().append(marqueeWrapper);
+
+            gsap.set(wordsWrapper, { y: `${yOffset}%` });
+            setTimeout(() => {
+                animateWordsWrapper(wordsWrapper, `${100 / (words.length + 2)}`, `${100 / (words.length + 2)}`);
+            }, 2000);
+        });
+
+        function animateWordsWrapper(wordsWrapper, posY, basePosY) {
+            posY = parseFloat(posY);
+            basePosY = parseFloat(basePosY);
+            gsap.to(wordsWrapper, {
+                y: `-${posY - yOffset}%`,
+                duration: 0.5,
+                ease: "power4.out",
+                onComplete: () => {
+                    setTimeout(() => {
+                        posY = posY + basePosY;
+                        if (posY >= 100) {
+                            gsap.set(wordsWrapper, { y: 0 });
+                            posY = basePosY;
+                        }
+                        animateWordsWrapper(wordsWrapper, posY, basePosY);
+                    }, 2000);
+                }
+            });
+        }
+    });
+</script>

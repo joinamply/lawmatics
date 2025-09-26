@@ -1,0 +1,33 @@
+<script>
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        if (!document.querySelector('[lightbox="comp"]')) return;
+
+        onLibrariesLoaded(["lightbox"], function () {
+            function initLightbox() {
+                $('[lightbox="comp"]').each(function () {
+                    if ($(this).data("glightboxInitialized")) return;
+                    $(this).data("glightboxInitialized", true);
+
+                    const lightboxConfig = {
+                        touchNavigation: $(this).attr("lb-touch-nav") === "true",
+                        loop: $(this).attr("lb-loop") === "true",
+                        autoplayVideos: $(this).attr("lb-autoplay") === "true",
+                        selector: ".lightbox",
+                        gallery: $(this).attr("data-gallery") || false
+                    };
+
+                    const lightbox = GLightbox(lightboxConfig);
+                    $(this).data("glightboxInstance", lightbox); // Store instance if needed
+                });
+            }
+
+            // Initialize GLightbox on page load
+            initLightbox();
+
+            // Listen for new elements being added dynamically (useful for CMS/AJAX)
+            const observer = new MutationObserver(initLightbox);
+            observer.observe(document.body, { childList: true, subtree: true });
+        });
+    });
+</script>

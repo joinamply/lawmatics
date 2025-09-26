@@ -82,7 +82,7 @@ Global Styles that are bing used through the role project:
     select:-webkit-autofill,
     select:-webkit-autofill:hover,
     select:-webkit-autofill:focus {
-        -webkit-text-fill-color: white !important;
+        -webkit-text-fill-color: var(--_themes---typography--heading) !important;
         -webkit-box-shadow: 0 0 0px 1000px transparent inset;
         box-shadow: 0 0 0px 1000px transparent inset;
         transition: background-color 5000s ease-in-out 0s;
@@ -166,37 +166,6 @@ Global Styles that are bing used through the role project:
         -webkit-line-clamp: 5;
         -webkit-box-orient: vertical;
     }
-
-    /* Row/col gap modifiers */
-    .row.row-gap-none .col {
-        margin: 0;
-        padding: 0;
-    }
-
-    .row.row-gap-huge .col {
-        padding-left: calc(var(--_sizing---column-gap--huge) / 2);
-        padding-right: calc(var(--_sizing---column-gap--huge) / 2);
-    }
-
-    .row.row-gap-large .col {
-        padding-left: calc(var(--_sizing---column-gap--large) / 2);
-        padding-right: calc(var(--_sizing---column-gap--large) / 2);
-    }
-
-    .row.row-gap-medium .col {
-        padding-left: calc(var(--_sizing---column-gap--medium) / 2);
-        padding-right: calc(var(--_sizing---column-gap--medium) / 2);
-    }
-
-    .row.row-gap-small .col {
-        padding-left: calc(var(--_sizing---column-gap--small) / 2);
-        padding-right: calc(var(--_sizing---column-gap--small) / 2);
-    }
-
-    .row.row-gap-tiny .col {
-        padding-left: calc(var(--_sizing---column-gap--tiny) / 2);
-        padding-right: calc(var(--_sizing---column-gap--tiny) / 2);
-    }
 </style>
 
 <!-- Heading Highlight -->
@@ -207,14 +176,8 @@ Global Styles that are bing used through the role project:
     h4 strong,
     h5 strong,
     h6 strong {
-        --start: var(--_themes---typography--heading-highlight-1);
-        --end: var(--_themes---typography--heading-highlight-2);
         font-weight: inherit;
-        background: linear-gradient(90deg, var(--start), var(--end));
-        background-color: var(--title-blob-color);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: var(--_themes---typography--heading-highlight);
     }
 </style>
 

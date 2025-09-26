@@ -13,12 +13,12 @@
                     const $dot = $(card).find('[tl-card="dot"]');
                     const $step = $(card).find('[tl-card="step"]');
                     const $cardContent = $(card).find('[tl-card="card"]');
-                    let tl = new gsap.timeline();
+                    let tl = new gsap.timeline({ defaults: { duration: 0.5, ease: "power2.out" } });
 
                     // Animate each card sequentially in the timeline
                     tl.to($dot, { opacity: 1 })
                         .fromTo($step, { x: '4rem', opacity: 0 }, { x: 0, opacity: 1 })
-                        .fromTo($cardContent, { x: '4rem', opacity: 0 }, { x: 0, opacity: 1 }, "<.2");
+                        .fromTo($cardContent, { x: '4rem', opacity: 0 }, { x: 0, opacity: 1 }, "<");
                     tlMain.add(tl, index === 0 ? 0 : '<.8');
                 });
 

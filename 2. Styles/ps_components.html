@@ -42,7 +42,7 @@
     .u-rich-text.cc-check-orange ul>li::before {
         background: none;
         left: -1.5rem;
-        top: -0.2rem;
+        top: 0.1em;
         width: 1.5rem;
         height: 1.5rem;
         background-image: url("https://cdn.prod.website-files.com/688005f0c89682201c6776cf/68a8d709d5fccf7170a5d15e_check.svg");
@@ -55,7 +55,7 @@
     .u-rich-text.cc-check-blue ul>li::before {
         background: none;
         left: -1.5rem;
-        top: -0.2rem;
+        top: 0.1em;
         width: 1.5rem;
         height: 1.5rem;
         background-image: url("https://cdn.prod.website-files.com/688005f0c89682201c6776cf/68adeaf9a3b9e5710cc2b7d4_check-blue.svg");
@@ -68,7 +68,7 @@
     .u-rich-text.cc-check-graphite ul>li::before {
         background: none;
         left: -1.5rem;
-        top: -0.2rem;
+        top: 0.1em;
         width: 1.5rem;
         height: 1.5rem;
         background-image: url("https://cdn.prod.website-files.com/688005f0c89682201c6776cf/68adeaf9c8e19135fcd97993_check-graphite.svg");
@@ -108,14 +108,19 @@
 <!-- Integrations Anim -->
 <style>
     .integration-anim-item:hover .integration-anim-item_img {
-        filter: grayscale(0%);
+        filter: grayscale(0%) brightness(100%);
+        filter: opacity(1);
     }
 </style>
 
 <!-- Hero Content Bg Video -->
 <style>
-    .hero:has(.hero-bg-video) {
+    .hero:has(.hero-bg-video[hero-aspect="16:9"]) {
         aspect-ratio: 16/9;
+    }
+
+    .hero:has(.hero-bg-video[hero-aspect="21:9"]) {
+        aspect-ratio: 21/9;
     }
 </style>
 
@@ -188,5 +193,78 @@
 
     .wistia-inline_embed {
         opacity: 1 !important;
+    }
+</style>
+
+<!-- Card Team -->
+<style>
+    .team-card {
+        /* Ensure stacking context and correct flow for Safari */
+        position: relative;
+    }
+
+    /* Base clamp: prevent mid-word breaks and flatten children */
+    .team-card .rt {
+        display: -webkit-box !important;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 5;
+        overflow: hidden;
+
+        /* Prevent broken words in Safari */
+        word-break: normal;
+        overflow-wrap: normal;
+        hyphens: none;
+
+        /* Ensure normal wrapping */
+        white-space: normal;
+
+        /* Optional future-friendly */
+        line-clamp: 5;
+
+        /* If this element is inside a flex parent, this helps WebKit clipping */
+        min-height: 0;
+    }
+
+    /* Flatten block children so WebKit treats content as one flow box */
+    .team-card .rt>* {
+        display: inline;
+        margin: 0;
+    }
+
+    /* Expanded state — remove clamp and restore child layout */
+    .team-card.cc-active .rt {
+        -webkit-line-clamp: unset;
+        overflow: visible;
+    }
+
+    .team-card.cc-active .rt>* {
+        display: revert;
+        margin: revert;
+    }
+
+    .team-card.cc-active .team-card_description {
+        max-height: 100%;
+        padding-top: 4rem;
+    }
+</style>
+
+<!-- Timeline -->
+<style>
+    .tl-card_card:hover .tl-card_card-rot {
+        transform: rotateY(180deg);
+    }
+
+    .tl-card_card:hover .tl-card_back {
+        z-index: 2;
+        opacity: 1;
+    }
+</style>
+
+<!-- Heading Motion -->
+<style>
+    [heading-anim] sub {
+        white-space: pre;
+        display: block;
+        font-size: var(--_headings---h1--font-size-adapt);
     }
 </style>

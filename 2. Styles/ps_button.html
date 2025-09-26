@@ -6,14 +6,14 @@
         --start: var(--_themes---button-primary--background-1);
         --end: var(--_themes---button-primary--background-2);
 
-        background: linear-gradient(90deg, var(--start), var(--end));
-        background-size: 150% 100%;
-        background-position: 98% 50%;
+        background: linear-gradient(90deg, var(--start), var(--end), var(--start));
+        background-size: 200% 100%;
+        background-position: 0% 50%;
     }
 
     [data-wf--button--button-type="primary"]:hover,
     [data-wf--button--button-type="primary-small"]:hover {
-        background-position: 0% 50%;
+        background-position: 100% 50%;
     }
 
     /* Text */
@@ -22,9 +22,9 @@
         --start: var(--_themes---button-text--text-1);
         --end: var(--_themes---button-text--text-2);
 
-        background: linear-gradient(90deg, var(--start), var(--end));
-        background-size: 150% 100%;
-        background-position: 98% 50%;
+        background: linear-gradient(90deg, var(--start), var(--end), var(--start));
+        background-size: 200% 100%;
+        background-position: 0% 50%;
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -32,6 +32,6 @@
 
     [data-wf--button--button-type="text"]:hover,
     [data-wf--button--button-type="text-small"]:hover {
-        background-position: 0% 50%;
+        background-position: 100% 50%;
     }
 </style>
