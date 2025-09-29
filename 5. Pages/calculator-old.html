@@ -1,0 +1,710 @@
+<script>
+    const additionalContactsOptions = [
+        { value: '0', text: 'None' },
+        { value: '5000,40', text: '5,000 ( $40 )' },
+        { value: '10000,80', text: '10,000 ( $80 )' },
+        { value: '15000,120', text: '15,000 ( $120 )' },
+        { value: '20000,160', text: '20,000 ( $160 )' },
+        { value: '25000,200', text: '25,000 ( $200 )' },
+        { value: '30000,240', text: '30,000 ( $240 )' },
+        { value: '35000,280', text: '35,000 ( $280 )' },
+        { value: '40000,320', text: '40,000 ( $320 )' },
+        { value: '45000,360', text: '45,000 ( $360 )' },
+        { value: '50000,400', text: '50,000 ( $400 )' },
+        { value: '55000,440', text: '55,000 ( $440 )' },
+        { value: '60000,480', text: '60,000 ( $480 )' },
+        { value: '65000,520', text: '65,000 ( $520 )' },
+        { value: '70000,560', text: '70,000 ( $560 )' },
+        { value: '75000,600', text: '75,000 ( $600 )' },
+        { value: '80000,640', text: '80,000 ( $640 )' },
+        { value: '85000,680', text: '85,000 ( $680 )' },
+        { value: '90000,720', text: '90,000 ( $720 )' },
+        { value: '95000,760', text: '95,000 ( $760 )' },
+        { value: '100000,800', text: '100,000 ( $800 )' },
+    ];
+    const additionalSMSOptions = [
+        { value: '0', text: 'None' },
+        { value: '1500,24,2', text: '1,500 ( $24 )' },
+        { value: '5000,79,3', text: '5,000 ( $79 )' },
+        { value: '10500,139,4', text: '10,500 ( $139 )' },
+        { value: '25500,279,5', text: '25,500 ( $279 )' },
+        { value: '50000,525,6', text: '50,000 ( $525 )' },
+        { value: '100000,950,7', text: '100,000 ( $950 )' },
+        { value: '200000,1825,8', text: '200,000 ( $1,825 )' },
+    ];
+    const onboardingFeeOptions = [
+        { value: '1499', text: '$1,499' },
+        { value: '399', text: '$399' },
+    ];
+    const initialValues = [
+        { field: 'numberOfUsers', value: 3 },
+        { field: 'annual', value: true, checked: true },
+        { field: 'premium', value: 'premium', checked: true },
+    ];
+    function populateSelectOptions(selectElement, options) {
+        selectElement.innerHTML = ''; // Clear existing options
+        options.forEach(option => {
+            const opt = document.createElement('option');
+            opt.value = option.value;
+            opt.textContent = option.text;
+            selectElement.appendChild(opt);
+        });
+    }
+
+    function formatNumber(value) {
+        if (typeof value === 'number') {
+            if (!Number.isInteger(value)) {
+                // If the number has decimals, always show 2 decimal places
+                return value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            } else {
+                // If it's an integer, ensure commas for thousands separators
+                return value.toLocaleString();
+            }
+        }
+        return value.toString();
+    }
+
+    // Function to enforce whole number input
+    function enforceWholeNumbers(inputElement) {
+        inputElement.addEventListener('input', event => {
+            const value = event.target.value;
+            if (!Number.isInteger(Number(value))) {
+                event.target.value = Math.floor(value);
+            }
+        });
+    }
+
+    function calculatePrice() {
+        let numberOfUsers = parseInt(document.getElementById('numberOfUsers').value);
+
+        // Check if numberOfUsers is valid
+        if (numberOfUsers > 0) {
+            let additionalContacts = document.getElementById('additionalContacts').value.split(',');
+            let additionalSMS = document.getElementById('additionalSMS').value.split(',');
+            let timeBillingUsers = parseInt(document.getElementById('timeBillingUsers').value);
+            let onboardingFee = parseInt(document.getElementById('onboardingFee').value);
+            let migratorFee = 500;
+            let discountPerUser = parseFloat(document.getElementById('discountPerUser').value);
+            let additionalContactsDiscount = parseFloat(document.getElementById('additionalContactsDiscount').value);
+            let additionalSMSDiscount = parseFloat(document.getElementById('additionalSMSDiscount').value);
+            let onboardingDiscount = parseFloat(document.getElementById('onboardingDiscount').value);
+            let migratorDiscount = parseFloat(document.getElementById('migratorDiscount').value);
+
+            // Validate and correct inputs
+            numberOfUsers = validateAndParseInt('numberOfUsers', numberOfUsers);
+            timeBillingUsers = validateAndParseInt('timeBillingUsers', timeBillingUsers);
+            onboardingFee = validateAndParseInt('onboardingFee', onboardingFee);
+            discountPerUser = validateAndParseFloat('discountPerUser', discountPerUser);
+            additionalContactsDiscount = validateAndParseFloat(
+                'additionalContactsDiscount',
+                additionalContactsDiscount
+            );
+            additionalSMSDiscount = validateAndParseFloat('additionalSMSDiscount', additionalSMSDiscount);
+            onboardingDiscount = validateAndParseFloat('onboardingDiscount', onboardingDiscount);
+            migratorDiscount = validateAndParseFloat('migratorDiscount', migratorDiscount);
+
+            let SMSCount;
+            let contactsBaseCount;
+
+            if (document.getElementById('premium').checked) {
+                userPrice = 99;
+                document.getElementById('outputEsignatures').innerText = `Unlimited e‑signatures`;
+                SMSCount = additionalSMS.length === 3 ? parseInt(additionalSMS[0]) : 750;
+                contactsBaseCount = 10000;
+                document.getElementById('premium-bullets').classList.remove('hidden');
+                document.getElementById('essential-bullets').classList.add('hidden');
+            } else {
+                userPrice = 79;
+                document.getElementById('outputEsignatures').innerText = `50 e‑signatures`;
+                SMSCount = additionalSMS.length === 3 ? parseInt(additionalSMS[0]) : 250;
+                contactsBaseCount = 2500;
+                document.getElementById('premium-bullets').classList.add('hidden');
+                document.getElementById('essential-bullets').classList.remove('hidden');
+            }
+
+            let userPriceDiscounted = userPrice - discountPerUser;
+
+            if (userPriceDiscounted > 0) {
+                document.getElementById('crossedOutPriceUsers').classList.remove('hidden');
+            } else {
+                document.getElementById('crossedOutPriceUsers').classList.add('hidden');
+            }
+
+            let usersCost = numberOfUsers * userPrice;
+
+            let contactsCost = additionalContacts.length === 2 ? parseInt(additionalContacts[1]) : 0;
+            let contactsCount =
+                additionalContacts.length === 2
+                    ? parseInt(additionalContacts[0]) + contactsBaseCount
+                    : contactsBaseCount;
+            let contactsCountAdditional = additionalContacts.length === 2 ? parseInt(additionalContacts[0]) : 0;
+            let contactsIncludedCost = ((contactsCount - 2500) / 5000) * 40;
+            let contactsDiscountAmount = contactsCost - additionalContactsDiscount;
+
+            if (additionalContactsDiscount < contactsCost) {
+                document.getElementById('crossedOutPriceContacts').classList.remove('hidden');
+            } else {
+                document.getElementById('crossedOutPriceContacts').classList.add('hidden');
+            }
+
+            let SMSTier = additionalSMS.length === 3 ? parseInt(additionalSMS[2]) : 1;
+            let SMSCost = additionalSMS.length === 3 ? parseInt(additionalSMS[1]) : 0;
+
+            let SMSDiscountedCost = SMSCost - additionalSMSDiscount;
+
+            if (additionalSMSDiscount < SMSCost) {
+                document.getElementById('crossedOutPriceSMS').classList.remove('hidden');
+            } else {
+                document.getElementById('crossedOutPriceSMS').classList.add('hidden');
+            }
+
+            if (additionalSMS.length === 1) {
+                additionalSMSDiscount = 0;
+            }
+
+            if (additionalSMS.length === 3) {
+                document.getElementById('additionalSMSBreakdown').classList.remove('hidden');
+            } else {
+                document.getElementById('additionalSMSBreakdown').classList.add('hidden');
+            }
+
+            let timeBillingCost = timeBillingUsers * 29;
+
+            let onboardingDiscountTotal = onboardingFee - onboardingDiscount;
+
+            let migratorDiscountTotal = migratorFee - migratorDiscount;
+
+            let totalUserDiscount = numberOfUsers * userPriceDiscounted;
+
+            let totalDiscount = totalUserDiscount + contactsDiscountAmount + SMSDiscountedCost;
+            let totalCost = usersCost + contactsCost + SMSCost + timeBillingCost - totalDiscount;
+
+            let discountedCost = Math.round(totalCost * 0.9);
+            let annualDiscount = totalCost - discountedCost;
+
+            if (document.getElementById('annual').checked) {
+                document.getElementById('totalCost').innerText = isNaN(discountedCost)
+                    ? '0'
+                    : formatNumber(discountedCost);
+                document.getElementById('outputAnnualPrice').innerText = formatNumber(discountedCost * 12);
+                document.getElementById('annualPrice').classList.remove('hidden');
+                document.getElementById('monthly').classList.add('hidden');
+                document.getElementById('annualToggle').style.fontWeight = '700';
+                document.getElementById('annualToggle').style.color = 'color(17)';
+                document.getElementById('totalAnnualDiscount').classList.remove('hidden');
+            } else {
+                document.getElementById('totalCost').innerText = isNaN(totalCost) ? '0' : formatNumber(totalCost);
+                document.getElementById('outputAnnualPrice').innerText = formatNumber(totalCost * 12);
+                document.getElementById('annualPrice').classList.add('hidden');
+                document.getElementById('monthly').classList.remove('hidden');
+                document.getElementById('annualToggle').style.fontWeight = '400';
+                document.getElementById('annualToggle').style.color = 'color(25)';
+                document.getElementById('totalAnnualDiscount').classList.add('hidden');
+            }
+
+            // Update DOM elements only if numberOfUsers is valid
+            document.getElementById('userPrice').innerText = formatNumber(discountPerUser);
+            document.getElementById('outputNumberOfUsers').innerText = numberOfUsers;
+            document.getElementById('outputNumberOfUsersRight').innerText = numberOfUsers;
+            document.getElementById(
+                'outputAdditionalContacts'
+            ).innerText = `${contactsCount.toLocaleString()} contacts`;
+            document.getElementById('outputAdditionalContactsRight').innerText =
+                contactsCountAdditional.toLocaleString();
+            document.getElementById('contactsDiscountedCost').innerText = formatNumber(additionalContactsDiscount);
+            document.getElementById('contactsBaseCount').innerText = formatNumber(contactsBaseCount);
+            document.getElementById('outputAdditionalSMS').innerText = `${SMSCount.toLocaleString()} text messages`;
+            document.getElementById('outputAdditionalSMSRight').innerText = SMSCount.toLocaleString();
+            document.getElementById('SMSDiscountedCost').innerText = formatNumber(additionalSMSDiscount);
+            document.getElementById('SMSAdditionalCostCrossed').innerText = formatNumber(SMSCost);
+            document.getElementById('totalAnnualDiscount').innerText = `$${formatNumber(
+                annualDiscount
+            )}/mo annual discount`;
+            document.getElementById('totalMonthlyDiscount').innerText = `$${formatNumber(totalDiscount)}/mo`;
+            document.getElementById('onboardingDiscountTotal').innerText = `$${formatNumber(
+                onboardingDiscountTotal
+            )} off onboarding`;
+            document.getElementById('migratorDiscountTotal').innerText = `$${formatNumber(
+                migratorDiscountTotal
+            )} off premium migration`;
+            document.getElementById('crossedOutPriceUsersMax').innerText = userPrice;
+            document.getElementById('crossedOutPriceContacts').innerText = `( $${formatNumber(contactsCost)} / mo )`;
+
+            let timeBillingUsersElement = document.getElementById('outputTimeBillingUsers');
+            let timeBillingUsersElementRight = document.getElementById('outputTimeBillingUsersRight');
+            if (timeBillingUsers > 0) {
+                timeBillingUsersElement.classList.remove('hidden');
+                timeBillingUsersElementRight.classList.remove('hidden');
+                document.getElementById('timeBillingUsersCount').innerText = timeBillingUsers;
+                document.getElementById('timeBillingUsersCountRight').innerText = timeBillingUsers;
+            } else {
+                timeBillingUsersElement.classList.add('hidden');
+                timeBillingUsersElementRight.classList.add('hidden');
+            }
+
+            document.getElementById('outputOnboardingFee').innerText = formatNumber(onboardingDiscount);
+            document.getElementById('outputOnboardingFeeRight').innerText = formatNumber(onboardingDiscount);
+            document.getElementById('outputOnboardingFeeUndiscounted').innerText = onboardingFee.toLocaleString();
+
+            document.getElementById('outputMigratorFeeRight').innerText = formatNumber(migratorDiscount);
+            document.getElementById('outputMigratorFeeBottom').innerText = formatNumber(migratorDiscount);
+
+            if (onboardingDiscountTotal > 0) {
+                document.getElementById('crossedOutPriceOnboarding').classList.remove('hidden');
+                document.getElementById('onboardingDiscountTotal').classList.remove('hidden');
+            } else {
+                document.getElementById('crossedOutPriceOnboarding').classList.add('hidden');
+                document.getElementById('onboardingDiscountTotal').classList.add('hidden');
+            }
+
+            if (document.getElementById('migratorFee').checked) {
+                document.getElementById('migratorPricingBreakdown').classList.remove('hidden');
+                document.getElementById('migratorDiscountField').classList.remove('hidden');
+                document.getElementById('migratorBottom').classList.remove('hidden');
+            } else {
+                document.getElementById('migratorPricingBreakdown').classList.add('hidden');
+                document.getElementById('migratorDiscountField').classList.add('hidden');
+                document.getElementById('migratorBottom').classList.add('hidden');
+            }
+
+            if (migratorDiscountTotal > 0 && document.getElementById('migratorFee').checked) {
+                document.getElementById('crossedOutPriceMigrator').classList.remove('hidden');
+                document.getElementById('migratorDiscountTotal').classList.remove('hidden');
+            } else {
+                document.getElementById('crossedOutPriceMigrator').classList.add('hidden');
+                document.getElementById('migratorDiscountTotal').classList.add('hidden');
+            }
+
+            if (totalDiscount > 0) {
+                document.getElementById('totalMonthlyDiscount').classList.remove('hidden');
+            } else {
+                document.getElementById('totalMonthlyDiscount').classList.add('hidden');
+            }
+
+            if (
+                document.getElementById('annual').checked &&
+                (onboardingDiscountTotal > 0 ||
+                    totalDiscount > 0 ||
+                    (migratorDiscountTotal > 0 && document.getElementById('migratorFee').checked))
+            ) {
+                document.getElementById('plusBetweenAnnual').classList.remove('hidden');
+            } else {
+                document.getElementById('plusBetweenAnnual').classList.add('hidden');
+            }
+
+            if (onboardingDiscountTotal > 0 && totalDiscount > 0) {
+                document.getElementById('plusBetweenDiscounts').classList.remove('hidden');
+            } else {
+                document.getElementById('plusBetweenDiscounts').classList.add('hidden');
+            }
+
+            if (
+                onboardingDiscountTotal > 0 &&
+                totalDiscount > 0 &&
+                migratorDiscountTotal > 0 &&
+                document.getElementById('migratorFee').checked
+            ) {
+                document.getElementById('plusBetweenDiscounts2').classList.remove('hidden');
+            } else if (
+                migratorDiscountTotal > 0 &&
+                document.getElementById('migratorFee').checked &&
+                totalDiscount > 0
+            ) {
+                document.getElementById('plusBetweenDiscounts2').classList.remove('hidden');
+            } else if (
+                migratorDiscountTotal > 0 &&
+                document.getElementById('migratorFee').checked &&
+                onboardingDiscountTotal > 0
+            ) {
+                document.getElementById('plusBetweenDiscounts2').classList.remove('hidden');
+            } else {
+                document.getElementById('plusBetweenDiscounts2').classList.add('hidden');
+            }
+
+            if (
+                onboardingDiscountTotal > 0 ||
+                totalDiscount > 0 ||
+                (migratorDiscountTotal > 0 && document.getElementById('migratorFee').checked) ||
+                document.getElementById('annual').checked
+            ) {
+                document.getElementById('totalSavings').classList.remove('hidden');
+            } else {
+                document.getElementById('totalSavings').classList.add('hidden');
+            }
+
+            let quoteContainer = document.getElementById('quote-container');
+
+            let additionalContactsValue = document.getElementById('additionalContacts').value;
+            let additionalContactsDiscountField = document.getElementById('additionalContactsDiscountField');
+            if (additionalContactsValue === '0') {
+                additionalContactsDiscountField.classList.add('hidden');
+            } else {
+                additionalContactsDiscountField.classList.remove('hidden');
+            }
+
+            let additionalSMSValue = document.getElementById('additionalSMS').value;
+            let additionalSMSDiscountField = document.getElementById('additionalSMSDiscountField');
+            if (additionalSMSValue === '0') {
+                additionalSMSDiscountField.classList.add('hidden');
+            } else {
+                additionalSMSDiscountField.classList.remove('hidden');
+            }
+
+            // Add event listeners to handle focus and blur events for timeBillingUsers and discount input fields
+            const fieldsToClear = [
+                'timeBillingUsers',
+                'discountPerUser',
+                'additionalContactsDiscount',
+                'additionalSMSDiscount',
+                'onboardingDiscount',
+            ];
+
+            fieldsToClear.forEach(fieldId => {
+                const inputField = document.getElementById(fieldId);
+
+                // Clear the input field when it gains focus
+                inputField.addEventListener('focus', function () {
+                    if (this.value == 0) {
+                        this.value = '';
+                    }
+                });
+
+                // Reset the input field to 0 if it's empty when it loses focus
+                inputField.addEventListener('blur', function () {
+                    if (this.value === '') {
+                        this.value = 0;
+                    }
+                });
+
+                // Ensure 0 is not added if the field is empty but user is in the middle of typing
+                inputField.addEventListener('input', function () {
+                    if (this.value == 0) {
+                        this.value = '';
+                    }
+                });
+            });
+
+            // Get specific input fields by their IDs
+            const wholeNumberInputs = [
+                document.getElementById('numberOfUsers'),
+                document.getElementById('timeBillingUsers'),
+            ];
+
+            // Apply the restriction to specific fields
+            wholeNumberInputs.forEach(input => {
+                if (input) {
+                    enforceWholeNumbers(input);
+                }
+            });
+        } else {
+            // Handle case where numberOfUsers is not valid (e.g., show an error message)
+            console.log('Please enter a valid number of users.');
+        }
+    }
+
+    function validateAndParseInt(inputId, value) {
+        const input = document.getElementById(inputId);
+        if (isNaN(value) || value === '') {
+            value = 0;
+            input.value = value;
+        } else {
+            const max = parseInt(input.max, 10);
+            if (value > max) {
+                value = max;
+                input.value = value;
+            }
+        }
+        return parseInt(value, 10);
+    }
+
+    function validateAndParseFloat(inputId, value) {
+        const input = document.getElementById(inputId);
+        if (isNaN(value) || value === '') {
+            value = 0;
+            input.value = value;
+        } else {
+            const max = parseFloat(input.max);
+            if (value > max) {
+                value = max;
+                input.value = value;
+            }
+        }
+        return parseFloat(value);
+    }
+
+    document.getElementById('numberOfUsers').addEventListener('blur', function () {
+        let minValue = parseInt(this.min, 10);
+        let currentValue = parseInt(this.value, 10);
+
+        if (isNaN(currentValue) || currentValue < minValue) {
+            this.value = minValue;
+        }
+        calculatePrice();
+    });
+
+    document.getElementById('discountPerUser').addEventListener('blur', function () {
+        let minValue = parseInt(this.min, 10);
+        let currentValue = parseInt(this.value, 10);
+
+        if (isNaN(currentValue) || currentValue < minValue) {
+            this.value = minValue;
+        }
+        calculatePrice(); // Recalculate price after correcting the value
+    });
+
+    //Function to set migratorDiscount to input min when user types in field
+
+    document.getElementById('migratorDiscount').addEventListener('blur', function () {
+        let minValue = parseInt(this.min, 10);
+        let currentValue = parseInt(this.value, 10);
+
+        if (isNaN(currentValue) || currentValue < minValue) {
+            this.value = minValue;
+        }
+        calculatePrice(); // Recalculate price after correcting the value
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        populateSelectOptions(document.getElementById('additionalContacts'), additionalContactsOptions);
+        populateSelectOptions(document.getElementById('additionalSMS'), additionalSMSOptions);
+        populateSelectOptions(document.getElementById('onboardingFee'), onboardingFeeOptions);
+        // Set initial values for numberOfUsers plan details and pay anually
+        initialValues.forEach(item => {
+            item.checked
+                ? document.getElementById(item.field).click()
+                : (document.getElementById(item.field).value = item.value);
+        });
+
+        calculatePrice();
+
+        // Add event listeners to all input fields with a max attribute to enforce max value and update display
+        const inputsWithMax = document.querySelectorAll('input[max]');
+        inputsWithMax.forEach(input => {
+            input.addEventListener('input', function () {
+                calculatePrice(); // Recalculate price on input change
+            });
+        });
+
+        // Add event listeners to all input fields with a min attribute to enforce min value and update display
+        const inputsWithMin = document.querySelectorAll('input[min]');
+        inputsWithMin.forEach(input => {
+            input.addEventListener('blur', function () {
+                calculatePrice(); // Recalculate price on input change
+            });
+        });
+    });
+
+    function updateDiscountPerUserValue() {
+        let discountPerUser = parseFloat(document.getElementById('discountPerUser').value);
+        if (document.getElementById('premium').checked) {
+            discountPerUser = 99; // Set price to 99 for Premium
+        } else {
+            discountPerUser = 79; // Set price to 79 for Essential (default)
+        }
+    }
+
+    function updateDiscountPerUserMin() {
+        let numberOfUsers = parseInt(document.getElementById('numberOfUsers').value);
+        let numberOfUsersMax = document.getElementById('numberOfUsers');
+        let discountPerUser = document.getElementById('discountPerUser');
+        let newMin = 0;
+
+        if (document.getElementById('premium').checked) {
+            document.getElementById('calculator-heading').innerText = `Premium plan pricing`;
+            numberOfUsersMax.setAttribute('max', 100);
+            discountPerUser.setAttribute('max', 99);
+            if (numberOfUsers <= 5) {
+                newMin = 94;
+            } else if (numberOfUsers >= 6 && numberOfUsers <= 10) {
+                newMin = 79;
+            } else if (numberOfUsers >= 11 && numberOfUsers <= 15) {
+                newMin = 59;
+            } else if (numberOfUsers >= 16 && numberOfUsers <= 20) {
+                newMin = 55;
+            } else if (numberOfUsers >= 21 && numberOfUsers <= 24) {
+                newMin = 50;
+            } else if (numberOfUsers > 24) {
+                newMin = 50;
+            }
+        } else {
+            document.getElementById('calculator-heading').innerText = `Essential plan pricing`;
+            numberOfUsersMax.setAttribute('max', 24);
+            discountPerUser.setAttribute('max', 79);
+            if (numberOfUsers <= 5) {
+                newMin = 74;
+            } else if (numberOfUsers >= 6 && numberOfUsers <= 10) {
+                newMin = 69;
+            } else if (numberOfUsers >= 11 && numberOfUsers <= 15) {
+                newMin = 59;
+            } else if (numberOfUsers >= 16 && numberOfUsers <= 20) {
+                newMin = 55;
+            } else if (numberOfUsers >= 21 && numberOfUsers <= 24) {
+                newMin = 50;
+            } else if (numberOfUsers > 24) {
+                newMin = 50;
+            }
+        }
+
+        discountPerUser.setAttribute('min', newMin);
+
+        // Update discountPerUser value if it's less than the new minimum
+        if (parseInt(discountPerUser.value) < newMin) {
+            discountPerUser.value = newMin;
+        }
+
+        let maxValue = parseInt(discountPerUser.max, 10);
+        if (parseInt(discountPerUser.value) > maxValue) {
+            discountPerUser.value = maxValue;
+        }
+    }
+
+    document.getElementById('numberOfUsers').addEventListener('input', function () {
+        updateDiscountPerUserMin();
+    });
+
+    document.getElementById('annual').addEventListener('change', function () {
+        calculatePrice();
+    });
+
+    document.getElementById('essential').addEventListener('change', function () {
+        updateDiscountPerUserMin();
+        calculatePrice();
+    });
+
+    document.getElementById('premium').addEventListener('change', function () {
+        const discountPerUser = document.getElementById('discountPerUser');
+        discountPerUser.value = discountPerUser.max;
+        updateDiscountPerUserMin();
+        calculatePrice();
+    });
+
+    document.getElementById('essential').addEventListener('change', function () {
+        const discountPerUser = document.getElementById('discountPerUser');
+        discountPerUser.value = discountPerUser.max;
+        calculatePrice();
+    });
+
+    // Function to update additionalContactsDiscount max and value based on additionalContacts
+    function updateAdditionalContactsDiscount() {
+        var additionalContactsSelect = document.getElementById('additionalContacts');
+        var additionalContactsDiscountInput = document.getElementById('additionalContactsDiscount');
+        var selectedOptionValue = additionalContactsSelect.value;
+
+        if (selectedOptionValue !== '0') {
+            var values = selectedOptionValue.split(',');
+            var discountValue = values[1];
+
+            additionalContactsDiscountInput.value = discountValue;
+            additionalContactsDiscountInput.max = discountValue;
+        } else {
+            additionalContactsDiscountInput.value = '';
+            additionalContactsDiscountInput.max = '';
+        }
+    }
+
+    document.getElementById('additionalContacts').addEventListener('change', function () {
+        updateAdditionalContactsDiscount();
+        calculatePrice();
+    });
+
+    // Function to update additionalSMSDiscount max and value based on additionalSMS
+    function updateAdditionalSMSDiscount() {
+        var additionalSMSSelect = document.getElementById('additionalSMS');
+        var additionalSMSDiscountInput = document.getElementById('additionalSMSDiscount');
+        var selectedOptionValue = additionalSMSSelect.value;
+
+        if (selectedOptionValue !== '0') {
+            var values = selectedOptionValue.split(',');
+            var discountValue = values[1];
+
+            additionalSMSDiscountInput.value = discountValue;
+            additionalSMSDiscountInput.max = discountValue;
+        } else {
+            additionalSMSDiscountInput.value = '';
+            additionalSMSDiscountInput.max = '';
+        }
+    }
+
+    document.getElementById('additionalSMS').addEventListener('change', function () {
+        updateAdditionalSMSDiscount();
+        calculatePrice();
+    });
+
+    // Function to update onboardingDiscount max value based on onboardingFee
+    function updateOnboardingDiscountMax() {
+        let onboardingFeeValue = parseInt(document.getElementById('onboardingFee').value, 10);
+        let maxOnboardingDiscount = onboardingFeeValue;
+
+        document.getElementById('onboardingDiscount').setAttribute('max', maxOnboardingDiscount);
+        document.getElementById('onboardingDiscount').value = maxOnboardingDiscount;
+    }
+
+    document.getElementById('onboardingFee').addEventListener('input', function () {
+        updateOnboardingDiscountMax();
+    });
+
+    // Function to update timeBillingUsers max value based on numberOfUsers
+    function updateTimeBillingUsersMax() {
+        let numberOfUsersValue = parseInt(document.getElementById('numberOfUsers').value, 10);
+        let maxTimeBillingUsers = Math.floor(numberOfUsersValue);
+        let timeBillingUsersInput = document.getElementById('timeBillingUsers');
+        let currentTimeBillingUsers = parseInt(timeBillingUsersInput.value, 10);
+
+        timeBillingUsersInput.setAttribute('max', maxTimeBillingUsers);
+
+        if (currentTimeBillingUsers > maxTimeBillingUsers) {
+            timeBillingUsersInput.value = maxTimeBillingUsers;
+        }
+    }
+
+    // Event listener for numberOfUsers input blur event
+    document.getElementById('numberOfUsers').addEventListener('blur', function () {
+        updateTimeBillingUsersMax(); // Call function to update max value
+    });
+
+    document.getElementById('premium').addEventListener('change', function () {
+        const discountPerUser = document.getElementById('discountPerUser');
+        discountPerUser.value = discountPerUser.max;
+        updateTimeBillingUsersMax();
+    });
+
+    document.getElementById('essential').addEventListener('change', function () {
+        const discountPerUser = document.getElementById('discountPerUser');
+        discountPerUser.value = discountPerUser.max;
+        updateTimeBillingUsersMax();
+    });
+
+    function toggleAdditionalContactsVisibility() {
+        const additionalContactsValue = document.getElementById('additionalContacts').value.split(',')[0];
+        if (additionalContactsValue === '0') {
+            document.getElementById('additionalContactsBreakdown').classList.add('hidden');
+        } else {
+            document.getElementById('additionalContactsBreakdown').classList.remove('hidden');
+        }
+    }
+
+    document.getElementById('additionalContacts').addEventListener('change', function () {
+        toggleAdditionalContactsVisibility();
+        calculatePrice();
+    });
+
+    toggleAdditionalContactsVisibility();
+
+    // Limit decimal places in discount fields
+    function limitDecimalPlaces(input) {
+        // Convert input value to string
+        let value = input.value.toString();
+
+        // Check if the input contains a decimal point
+        let hasDecimal = value.includes('.');
+
+        // If input has a decimal point and it's followed by more than 2 digits, truncate
+        if (hasDecimal) {
+            let parts = value.split('.');
+            if (parts[1].length > 2) {
+                parts[1] = parts[1].slice(0, 2); // Keep up to 2 decimal places
+                input.value = parts.join('.');
+            }
+        }
+    }
+</script>

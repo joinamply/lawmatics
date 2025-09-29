@@ -1,0 +1,38 @@
+<script>
+    window.Webflow ||= [];
+    window.Webflow.push(() => {
+        // Update with your actual GitHub Pages URL
+        const calculatorUrl = "https://joinamply.github.io/lawmatics/calculator/calculator-upd.html";
+        const tachyonsUrl = "https://joinamply.github.io/lawmatics/calculator/tachyons.css";
+
+        // Create a container for the calculator
+        const $calculatorContainer = $('<div id="calculator-embed-container"></div>');
+        $('body').append($calculatorContainer);
+
+        // Dynamically load tachyons.css if not already present
+        function ensureTachyonsCss(url) {
+            if (!$('link[href="' + url + '"]').length) {
+                $('<link>', {
+                    rel: 'stylesheet',
+                    type: 'text/css',
+                    href: url
+                }).appendTo('head');
+            }
+        }
+
+        ensureTachyonsCss(tachyonsUrl);
+
+        // Fetch and inject the calculator HTML
+        $.get(calculatorUrl, function (data) {
+            // Extract only the content inside <body> to avoid duplicating <html>, <head>, etc.
+            const bodyContent = data.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+            if (bodyContent && bodyContent[1]) {
+                $calculatorContainer.html(bodyContent[1]);
+            } else {
+                $calculatorContainer.html("<p>Failed to load calculator.</p>");
+            }
+        }).fail(function () {
+            $calculatorContainer.html("<p>Failed to load calculator.</p>");
+        });
+    });
+</script>
