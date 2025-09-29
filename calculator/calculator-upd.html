@@ -1,0 +1,2722 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US" style="scroll-behavior: auto;">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" id="jquery-core-js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.5.2/jquery-migrate.min.js" id="jquery-migrate-js"></script>
+    <link rel="stylesheet" href="./tachyons.css" type="text/css" media="all">
+
+<body>
+    <!--MARKUP-->
+    <section id="section-3-8980" class="w-100 flex items-center justify-center ct-section">
+        <div class="ct-section-inner-wrap">
+            <div id="div_block-9-8980" class="ct-div-block">
+                <h1 id="calculator-heading" class="ct-headline mb0">Premium plan pricing</h1>
+            </div>
+            <div id="div_block-11-8980" class="ct-div-block">
+                <div id="div_block-76-8980" class="ct-div-block">
+                    <div id="_toggle-71-8980" class="oxy-toggle toggle-1939 toggle-1939-expanded" data-oxy-toggle-initial-state="open" data-oxy-toggle-active-class="toggle-1939-expanded">
+                        <div class="oxy-expand-collapse-icon" href="#"></div>
+                        <div class="oxy-toggle-content">
+                        </div>
+                    </div>
+                    <div id="code_block-5-8980" class="ct-code-block t-flow-2">
+                        <h3 style="margin-bottom: 15px;">Plan details</h3>
+
+                        <div style="width: 100%; display: flex; gap: 30px; margin-bottom: 15px;">
+                            <div style="display: flex; gap: 3px; align-items: center;">
+                                <input type="radio" id="essential" value="Essential" name="pick-plan" onchange="calculatePrice(); updateDiscountPerUserMin()">
+                                &nbsp; <label class="pick-plan-label" style="width: fit-content;" for="essential">Essential</label>
+                            </div>
+                            <div style="display: flex; gap: 3px; align-items: center;">
+                                <input type="radio" id="premium" checked="checked" value="Premium" name="pick-plan" onchange="calculatePrice(); updateDiscountPerUserMin()">
+                                &nbsp; <label class="pick-plan-label" style="width: fit-content;" for="premium">Premium</label>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="numberOfUsers">Number of users</label>
+                            <input type="number" id="numberOfUsers" value="3" min="3" max="100" step="1" oninput="calculatePrice()">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="additionalContacts">Additional contacts</label>
+                            <select id="additionalContacts" onchange="calculatePrice()">
+                                <option value="0">None</option>
+                                <option value="5000,40">5,000 ( $40 )</option>
+                                <option value="10000,80">10,000 ( $80 )</option>
+                                <option value="15000,120">15,000 ( $120 )</option>
+                                <option value="20000,160">20,000 ( $160 )</option>
+                                <option value="25000,200">25,000 ( $200 )</option>
+                                <option value="30000,240">30,000 ( $240 )</option>
+                                <option value="35000,280">35,000 ( $280 )</option>
+                                <option value="40000,320">40,000 ( $320 )</option>
+                                <option value="45000,360">45,000 ( $360 )</option>
+                                <option value="50000,400">50,000 ( $400 )</option>
+                                <option value="55000,440">55,000 ( $440 )</option>
+                                <option value="60000,480">60,000 ( $480 )</option>
+                                <option value="65000,520">65,000 ( $520 )</option>
+                                <option value="70000,560">70,000 ( $560 )</option>
+                                <option value="75000,600">75,000 ( $600 )</option>
+                                <option value="80000,640">80,000 ( $640 )</option>
+                                <option value="85000,680">85,000 ( $680 )</option>
+                                <option value="90000,720">90,000 ( $720 )</option>
+                                <option value="95000,760">95,000 ( $760 )</option>
+                                <option value="100000,800">100,000 ( $800 )</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group flex flex-column">
+                            <label for="additionalSMS">Additional SMS</label>
+                            <select id="additionalSMS" onchange="calculatePrice()">
+                                <option value="0">None</option>
+                                <option value="1500,39,2" data-monthly-note="Per month: 1,500 ( $39 )">18,000 ( $468 )</option>
+                                <option value="5000,99,3" data-monthly-note="Per month: 5,000 ( $99 )">60,000 ( $1,188 )</option>
+                                <option value="10000,179,4" data-monthly-note="Per month: 10,000 ( $179 )">120,000 ( $2,148 )</option>
+                                <option value="25500,399,5" data-monthly-note="Per month: 25,500 ( $399 )">306,000 ( $4,788 )</option>
+                                <option value="50000,699,6" data-monthly-note="Per month: 50,000 ( $699 )">600,000 ( $8,388 )</option>
+                                <option value="100000,1249,7" data-monthly-note="Per month: 100,000 ( $1,249 )">1,200,000 ( $14,988 )</option>
+                                <option value="200000,2249,8" data-monthly-note="Per month: 200,000 ( $2,249 )">2,400,000 ( $26,988 )</option>
+                            </select>
+                            <small class="boost-secondary-50 i" id="smsMonthlyNote"></small>
+                        </div>
+
+                        <div class="input-group flex flex-column">
+                            <label for="additionalMMS">Additional MMS</label>
+                            <select id="additionalMMS" onchange="calculatePrice()">
+                                <option value="0">None</option>
+                                <option value="1000,25,2" data-monthly-note="Per month: 1,000 ( $25 )">12,000 ( $300 )</option>
+                                <option value="2000,50,3" data-monthly-note="Per month: 2,000 ( $50 )">24,000 ( $600 )</option>
+                                <option value="3000,75,4" data-monthly-note="Per month: 3,000 ( $75 )">36,000 ( $900 )</option>
+                                <option value="4000,100,5" data-monthly-note="Per month: 4,000 ( $100 )">48,000 ( $1,200 )</option>
+                                <option value="5000,125,6" data-monthly-note="Per month: 5,000 ( $125 )">60,000 ( $1,500 )</option>
+                            </select>
+                            <small class="boost-secondary-50 i" id="mmsMonthlyNote"></small>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="timeBillingUsers">Time &amp; Billing users</label>
+                            <input type="number" id="timeBillingUsers" value="0" min="0" step="1" oninput="this.max = document.getElementById('numberOfUsers').value; calculatePrice()" max="3">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="onboardingFee">Onboarding fee</label>
+                            <!--<select id="onboardingFee" onchange="calculatePrice()">
+      <option value="1499">$1,499</option>
+      <option value="399">$399</option>
+  </select>-->
+
+                            $ <input class="dollar-width" type="number" id="onboardingFee" value="1499" min="0" oninput="limitDecimalPlaces(this); calculatePrice()">
+                        </div>
+
+                        <div style="margin-bottom: 0; margin-top: 3px; display: flex; flex-direction: row;">
+                            <label for="migratorFee" class="check-headers_pricing-calc">
+                                <input type="checkbox" id="migratorFee" onchange="calculatePrice()">
+                                <div class="checkbox_pricing-calc smaller-box"></div>
+                                Premium data migration
+                            </label>
+
+                        </div>
+
+                        <hr style="margin: 30px 0 20px">
+
+                        <h3 style="margin-top: 0px; margin-bottom: 15px;">Discounts</h3>
+
+                        <div class="input-group">
+                            <label for="discountPerUser">Discounted price / user</label>
+                            $ <input class="dollar-width" type="number" id="discountPerUser" value="99" min="94" max="99" oninput="limitDecimalPlaces(this); calculatePrice()">
+                        </div>
+
+                        <div id="additionalContactsDiscountField" class="input-group hidden">
+                            <label for="additionalContactsDiscount">Discounted contacts price</label>
+                            $ <input class="dollar-width" type="number" id="additionalContactsDiscount" value="0" min="0" max="0" oninput="limitDecimalPlaces(this); calculatePrice()">
+                        </div>
+
+                        <div id="additionalSMSDiscountField" class="input-group dn">
+                            <label for="additionalSMSDiscount">Discounted SMS price</label>
+                            $ <input class="dollar-width" type="number" id="additionalSMSDiscount" value="0" min="0" max="" oninput="limitDecimalPlaces(this); calculatePrice()">
+                        </div>
+
+                        <div id="additionalMMSDiscountField" class="input-group dn hidden">
+                            <label for="additionalMMSDiscount">Discounted MMS price</label>
+                            $ <input class="dollar-width" type="number" id="additionalMMSDiscount" value="0" min="0" max="" oninput="limitDecimalPlaces(this); calculatePrice()">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="onboardingDiscount">Discounted onboarding price</label>
+                            $ <input class="dollar-width" type="number" id="onboardingDiscount" value="1499" min="0" oninput="limitDecimalPlaces(this); calculatePrice()">
+                        </div>
+
+                        <div id="migratorDiscountField" class="input-group hidden">
+                            <label for="migratorDiscount">Discounted migration price</label>
+                            $ <input class="dollar-width" type="number" id="migratorDiscount" value="500" min="300" max="500" oninput="limitDecimalPlaces(this); calculatePrice()">
+                        </div>
+
+                    </div>
+                </div>
+                <div id="div_block-194-8980" class="ct-div-block">
+                    <div id="quote-container" class="ct-div-block">
+                        <div id="div_block-236-9228" class="ct-div-block">
+                            <div id="div_block-105-8980" class="ct-div-block">
+                                <h3 id="headline-146-8980" class="ct-headline">What's included</h3>
+                                <ul id="div_block-19-8980" class="ct-div-block">
+                                    <li id="usersIncluded" class="ct-div-block hidden">
+                                        <div class="flex">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="boost-primary mr2">
+                                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" /></svg>
+                                            <div id="div_block-111-8980" class="ct-div-block">
+                                                <div id="code_block-58-8980" class="ct-code-block calc-checklist-text">
+                                                    <span id="outputNumberOfUsers">3</span> users
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li id="outputTimeBillingUsers" class="ct-div-block hidden">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="boost-primary mr2">
+                                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" /></svg>
+                                        <div id="div_block-118-8980" class="ct-div-block">
+                                            <div id="code_block-66-8980" class="ct-code-block calc-checklist-text"><span id="timeBillingUsersCount">0</span> Time &amp; Billing users</div>
+                                        </div>
+                                    </li>
+                                    <li id="div_block-59-8980" class="ct-div-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="boost-primary mr2">
+                                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" /></svg>
+                                        <div id="div_block-123-8980" class="ct-div-block">
+                                            <div id="outputAdditionalContacts" class="ct-code-block calc-checklist-text">10,000 contacts</div>
+                                        </div>
+                                    </li>
+                                    <li id="div_block-130-8980" class="ct-div-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="boost-primary mr2">
+                                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" /></svg>
+                                        <div id="div_block-132-8980" class="ct-div-block">
+                                            <div id="outputAdditionalSMS" class="ct-code-block calc-checklist-text"><span>50 SMS messages monthly<br> <small class="boost-secondary-50"><em>600 SMS messages annually</em></small></span></div>
+                                        </div>
+                                    </li>
+                                    <li id="outputMMS" class="ct-div-block hidden">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="boost-primary mr2">
+                                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" /></svg>
+                                        <div id="div_block-265-9512" class="ct-div-block">
+                                            <div id="outputAdditionalMMS" class="ct-code-block calc-checklist-text"><span id="MMSCount">1000</span> MMS messages</div>
+                                        </div>
+                                    </li>
+                                    <li id="div_block-46-8980" class="ct-div-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="boost-primary mr2">
+                                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" /></svg>
+                                        <div id="outputEsignatures" class="ct-text-block calc-checklist-text">Unlimited e‑signatures</div>
+                                    </li>
+                                    <div id="essential-bullets" class="ct-div-block hidden">
+                                        <li id="div_block-30-8980" class="ct-div-block">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="boost-primary mr2">
+                                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" /></svg>
+                                            <div id="text_block-32-8980" class="ct-text-block calc-checklist-text">Client intake</div>
+                                        </li>
+                                        <li id="div_block-33-8980" class="ct-div-block">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="boost-primary mr2">
+                                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" /></svg>
+                                            <div id="text_block-35-8980" class="ct-text-block calc-checklist-text">Lead management</div>
+                                        </li>
+                                        <li id="div_block-36-8980" class="ct-div-block">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="boost-primary mr2">
+                                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" /></svg>
+                                            <div id="text_block-38-8980" class="ct-text-block calc-checklist-text">Calendaring</div>
+                                        </li>
+                                        <li id="div_block-39-8980" class="ct-div-block">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="boost-primary mr2">
+                                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" /></svg>
+                                            <div id="text_block-41-8980" class="ct-text-block calc-checklist-text">Custom forms</div>
+                                        </li>
+                                        <li id="div_block-139-8980" class="ct-div-block">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="boost-primary mr2">
+                                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" /></svg>
+                                            <div id="text_block-141-8980" class="ct-text-block calc-checklist-text">Task management</div>
+                                        </li>
+                                    </div>
+                                    <div id="premium-bullets" class="ct-div-block">
+                                        <li id="div_block-213-9007" class="ct-div-block">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="boost-primary mr2">
+                                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" /></svg>
+                                            <div id="text_block-215-9007" class="ct-text-block calc-checklist-text">Unlimited automations</div>
+                                        </li>
+                                        <li id="div_block-216-9007" class="ct-div-block">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="boost-primary mr2">
+                                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" /></svg>
+                                            <div id="text_block-218-9007" class="ct-text-block calc-checklist-text">Email marketing campaigns</div>
+                                        </li>
+                                        <li id="div_block-219-9007" class="ct-div-block">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="boost-primary mr2">
+                                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" /></svg>
+                                            <div id="text_block-221-9007" class="ct-text-block calc-checklist-text">Advanced conflict checking</div>
+                                        </li>
+                                        <li id="div_block-222-9007" class="ct-div-block">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="boost-primary mr2">
+                                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" /></svg>
+                                            <div id="text_block-224-9007" class="ct-text-block calc-checklist-text">ROI tracking &amp; analysis</div>
+                                        </li>
+                                        <li id="div_block-225-9007" class="ct-div-block">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="boost-primary mr2">
+                                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" /></svg>
+                                            <div id="text_block-227-9007" class="ct-text-block calc-checklist-text">Custom dashboards</div>
+                                        </li>
+                                        <li id="div_block-228-9007" class="ct-div-block">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="boost-primary mr2">
+                                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" /></svg>
+                                            <div id="text_block-230-9007" class="ct-text-block calc-checklist-text">Event management</div>
+                                        </li>
+                                    </div>
+                                </ul>
+                            </div>
+                            <div id="div_block-142-8980" class="ct-div-block"></div>
+                            <div id="div_block-144-8980" class="ct-div-block">
+                                <h3 id="headline-249-9228" class="ct-headline">Pricing</h3>
+                                <div id="annualToggle" class="ct-code-block" style="font-weight: 700;"><label class="switch">
+                                        <input id="annual" type="checkbox" checked="checked">Pay annually
+                                        <span class="slider round"></span>
+                                        <span class="orange-text" style="margin-left: 3px">( Save 10%! )</span>
+                                    </label></div>
+                                <div id="div_block-193-8980" class="ct-div-block">
+                                    <div id="usersSummary" class="ct-div-block hidden w-100" style="gap:10px;">
+                                        <div id="div_block-154-8980" class="ct-div-block">
+                                            <div id="code_block-158-8980" class="ct-code-block ">Users: <span id="outputNumberOfUsersRight">3</span></div>
+                                        </div>
+                                        <div id="code_block-117-8980" class="ct-code-block per-unit-cost">
+                                            <div>$<span id="userPrice">99</span> / user </div>
+                                            <div> <span class="hidden crossed-out" id="crossedOutPriceUsers">( $<span id="crossedOutPriceUsersMax">99</span> / user )</span></div>
+                                        </div>
+                                    </div>
+                                    <div id="soloUsersSummary" class="ct-div-block w-100" style="gap:10px;">
+                                        <div id="div_block-154-8980" class="ct-div-block">
+                                            <div id="code_block-158-8980" class="ct-code-block ">Users</div>
+                                        </div>
+                                        <div id="code_block-270-9520" class="ct-code-block per-unit-cost">
+                                            <div>$<span id="soloUserPrice">297</span></div>
+                                            <div> <span class="hidden crossed-out" id="crossedOutPriceSoloUsers">( $<span id="crossedOutPriceSoloUsersMax">297</span> )</span></div>
+                                        </div>
+                                    </div>
+                                    <div id="outputTimeBillingUsersRight" class="ct-div-block hidden">
+                                        <div id="div_block-170-8980" class="ct-div-block">
+                                            <div id="code_block-171-8980" class="ct-code-block">Time &amp; Billing users: <span id="timeBillingUsersCountRight"> 0</span></div>
+                                        </div>
+                                        <div id="code_block-122-8980" class="ct-code-block per-unit-cost"><span class="">$29 / user</span></div>
+                                    </div>
+                                    <div id="additionalContactsBreakdown" class="ct-div-block hidden">
+                                        <div id="div_block-180-8980" class="ct-div-block">
+                                            <div id="code_block-181-8980" class="ct-code-block">Contacts: <span id="contactsBaseCount">10,000</span> incl. + <span id="outputAdditionalContactsRight">0</span> add.</div>
+                                        </div>
+                                        <div id="code-block-1234" class="ct-code-block per-unit-cost">
+                                            <div>$<span id="contactsDiscountedCost">0</span> / mo</div>
+                                            <div><span class="hidden crossed-out" id="crossedOutPriceContacts">( $0 / mo )</span></div>
+                                        </div>
+                                    </div>
+                                    <div id="additionalSMSBreakdown" class="ct-div-block hidden">
+                                        <div id="div_block-185-8980" class="ct-div-block">
+                                            <div id="code_block-186-8980" class="ct-code-block">Text messages: <span id="outputAdditionalSMSRight">600 incl. + 0 add.</span></div>
+                                        </div>
+                                        <div id="code_block-134-8980" class="ct-code-block per-unit-cost">
+                                            <div>$<span id="SMSDiscountedCost">0 / mo</span></div>
+                                            <div><span class="hidden crossed-out" id="crossedOutPriceSMS">
+                                                    ( $<span id="SMSAdditionalCostCrossed">0 / mo</span> )
+                                                </span></div>
+                                        </div>
+                                    </div>
+                                    <div id="additionalMMSBreakdown" class="ct-div-block hidden">
+                                        <div id="div_block-256-9512" class="ct-div-block">
+                                            <div id="code_block-257-9512" class="ct-code-block">MMS messages: <span id="outputAdditionalMMSRight" class="hidden">1000</span></div>
+                                        </div>
+                                        <div id="code_block-258-9512" class="ct-code-block per-unit-cost">
+                                            <div>$<span id="MMSDiscountedCost">22.5</span></div>
+                                            <div><span class="hidden crossed-out" id="crossedOutPriceMMS">
+                                                    ( $<span id="MMSAdditionalCostCrossed">25</span> )
+                                                </span></div>
+                                        </div>
+                                    </div>
+                                    <div id="div_block-189-8980" class="ct-div-block">
+                                        <div id="div_block-190-8980" class="ct-div-block">
+                                            <div id="code_block-191-8980" class="ct-code-block">Onboarding fee</div>
+                                        </div>
+                                        <div id="code_block-192-8980" class="ct-code-block per-unit-cost">
+                                            <div>$<span id="outputOnboardingFeeRight">1,499</span> </div>
+                                            <div><span class="hidden crossed-out" id="crossedOutPriceOnboarding">( $<span id="outputOnboardingFeeUndiscounted">1,499</span> )</span></div>
+                                        </div>
+                                    </div>
+                                    <div id="migratorPricingBreakdown" class="ct-div-block hidden">
+                                        <div id="div_block-233-9150" class="ct-div-block">
+                                            <div id="code_block-234-9150" class="ct-code-block">Premium data migration</div>
+                                        </div>
+                                        <div id="code_block-235-9150" class="ct-code-block per-unit-cost">
+                                            <div>$<span id="outputMigratorFeeRight">500</span> </div>
+                                            <div><span class="hidden crossed-out" id="crossedOutPriceMigrator">( $<span id="outputMigratorFeeUndiscounted">500</span> )</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="code_block-7-8980" class="ct-code-block">
+                                    <hr style="margin: 0 0 30px 0;">
+                                    <div class="" style="display: flex; align-items: center; justify-content: space-between;">
+                                        <div>
+                                            <h2 style="font-size: 50px; line-height: 1; margin: 0; text-wrap:nowrap; margin-right: 20px;  "><span style="font-size: 35px;">$</span><span id="totalCost">267</span><span style="font-size: 20px;">/ mo</span></h2>
+                                        </div>
+
+                                    </div>
+
+                                    <div style="margin-top: 5px; font-size: 18px;"> ( Billed <span id="annualPrice">at &nbsp;<b>$<span id="outputAnnualPrice">3,204</span> / year</b></span><span id="monthly" class="hidden">monthly</span> )</div>
+
+                                    <div style="margin-top: 5px;"> + One-time onboarding fee: $<span id="outputOnboardingFee">1,499</span></div>
+
+                                    <div id="migratorBottom" style="margin-top: 0px;" class="hidden"> + Premium data migration: $<span id="outputMigratorFeeBottom">500</span></div>
+
+                                    <div style="margin-top: 10px; font-weight: 500;" id="totalSavings" class="boost-primary">Total savings:&nbsp; <span style="display: inline-block;"><span class="" id="totalAnnualDiscount">$30/mo annual discount</span><span class="hidden" id="plusBetweenAnnual">&nbsp; +&nbsp; </span><span class="hidden" id="totalMonthlyDiscount">$0/mo</span><span class="hidden" id="plusBetweenDiscounts">&nbsp; +&nbsp; </span><span class="hidden" id="onboardingDiscountTotal" style="text-wrap: nowrap;">$0 off onboarding</span><span class="hidden" id="plusBetweenDiscounts2">&nbsp; +&nbsp; </span><span class="hidden" id="migratorDiscountTotal" style="text-wrap: nowrap;">$0 off premium migration</span>!
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="div_block-196-8980" class="ct-div-block">
+                        <div id="text_block-197-8980" class="ct-text-block">Save $500 with our referral program!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--SCRIPT-->
+    <script type="text/javascript" id="ct_code_block_js_5">
+        function formatNumber(value) {
+            if (typeof value === 'number') {
+                if (!Number.isInteger(value)) {
+                    // If the number has decimals, always show 2 decimal places
+                    return value.toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    });
+                } else {
+                    // If it's an integer, ensure commas for thousands separators
+                    return value.toLocaleString();
+                }
+            }
+            return value.toString();
+        }
+
+        // Function to enforce whole number input
+        function enforceWholeNumbers(inputElement) {
+            inputElement.addEventListener('input', (event) => {
+                const value = event.target.value;
+                if (!Number.isInteger(Number(value))) {
+                    event.target.value = Math.floor(value);
+                }
+            });
+        }
+
+        function calculatePrice() {
+            let numberOfUsers = parseInt(document.getElementById('numberOfUsers').value);
+            const isAnnual = document.getElementById('annual').checked;
+            const additionalSMSSelector = document.getElementById('additionalSMS');
+            const additionalMMSSelector = document.getElementById('additionalMMS');
+
+            // Check if numberOfUsers is valid
+            if (numberOfUsers > 0) {
+                let additionalContacts = document.getElementById('additionalContacts').value.split(',');
+                let additionalSMS = additionalSMSSelector.value.split(',');
+                let additionalMMS = additionalMMSSelector.value.split(',');
+                let timeBillingUsers = parseInt(document.getElementById('timeBillingUsers').value);
+                let onboardingFee = parseInt(document.getElementById('onboardingFee').value);
+                let migratorFee = 500;
+                let discountPerUser = parseFloat(document.getElementById('discountPerUser').value);
+                let additionalContactsDiscount = parseFloat(document.getElementById('additionalContactsDiscount').value);
+                let additionalSMSDiscount = parseFloat(document.getElementById('additionalSMSDiscount').value);
+                let additionalMMSDiscount = parseFloat(document.getElementById('additionalMMSDiscount').value || 0);
+                let onboardingDiscount = parseFloat(document.getElementById('onboardingDiscount').value);
+                let migratorDiscount = parseFloat(document.getElementById('migratorDiscount').value);
+
+                // Validate and correct inputs
+                numberOfUsers = validateAndParseInt('numberOfUsers', numberOfUsers);
+                timeBillingUsers = validateAndParseInt('timeBillingUsers', timeBillingUsers);
+                onboardingFee = validateAndParseInt('onboardingFee', onboardingFee);
+                discountPerUser = validateAndParseFloat('discountPerUser', discountPerUser);
+                additionalContactsDiscount = validateAndParseFloat('additionalContactsDiscount', additionalContactsDiscount);
+                additionalSMSDiscount = validateAndParseFloat('additionalSMSDiscount', additionalSMSDiscount);
+                additionalMMSDiscount = validateAndParseFloat('additionalMMSDiscount', additionalMMSDiscount || 0);
+                onboardingDiscount = validateAndParseFloat('onboardingDiscount', onboardingDiscount);
+                migratorDiscount = validateAndParseFloat('migratorDiscount', migratorDiscount);
+
+                let SMSCount;
+                let contactsBaseCount;
+
+                if (document.getElementById('premium').checked) {
+                    userPrice = 99;
+                    document.getElementById('outputEsignatures').innerText = `Unlimited e‑signatures`;
+                    SMSCount = additionalSMS.length === 3 ? parseInt(additionalSMS[0]) : 50;
+                    contactsBaseCount = 10000;
+                    document.getElementById('premium-bullets').classList.remove('hidden');
+                    document.getElementById('essential-bullets').classList.add('hidden');
+                } else {
+                    userPrice = 79;
+                    document.getElementById('outputEsignatures').innerText = `50 e‑signatures`;
+                    SMSCount = additionalSMS.length === 3 ? parseInt(additionalSMS[0]) : 50;
+                    contactsBaseCount = 2500;
+                    document.getElementById('premium-bullets').classList.add('hidden');
+                    document.getElementById('essential-bullets').classList.remove('hidden');
+                }
+
+                let userPriceDiscounted = userPrice - discountPerUser;
+
+                if (userPriceDiscounted > 0) {
+                    document.getElementById('crossedOutPriceUsers').classList.remove('hidden');
+                    document.getElementById('crossedOutPriceSoloUsers').classList.remove('hidden');
+                } else {
+                    document.getElementById('crossedOutPriceUsers').classList.add('hidden');
+                    document.getElementById('crossedOutPriceSoloUsers').classList.add('hidden');
+                }
+
+                if (numberOfUsers > 3) {
+                    document.getElementById('usersSummary').classList.remove('hidden');
+                    document.getElementById('soloUsersSummary').classList.add('hidden');
+                    document.getElementById('usersIncluded').classList.remove('hidden');
+                } else {
+                    document.getElementById('usersSummary').classList.add('hidden');
+                    document.getElementById('soloUsersSummary').classList.remove('hidden');
+                    document.getElementById('usersIncluded').classList.add('hidden');
+                }
+
+                let usersCost = numberOfUsers * userPrice;
+
+                let contactsCost = additionalContacts.length === 2 ? parseInt(additionalContacts[1]) : 0;
+                let contactsCount = additionalContacts.length === 2 ? parseInt(additionalContacts[0]) + contactsBaseCount : contactsBaseCount;
+                let contactsCountAdditional = additionalContacts.length === 2 ? parseInt(additionalContacts[0]) : 0;
+                let contactsIncludedCost = (contactsCount - 2500) / 5000 * 40;
+                let contactsDiscountAmount = contactsCost - additionalContactsDiscount;
+
+                if (additionalContactsDiscount < contactsCost) {
+                    document.getElementById('crossedOutPriceContacts').classList.remove('hidden');
+                } else {
+                    document.getElementById('crossedOutPriceContacts').classList.add('hidden');
+                }
+
+
+                let SMSTier = additionalSMS.length === 3 ? parseInt(additionalSMS[2]) : 1;
+                // Get base cost from dropdown
+                let baseSMSCost = additionalSMS.length === 3 ? parseInt(additionalSMS[1]) : 0;
+                // Apply annual multiplier if annual toggle is on
+                let SMSCost = isAnnual ? baseSMSCost * 12 : baseSMSCost;
+
+                let SMSDiscountedCost = SMSCost - additionalSMSDiscount;
+
+                if (additionalSMSDiscount < SMSCost) {
+                    document.getElementById('crossedOutPriceSMS').classList.remove('hidden');
+                } else {
+                    document.getElementById('crossedOutPriceSMS').classList.add('hidden');
+                }
+
+                // Parse the additionalMMS cost
+                let MMSTier = additionalMMS.length === 3 ? parseInt(additionalMMS[2]) : 1;
+                // Get base cost from dropdown
+                let baseMMSCost = additionalMMS.length === 3 ? parseInt(additionalMMS[1]) : 0;
+                // Apply annual multiplier if annual toggle is on
+                let MMSCost = isAnnual ? baseMMSCost * 12 : baseMMSCost;
+                let MMSCount = additionalMMS.length === 3 ? parseInt(additionalMMS[0]) : 0;
+                let MMSDiscountedCost = MMSCost - additionalMMSDiscount;
+
+                if (additionalMMSDiscount < MMSCost) {
+                    document.getElementById('crossedOutPriceMMS').classList.remove('hidden');
+                } else {
+                    document.getElementById('crossedOutPriceMMS').classList.add('hidden');
+                }
+
+                if (additionalMMS.length === 1) {
+                    additionalMMSDiscount = 0;
+                }
+
+                if (additionalMMS.length === 3) {
+                    document.getElementById('additionalMMSBreakdown').classList.remove('hidden');
+                } else {
+                    document.getElementById('additionalMMSBreakdown').classList.add('hidden');
+                }
+
+                if (additionalSMS.length === 1) {
+                    additionalSMSDiscount = 0;
+                }
+
+                if (additionalSMS.length === 3) {
+                    document.getElementById('additionalSMSBreakdown').classList.remove('hidden');
+                } else {
+                    document.getElementById('additionalSMSBreakdown').classList.add('hidden');
+                }
+
+                let timeBillingCost = timeBillingUsers * 29;
+
+                let onboardingDiscountTotal = onboardingFee - onboardingDiscount;
+
+                let migratorDiscountTotal = migratorFee - migratorDiscount;
+
+                let totalUserDiscount = numberOfUsers * userPriceDiscounted;
+
+                let totalDiscount = totalUserDiscount + contactsDiscountAmount + SMSDiscountedCost + MMSDiscountedCost;
+
+
+
+                // Calculate total cost (everything without discounts)
+                let totalCost = usersCost + contactsCost + SMSCost + MMSCost + timeBillingCost;
+                // Calculate total cost with per-user pricing applied (for monthly display)
+                let userDiscountedCost = numberOfUsers * discountPerUser + contactsCost + SMSCost + MMSCost + timeBillingCost;
+                // Calculate discountable amount (excluding SMS and MMS costs)
+                let discountableAmount = usersCost + contactsCost + timeBillingCost - totalDiscount;
+                // Apply 10% discount only to the discountable amount
+                // Calculate discounted cost
+                let discountedCost;
+                if (document.getElementById('annual').checked) {
+                    // For annual plans: calculate with 10% discount on discountable amount, then add SMS/MMS costs and divide by 12
+                    let annualDiscountedAmount = Math.round(discountableAmount * 0.9 * 12);
+                    let annualTotal = annualDiscountedAmount + SMSCost + MMSCost;
+                    discountedCost = Math.round(annualTotal / 12); // Convert to monthly equivalent and round
+                } else {
+                    // For monthly plans: calculate as before
+                    discountedCost = Math.round(discountableAmount * 0.9) + SMSCost + MMSCost;
+                }
+                // Calculate the annual discount amount
+                let annualDiscount;
+                if (document.getElementById('annual').checked) {
+                    // For annual plans, calculate the monthly equivalent of the discount
+                    annualDiscount = Math.round((totalCost * 12 - discountedCost * 12) / 12);
+                } else {
+                    // For monthly plans
+                    annualDiscount = totalCost - discountedCost;
+                }
+
+                if (document.getElementById('annual').checked) {
+                    document.getElementById('totalCost').innerText = isNaN(discountedCost) ? '0' : formatNumber(discountedCost);
+                    document.getElementById('outputAnnualPrice').innerText = formatNumber(discountedCost * 12);
+                    document.getElementById('annualPrice').classList.remove('hidden');
+                    document.getElementById('monthly').classList.add('hidden');
+                    document.getElementById('annualToggle').style.fontWeight = '700';
+                    document.getElementById('annualToggle').style.color = 'color(17)';
+                    document.getElementById('totalAnnualDiscount').classList.remove('hidden');
+                } else {
+                    document.getElementById('totalCost').innerText = isNaN(userDiscountedCost) ? '0' : formatNumber(userDiscountedCost);
+                    document.getElementById('outputAnnualPrice').innerText = formatNumber(userDiscountedCost * 12);
+                    document.getElementById('annualPrice').classList.add('hidden')
+                    document.getElementById('monthly').classList.remove('hidden');
+                    document.getElementById('annualToggle').style.fontWeight = '400';
+                    document.getElementById('annualToggle').style.color = 'color(25)';
+                    document.getElementById('totalAnnualDiscount').classList.add('hidden');
+                }
+
+
+                // Update DOM elements only if numberOfUsers is valid
+                document.getElementById('userPrice').innerText = formatNumber(discountPerUser);
+                document.getElementById('soloUserPrice').innerText = formatNumber(discountPerUser * 3);
+                document.getElementById('outputNumberOfUsers').innerText = numberOfUsers;
+                document.getElementById('outputNumberOfUsersRight').innerText = numberOfUsers;
+                document.getElementById('outputAdditionalContacts').innerText = `${contactsCount.toLocaleString()} contacts`;
+                document.getElementById('outputAdditionalContactsRight').innerText = contactsCountAdditional.toLocaleString();
+                document.getElementById('contactsDiscountedCost').innerText = formatNumber(additionalContactsDiscount);
+                document.getElementById('contactsBaseCount').innerText = formatNumber(contactsBaseCount);
+                // Apply annual multiplier to SMS count for display
+                const displaySMSCount = isAnnual ? SMSCount * 12 : SMSCount;
+                // Update SMS counts in the UI
+                if (isAnnual) {
+                    // For annual plans, show monthly amount with annual total
+                    document.getElementById('outputAdditionalSMS').innerHTML = `<span>${SMSCount.toLocaleString()} SMS messages monthly<br> <small class="boost-secondary-50"><em>${displaySMSCount.toLocaleString()} SMS messages annually</em></small></span>`;
+                } else {
+                    // For monthly plans, show just the monthly amount
+                    document.getElementById('outputAdditionalSMS').innerText = `${SMSCount.toLocaleString()} text messages`;
+                }
+                // Show included and additional SMS counts in the right panel
+                const includedSMSCount = 50;
+                const additionalSMSCount = SMSCount > includedSMSCount ? SMSCount : 0;
+                const displayIncludedSMSCount = isAnnual ? includedSMSCount * 12 : includedSMSCount;
+                const displayAdditionalSMSCount = isAnnual ? additionalSMSCount * 12 : additionalSMSCount;
+                document.getElementById('outputAdditionalSMSRight').innerText = `${displayIncludedSMSCount.toLocaleString()} incl. + ${displayAdditionalSMSCount.toLocaleString()} add.`;
+
+                // Update SMS discount display with appropriate units
+                if (isAnnual) {
+                    document.getElementById('SMSDiscountedCost').innerText = formatNumber(additionalSMSDiscount / 12) + ' / mo';
+                } else {
+                    document.getElementById('SMSDiscountedCost').innerText = formatNumber(additionalSMSDiscount) + ' / mo';
+                }
+                // Update SMS cost display with appropriate units
+                if (isAnnual) {
+                    document.getElementById('SMSAdditionalCostCrossed').innerText = formatNumber(SMSCost / 12) + ' / mo';
+                } else {
+                    document.getElementById('SMSAdditionalCostCrossed').innerText = formatNumber(SMSCost) + ' / mo';
+                }
+
+                // Update MMS related DOM elements
+                let MMSElement = document.getElementById('outputMMS');
+                let MMSElementRight = document.getElementById('outputAdditionalMMSRight');
+                if (MMSCount > 0) {
+                    MMSElement.classList.remove('hidden');
+                    MMSElementRight.classList.remove('hidden');
+                    // Apply annual multiplier to MMS count for display
+                    const displayMMSCount = isAnnual ? MMSCount * 12 : MMSCount;
+                    // Update MMS counts in the UI
+                    if (isAnnual) {
+                        // For annual plans, show monthly amount with annual total
+                        document.getElementById('outputAdditionalMMS').innerHTML = `<span>${MMSCount.toLocaleString()} MMS messages monthly<br> <small class="boost-secondary-50"><em>${displayMMSCount.toLocaleString()} MMS messages annually</em></small></span>`;
+                    } else {
+                        // For monthly plans, show just the monthly amount
+                        document.getElementById('outputAdditionalMMS').innerText = `${MMSCount.toLocaleString()} MMS messages`;
+                    }
+                    document.getElementById('outputAdditionalMMSRight').innerText = displayMMSCount.toLocaleString();
+                    // Update MMS discount display with appropriate units
+                    if (isAnnual) {
+                        document.getElementById('MMSDiscountedCost').innerText = formatNumber(additionalMMSDiscount / 12) + ' / mo';
+                    } else {
+                        document.getElementById('MMSDiscountedCost').innerText = formatNumber(additionalMMSDiscount) + ' / mo';
+                    }
+                    // Update MMS cost display with appropriate units - always show as monthly
+                    if (isAnnual) {
+                        document.getElementById('MMSAdditionalCostCrossed').innerText = formatNumber(MMSCost / 12) + ' / mo';
+                    } else {
+                        document.getElementById('MMSAdditionalCostCrossed').innerText = formatNumber(MMSCost) + ' / mo';
+                    }
+                } else {
+                    MMSElement.classList.add('hidden');
+                    MMSElementRight.classList.add('hidden');
+                }
+
+                document.getElementById('crossedOutPriceUsersMax').innerText = userPrice;
+                document.getElementById('crossedOutPriceSoloUsersMax').innerText = userPrice * 3;
+                document.getElementById('totalAnnualDiscount').innerText = `$${formatNumber(annualDiscount)}/mo annual discount`;
+                document.getElementById('totalMonthlyDiscount').innerText = `$${formatNumber(totalDiscount)}/mo`;
+                document.getElementById('onboardingDiscountTotal').innerText = `$${formatNumber(onboardingDiscountTotal)} off onboarding`;
+                document.getElementById('migratorDiscountTotal').innerText = `$${formatNumber(migratorDiscountTotal)} off premium migration`;
+                // document.getElementById('crossedOutPriceUsersMax').innerText = userPrice;
+                document.getElementById('crossedOutPriceContacts').innerText = `( $${formatNumber(contactsCost)} / mo )`;
+
+                let timeBillingUsersElement = document.getElementById('outputTimeBillingUsers');
+                let timeBillingUsersElementRight = document.getElementById('outputTimeBillingUsersRight');
+                if (timeBillingUsers > 0) {
+                    timeBillingUsersElement.classList.remove('hidden');
+                    timeBillingUsersElementRight.classList.remove('hidden');
+                    document.getElementById('timeBillingUsersCount').innerText = timeBillingUsers;
+                    document.getElementById('timeBillingUsersCountRight').innerText = timeBillingUsers;
+                } else {
+                    timeBillingUsersElement.classList.add('hidden');
+                    timeBillingUsersElementRight.classList.add('hidden');
+                }
+
+                document.getElementById('outputOnboardingFee').innerText = formatNumber(onboardingDiscount);
+                document.getElementById('outputOnboardingFeeRight').innerText = formatNumber(onboardingDiscount);
+                document.getElementById('outputOnboardingFeeUndiscounted').innerText = onboardingFee.toLocaleString();
+
+                document.getElementById('outputMigratorFeeRight').innerText = formatNumber(migratorDiscount);
+                document.getElementById('outputMigratorFeeBottom').innerText = formatNumber(migratorDiscount);
+
+                if (onboardingDiscountTotal > 0) {
+                    document.getElementById('crossedOutPriceOnboarding').classList.remove('hidden');
+                    document.getElementById('onboardingDiscountTotal').classList.remove('hidden');
+                } else {
+                    document.getElementById('crossedOutPriceOnboarding').classList.add('hidden');
+                    document.getElementById('onboardingDiscountTotal').classList.add('hidden');
+                }
+
+                if (document.getElementById('migratorFee').checked) {
+                    document.getElementById('migratorPricingBreakdown').classList.remove('hidden');
+                    document.getElementById('migratorDiscountField').classList.remove('hidden');
+                    document.getElementById('migratorBottom').classList.remove('hidden');
+                } else {
+                    document.getElementById('migratorPricingBreakdown').classList.add('hidden');
+                    document.getElementById('migratorDiscountField').classList.add('hidden');
+                    document.getElementById('migratorBottom').classList.add('hidden');
+                }
+
+                if (migratorDiscountTotal > 0 && document.getElementById('migratorFee').checked) {
+                    document.getElementById('crossedOutPriceMigrator').classList.remove('hidden');
+                    document.getElementById('migratorDiscountTotal').classList.remove('hidden');
+                } else {
+                    document.getElementById('crossedOutPriceMigrator').classList.add('hidden');
+                    document.getElementById('migratorDiscountTotal').classList.add('hidden');
+                }
+
+                if (totalDiscount > 0) {
+                    document.getElementById('totalMonthlyDiscount').classList.remove('hidden');
+                } else {
+                    document.getElementById('totalMonthlyDiscount').classList.add('hidden');
+                }
+
+                if (document.getElementById('annual').checked && (onboardingDiscountTotal > 0 || totalDiscount > 0 || (migratorDiscountTotal > 0 && document.getElementById('migratorFee').checked))) {
+                    document.getElementById('plusBetweenAnnual').classList.remove('hidden');
+                } else {
+                    document.getElementById('plusBetweenAnnual').classList.add('hidden');
+                }
+
+                if (onboardingDiscountTotal > 0 && totalDiscount > 0) {
+                    document.getElementById('plusBetweenDiscounts').classList.remove('hidden');
+                } else {
+                    document.getElementById('plusBetweenDiscounts').classList.add('hidden');
+                }
+
+
+                if (onboardingDiscountTotal > 0 && totalDiscount > 0 && (migratorDiscountTotal > 0 && document.getElementById('migratorFee').checked)) {
+                    document.getElementById('plusBetweenDiscounts2').classList.remove('hidden');
+                } else if ((migratorDiscountTotal > 0 && document.getElementById('migratorFee').checked) && totalDiscount > 0) {
+                    document.getElementById('plusBetweenDiscounts2').classList.remove('hidden');
+                } else if ((migratorDiscountTotal > 0 && document.getElementById('migratorFee').checked) && onboardingDiscountTotal > 0) {
+                    document.getElementById('plusBetweenDiscounts2').classList.remove('hidden');
+                } else {
+                    document.getElementById('plusBetweenDiscounts2').classList.add('hidden');
+                }
+
+                if (onboardingDiscountTotal > 0 || totalDiscount > 0 || (migratorDiscountTotal > 0 && document.getElementById('migratorFee').checked) || document.getElementById('annual').checked) {
+                    document.getElementById('totalSavings').classList.remove('hidden');
+                } else {
+                    document.getElementById('totalSavings').classList.add('hidden');
+                }
+
+
+
+                let quoteContainer = document.getElementById('quote-container');
+
+
+                let additionalContactsValue = document.getElementById('additionalContacts').value;
+                let additionalContactsDiscountField = document.getElementById('additionalContactsDiscountField');
+                if (additionalContactsValue === '0') {
+                    additionalContactsDiscountField.classList.add('hidden');
+                } else {
+                    additionalContactsDiscountField.classList.remove('hidden');
+                }
+
+                let additionalSMSValue = additionalSMSSelector.value;
+                let additionalSMSDiscountField = document.getElementById('additionalSMSDiscountField');
+                // if (additionalSMSValue === '0') {
+                //     additionalSMSDiscountField.classList.add('hidden');
+                // } else {
+                //     additionalSMSDiscountField.classList.remove('hidden');
+                // }
+
+                // let additionalMMSValue = document.getElementById('additionalMMS').value;
+                let additionalMMSValue = additionalMMSSelector.value;
+                let additionalMMSDiscountField = document.getElementById('additionalMMSDiscountField');
+                // if (additionalMMSValue === '0') {
+                //     additionalMMSDiscountField.classList.add('hidden');
+                // } else {
+                //     additionalMMSDiscountField.classList.remove('hidden');
+                // }
+
+                // Add event listeners to handle focus and blur events for timeBillingUsers and discount input fields
+                const fieldsToClear = ['timeBillingUsers', 'discountPerUser', 'additionalContactsDiscount', 'additionalSMSDiscount', 'additionalMMSDiscount', 'onboardingDiscount'];
+
+                fieldsToClear.forEach(fieldId => {
+                    const inputField = document.getElementById(fieldId);
+
+                    // Clear the input field when it gains focus
+                    inputField.addEventListener('focus', function() {
+                        if (this.value == 0) {
+                            this.value = '';
+                        }
+                    });
+
+                    // Reset the input field to 0 if it's empty when it loses focus
+                    inputField.addEventListener('blur', function() {
+                        if (this.value === '') {
+                            this.value = 0;
+                        }
+                    });
+
+                    // Ensure 0 is not added if the field is empty but user is in the middle of typing
+                    inputField.addEventListener('input', function() {
+                        if (this.value == 0) {
+                            this.value = '';
+                        }
+                    });
+                });
+
+                // Get specific input fields by their IDs
+                const wholeNumberInputs = [
+                    document.getElementById('numberOfUsers'),
+                    document.getElementById('timeBillingUsers')
+                ];
+
+                // Apply the restriction to specific fields
+                wholeNumberInputs.forEach(input => {
+                    if (input) {
+                        enforceWholeNumbers(input);
+                    }
+                });
+
+
+            } else {
+                // Handle case where numberOfUsers is not valid (e.g., show an error message)
+                console.log('Please enter a valid number of users.');
+            }
+        }
+
+        function validateAndParseInt(inputId, value) {
+            const input = document.getElementById(inputId);
+            if (isNaN(value) || value === '') {
+                value = 0;
+                input.value = value;
+            } else {
+                const max = parseInt(input.max, 10);
+                if (value > max) {
+                    value = max;
+                    input.value = value;
+                }
+            }
+            return parseInt(value, 10);
+        }
+
+        function validateAndParseFloat(inputId, value) {
+            const input = document.getElementById(inputId);
+            if (isNaN(value) || value === '') {
+                value = 0;
+                input.value = value;
+            } else {
+                const max = parseFloat(input.max);
+                if (value > max) {
+                    value = max;
+                    input.value = value;
+                }
+            }
+            return parseFloat(value);
+        }
+
+        document.getElementById('numberOfUsers').addEventListener('blur', function() {
+            let minValue = parseInt(this.min, 10);
+            let currentValue = parseInt(this.value, 10);
+
+            if (isNaN(currentValue) || currentValue < minValue) {
+                this.value = minValue;
+            }
+            calculatePrice();
+        });
+
+        document.getElementById('discountPerUser').addEventListener('blur', function() {
+            let minValue = parseInt(this.min, 10);
+            let currentValue = parseInt(this.value, 10);
+
+            if (isNaN(currentValue) || currentValue < minValue) {
+                this.value = minValue;
+            }
+            calculatePrice(); // Recalculate price after correcting the value
+        });
+
+        //Function to set migratorDiscount to input min when user types in field
+
+        document.getElementById('migratorDiscount').addEventListener('blur', function() {
+            let minValue = parseInt(this.min, 10);
+            let currentValue = parseInt(this.value, 10);
+
+            if (isNaN(currentValue) || currentValue < minValue) {
+                this.value = minValue;
+            }
+            calculatePrice(); // Recalculate price after correcting the value
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize dropdown options based on annual toggle state
+            updateDropdownOptions();
+            calculatePrice();
+
+            // Add event listeners to all input fields with a max attribute to enforce max value and update display
+            const inputsWithMax = document.querySelectorAll('input[max]');
+            inputsWithMax.forEach(input => {
+                input.addEventListener('input', function() {
+                    calculatePrice(); // Recalculate price on input change
+                });
+            });
+
+            // Add event listeners to all input fields with a min attribute to enforce min value and update display
+            const inputsWithMin = document.querySelectorAll('input[min]');
+            inputsWithMin.forEach(input => {
+                input.addEventListener('blur', function() {
+                    calculatePrice(); // Recalculate price on input change
+                });
+            });
+
+
+        });
+
+
+
+        function updateDiscountPerUserValue() {
+            let discountPerUser = parseFloat(document.getElementById('discountPerUser').value);
+            if (document.getElementById('premium').checked) {
+                discountPerUser = 99; // Set price to 99 for Premium
+            } else {
+                discountPerUser = 79; // Set price to 79 for Essential (default)
+            }
+        }
+
+        function updateDiscountPerUserMin() {
+            let numberOfUsers = parseInt(document.getElementById('numberOfUsers').value);
+            let numberOfUsersMax = document.getElementById('numberOfUsers');
+            let discountPerUser = document.getElementById('discountPerUser');
+            let newMin = 0;
+
+            if (document.getElementById('premium').checked) {
+                document.getElementById('calculator-heading').innerText = `Premium plan pricing`;
+                numberOfUsersMax.setAttribute('max', 100);
+                discountPerUser.setAttribute('max', 99);
+                if (numberOfUsers <= 5) {
+                    newMin = 94;
+                } else if (numberOfUsers >= 6 && numberOfUsers <= 10) {
+                    newMin = 79;
+                } else if (numberOfUsers >= 11 && numberOfUsers <= 15) {
+                    newMin = 59;
+                } else if (numberOfUsers >= 16 && numberOfUsers <= 20) {
+                    newMin = 55;
+                } else if (numberOfUsers >= 21 && numberOfUsers <= 24) {
+                    newMin = 50;
+                } else if (numberOfUsers > 24) {
+                    newMin = 50;
+                }
+            } else {
+                document.getElementById('calculator-heading').innerText = `Essential plan pricing`;
+                numberOfUsersMax.setAttribute('max', 24);
+                discountPerUser.setAttribute('max', 79);
+                if (numberOfUsers <= 5) {
+                    newMin = 74;
+                } else if (numberOfUsers >= 6 && numberOfUsers <= 10) {
+                    newMin = 69;
+                } else if (numberOfUsers >= 11 && numberOfUsers <= 15) {
+                    newMin = 59;
+                } else if (numberOfUsers >= 16 && numberOfUsers <= 20) {
+                    newMin = 55;
+                } else if (numberOfUsers >= 21 && numberOfUsers <= 24) {
+                    newMin = 50;
+                } else if (numberOfUsers > 24) {
+                    newMin = 50;
+                }
+            }
+
+            discountPerUser.setAttribute('min', newMin);
+
+            // Update discountPerUser value if it's less than the new minimum
+            if (parseInt(discountPerUser.value) < newMin) {
+                discountPerUser.value = newMin;
+            }
+
+            let maxValue = parseInt(discountPerUser.max, 10);
+            if (parseInt(discountPerUser.value) > maxValue) {
+                discountPerUser.value = maxValue;
+            }
+        }
+
+        document.getElementById('numberOfUsers').addEventListener('input', function() {
+            updateDiscountPerUserMin();
+        });
+
+        // Function to update dropdown options based on annual toggle
+        function updateDropdownOptions() {
+            const isAnnual = document.getElementById('annual').checked;
+
+            // SMS dropdown options
+            const smsOptions = [{
+                    value: "0",
+                    text: "None"
+                },
+                {
+                    value: "1500,39,2",
+                    count: 1500,
+                    price: 39
+                },
+                {
+                    value: "5000,99,3",
+                    count: 5000,
+                    price: 99
+                },
+                {
+                    value: "10000,179,4",
+                    count: 10000,
+                    price: 179
+                },
+                {
+                    value: "25500,399,5",
+                    count: 25500,
+                    price: 399
+                },
+                {
+                    value: "50000,699,6",
+                    count: 50000,
+                    price: 699
+                },
+                {
+                    value: "100000,1249,7",
+                    count: 100000,
+                    price: 1249
+                },
+                {
+                    value: "200000,2249,8",
+                    count: 200000,
+                    price: 2249
+                }
+            ];
+
+            // MMS dropdown options
+            const mmsOptions = [{
+                    value: "0",
+                    text: "None"
+                },
+                {
+                    value: "1000,25,2",
+                    count: 1000,
+                    price: 25
+                },
+                {
+                    value: "2000,50,3",
+                    count: 2000,
+                    price: 50
+                },
+                {
+                    value: "3000,75,4",
+                    count: 3000,
+                    price: 75
+                },
+                {
+                    value: "4000,100,5",
+                    count: 4000,
+                    price: 100
+                },
+                {
+                    value: "5000,125,6",
+                    count: 5000,
+                    price: 125
+                }
+            ];
+
+            // Get the select elements
+            const smsSelect = document.getElementById('additionalSMS');
+            const mmsSelect = document.getElementById('additionalMMS');
+
+            // Save current selections
+            const currentSMSValue = smsSelect.value;
+            const currentMMSValue = mmsSelect.value;
+
+            // Update SMS options
+            smsSelect.innerHTML = '';
+            smsOptions.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option.value;
+
+                if (option.value === "0") {
+                    optionElement.textContent = option.text;
+                } else {
+                    // Apply annual multiplier to both count and price if needed
+                    const displayCount = isAnnual ? option.count * 12 : option.count;
+                    const displayPrice = isAnnual ? option.price * 12 : option.price;
+                    // Format the count with commas
+                    const formattedCount = displayCount.toLocaleString();
+                    optionElement.textContent = `${formattedCount} ( $${formatNumber(displayPrice)} )`;
+
+                    // Always add monthly pricing note data regardless of annual toggle
+                    optionElement.dataset.monthlyNote = `Per month: ${option.count.toLocaleString()} ( $${formatNumber(option.price)} )`;
+                }
+
+                smsSelect.appendChild(optionElement);
+            });
+
+            // Update the monthly pricing note if annual is selected
+            const smsNoteElement = document.getElementById('smsMonthlyNote');
+
+            // Always set up the change event listener
+            if (!smsSelect._hasChangeListener) {
+                smsSelect.addEventListener('change', function() {
+                    const selectedOption = this.options[this.selectedIndex];
+                    const noteText = selectedOption.dataset.monthlyNote || '';
+                    const isCurrentlyAnnual = document.getElementById('annual').checked;
+                    smsNoteElement.textContent = isCurrentlyAnnual ? noteText : '';
+                });
+                smsSelect._hasChangeListener = true;
+            }
+
+            // Trigger change to show or hide note based on annual toggle
+            smsSelect.dispatchEvent(new Event('change'));
+
+            // Update MMS options
+            mmsSelect.innerHTML = '';
+            mmsOptions.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option.value;
+
+                if (option.value === "0") {
+                    optionElement.textContent = option.text;
+                } else {
+                    // Apply annual multiplier to both count and price if needed
+                    const displayCount = isAnnual ? option.count * 12 : option.count;
+                    const displayPrice = isAnnual ? option.price * 12 : option.price;
+                    // Format the count with commas
+                    const formattedCount = displayCount.toLocaleString();
+                    optionElement.textContent = `${formattedCount} ( $${formatNumber(displayPrice)} )`;
+
+                    // Always add monthly pricing note data regardless of annual toggle
+                    optionElement.dataset.monthlyNote = `Per month: ${option.count.toLocaleString()} ( $${formatNumber(option.price)} )`;
+                }
+
+                mmsSelect.appendChild(optionElement);
+            });
+
+            // Update the monthly pricing note for MMS if annual is selected
+            const mmsNoteElement = document.getElementById('mmsMonthlyNote');
+
+            // Always set up the change event listener
+            if (!mmsSelect._hasChangeListener) {
+                mmsSelect.addEventListener('change', function() {
+                    const selectedOption = this.options[this.selectedIndex];
+                    const noteText = selectedOption.dataset.monthlyNote || '';
+                    const isCurrentlyAnnual = document.getElementById('annual').checked;
+                    mmsNoteElement.textContent = isCurrentlyAnnual ? noteText : '';
+                });
+                mmsSelect._hasChangeListener = true;
+            }
+
+            // Trigger change to show or hide note based on annual toggle
+            mmsSelect.dispatchEvent(new Event('change'));
+
+            // Restore selections
+            smsSelect.value = currentSMSValue;
+            mmsSelect.value = currentMMSValue;
+        }
+
+        document.getElementById('annual').addEventListener('change', function() {
+            updateDropdownOptions();
+            updateAdditionalSMSDiscount();
+            updateAdditionalMMSDiscount();
+
+            // Directly update note elements when annual toggle changes
+            const isCurrentlyAnnual = this.checked;
+            const smsSelect = document.getElementById('additionalSMS');
+            const mmsSelect = document.getElementById('additionalMMS');
+            const smsNoteElement = document.getElementById('smsMonthlyNote');
+            const mmsNoteElement = document.getElementById('mmsMonthlyNote');
+
+            if (isCurrentlyAnnual) {
+                const smsSelectedOption = smsSelect.options[smsSelect.selectedIndex];
+                const mmsSelectedOption = mmsSelect.options[mmsSelect.selectedIndex];
+                smsNoteElement.textContent = smsSelectedOption.dataset.monthlyNote || '';
+                mmsNoteElement.textContent = mmsSelectedOption.dataset.monthlyNote || '';
+            } else {
+                smsNoteElement.textContent = '';
+                mmsNoteElement.textContent = '';
+            }
+
+            calculatePrice();
+        });
+
+
+        document.getElementById('essential').addEventListener('change', function() {
+            updateDiscountPerUserMin();
+            calculatePrice();
+        });
+
+        document.getElementById('premium').addEventListener('change', function() {
+            const discountPerUser = document.getElementById('discountPerUser');
+            discountPerUser.value = discountPerUser.max;
+            calculatePrice();
+        });
+
+        document.getElementById('essential').addEventListener('change', function() {
+            const discountPerUser = document.getElementById('discountPerUser');
+            discountPerUser.value = discountPerUser.max;
+            calculatePrice();
+        });
+
+
+        // Function to update additionalContactsDiscount max and value based on additionalContacts
+        function updateAdditionalContactsDiscount() {
+            var additionalContactsSelect = document.getElementById('additionalContacts');
+            var additionalContactsDiscountInput = document.getElementById('additionalContactsDiscount');
+            var selectedOptionValue = additionalContactsSelect.value;
+
+            if (selectedOptionValue !== '0') {
+                var values = selectedOptionValue.split(',');
+                var discountValue = values[1];
+
+                additionalContactsDiscountInput.value = discountValue;
+                additionalContactsDiscountInput.max = discountValue;
+
+            } else {
+                additionalContactsDiscountInput.value = '';
+                additionalContactsDiscountInput.max = '';
+            }
+        }
+
+        document.getElementById('additionalContacts').addEventListener('change', function() {
+            updateAdditionalContactsDiscount();
+            calculatePrice();
+        });
+
+        // Function to update additionalSMSDiscount max and value based on additionalSMS
+        function updateAdditionalSMSDiscount() {
+            var isAnnual = document.getElementById('annual').checked;
+            var additionalSMSSelector = document.getElementById('additionalSMS');
+            var additionalSMSDiscountInput = document.getElementById('additionalSMSDiscount');
+            var selectedOptionValue = additionalSMSSelector.value;
+
+            if (selectedOptionValue !== '0') {
+                var values = selectedOptionValue.split(',');
+                var baseDiscountValue = parseInt(values[1]);
+                // Apply annual multiplier if annual toggle is on
+                var discountValue = isAnnual ? baseDiscountValue * 12 : baseDiscountValue;
+
+                additionalSMSDiscountInput.value = discountValue;
+                additionalSMSDiscountInput.max = discountValue;
+
+            } else {
+                additionalSMSDiscountInput.value = '';
+                additionalSMSDiscountInput.max = '';
+            }
+        }
+
+        document.getElementById('additionalSMS').addEventListener('change', function() {
+            updateAdditionalSMSDiscount();
+            calculatePrice();
+        });
+
+        function updateAdditionalMMSDiscount() {
+            var isAnnual = document.getElementById('annual').checked;
+            var additionalMMSSelector = document.getElementById('additionalMMS');
+            var additionalMMSDiscountInput = document.getElementById('additionalMMSDiscount');
+            var additionalMMSDiscountField = document.getElementById('additionalMMSDiscountField');
+            var selectedOptionValue = additionalMMSSelector.value;
+
+            if (selectedOptionValue !== '0') {
+                var values = selectedOptionValue.split(',');
+                var baseDiscountValue = parseInt(values[1]);
+                // Apply annual multiplier if annual toggle is on
+                var discountValue = isAnnual ? baseDiscountValue * 12 : baseDiscountValue;
+
+                additionalMMSDiscountInput.value = discountValue;
+                additionalMMSDiscountInput.max = discountValue;
+                additionalMMSDiscountField.classList.remove('hidden');
+            } else {
+                additionalMMSDiscountField.classList.add('hidden');
+                additionalMMSDiscountInput.value = '';
+                additionalMMSDiscountInput.max = '';
+            }
+        }
+
+        document.getElementById('additionalMMS').addEventListener('change', function() {
+            updateAdditionalMMSDiscount();
+            calculatePrice();
+        });
+
+
+        // Function to update onboardingDiscount max value based on onboardingFee
+        function updateOnboardingDiscountMax() {
+
+            let onboardingFeeValue = parseInt(document.getElementById('onboardingFee').value, 10);
+            let maxOnboardingDiscount = onboardingFeeValue;
+
+            document.getElementById('onboardingDiscount').setAttribute('max', maxOnboardingDiscount);
+            document.getElementById('onboardingDiscount').value = maxOnboardingDiscount;
+        }
+
+        document.getElementById('onboardingFee').addEventListener('input', function() {
+            updateOnboardingDiscountMax();
+        });
+
+
+        // Function to update timeBillingUsers max value based on numberOfUsers
+        function updateTimeBillingUsersMax() {
+            let numberOfUsersValue = parseInt(document.getElementById('numberOfUsers').value, 10);
+            let maxTimeBillingUsers = Math.floor(numberOfUsersValue);
+            let timeBillingUsersInput = document.getElementById('timeBillingUsers');
+            let currentTimeBillingUsers = parseInt(timeBillingUsersInput.value, 10);
+
+            timeBillingUsersInput.setAttribute('max', maxTimeBillingUsers);
+
+            if (currentTimeBillingUsers > maxTimeBillingUsers) {
+                timeBillingUsersInput.value = maxTimeBillingUsers;
+            }
+        }
+
+        // Event listener for numberOfUsers input blur event
+        document.getElementById('numberOfUsers').addEventListener('blur', function() {
+            updateTimeBillingUsersMax(); // Call function to update max value
+        });
+
+        document.getElementById('premium').addEventListener('change', function() {
+            const discountPerUser = document.getElementById('discountPerUser');
+            discountPerUser.value = discountPerUser.max;
+            updateTimeBillingUsersMax();
+        });
+
+        document.getElementById('essential').addEventListener('change', function() {
+            const discountPerUser = document.getElementById('discountPerUser');
+            discountPerUser.value = discountPerUser.max;
+            updateTimeBillingUsersMax();
+        });
+
+        function toggleAdditionalContactsVisibility() {
+            const additionalContactsValue = document.getElementById('additionalContacts').value.split(',')[0];
+            if (additionalContactsValue === '0') {
+                document.getElementById('additionalContactsBreakdown').classList.add('hidden');
+            } else {
+                document.getElementById('additionalContactsBreakdown').classList.remove('hidden');
+            }
+        }
+
+        document.getElementById('additionalContacts').addEventListener('change', function() {
+            toggleAdditionalContactsVisibility();
+            calculatePrice();
+        });
+
+        toggleAdditionalContactsVisibility();
+
+        // Limit decimal places in discount fields
+        function limitDecimalPlaces(input) {
+            // Convert input value to string
+            let value = input.value.toString();
+
+            // Check if the input contains a decimal point
+            let hasDecimal = value.includes('.');
+
+            // If input has a decimal point and it's followed by more than 2 digits, truncate
+            if (hasDecimal) {
+                let parts = value.split('.');
+                if (parts[1].length > 2) {
+                    parts[1] = parts[1].slice(0, 2); // Keep up to 2 decimal places
+                    input.value = parts.join('.');
+                }
+            }
+        }
+    </script>
+    <!--TOGGLE SCRIPT-->
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            let event = new Event('oxygenVSBInitToggleJs');
+            document.dispatchEvent(event);
+        });
+
+        document.addEventListener("oxygenVSBInitToggleJs", function() {
+            oxygenVSBInitToggleState();
+        }, false);
+
+        oxygenVSBInitToggleState = function() {
+
+            jQuery('.oxy-toggle').each(function() {
+
+                var initial_state = jQuery(this).attr('data-oxy-toggle-initial-state'),
+                    toggle_target = jQuery(this).attr('data-oxy-toggle-target'),
+                    active_class = jQuery(this).attr('data-oxy-toggle-active-class');
+
+                if (initial_state == 'closed') {
+                    if (!toggle_target) {
+                        jQuery(this).next().hide();
+                    } else {
+                        jQuery(toggle_target).hide();
+                    }
+                    jQuery(this).children('.oxy-expand-collapse-icon').addClass('oxy-eci-collapsed');
+                    jQuery(this).removeClass(active_class)
+                } else {
+                    jQuery(this).addClass(active_class)
+                }
+            });
+        }
+
+        jQuery("body").on('click', '.oxy-toggle', function() {
+
+            var toggle_target = jQuery(this).attr('data-oxy-toggle-target'),
+                active_class = jQuery(this).attr('data-oxy-toggle-active-class');
+
+            jQuery(this).toggleClass(active_class)
+            jQuery(this).children('.oxy-expand-collapse-icon').toggleClass('oxy-eci-collapsed');
+
+            if (!toggle_target) {
+                jQuery(this).next().toggle();
+            } else {
+                jQuery(toggle_target).toggle();
+            }
+
+            // force 3rd party plugins to rerender things inside the toggle
+            jQuery(window).trigger('resize');
+        });
+    </script>
+
+
+    <!--STYLES-->
+    <style>
+        input,
+        select {
+            width: 100%;
+            border: 1.5px solid #e9edf1;
+            background-color: #f5f8fa;
+            padding: 4px 8px;
+            border-radius: 6px;
+            color: #667285;
+            font-family: inherit;
+            outline-color: #f5f8fa;
+        }
+
+        input:focus-visible,
+        select:focus-visible {
+            outline-color: #d2d8de;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        select {
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="5" viewBox="0 0 10 5"><path fill="none" stroke="%23667285" stroke-width="1.5" d="M1 1l4 3 4-3"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 8px top 50%;
+            padding-right: 24px;
+        }
+
+        input[type="radio"] {
+            width: auto;
+            accent-color: #f76300;
+        }
+
+        input[type="checkbox"] {
+            width: 0;
+            height: 0;
+            accent-color: #f76300;
+            opacity: 0 !important;
+        }
+
+        .smaller-box {
+            width: 20px;
+            height: 20px;
+            top: 2px !important;
+            border-radius: 3px;
+        }
+
+        .smaller-box:after {
+            left: 5.5px !important;
+            top: 1px !important;
+            width: 7px !important;
+            height: 13px !important;
+            border-width: 0 2px 2px 0 !important;
+            border-color: #9099a8 !important;
+        }
+
+        .check-headers_pricing-calc {
+            padding-left: 8px;
+        }
+
+        .check-headers_pricing-calc input:checked~.checkbox_pricing-calc {
+            background-color: #f5f8fa !important;
+            border-color: #9099a8 !important;
+        }
+
+        .pick-plan-label {
+            font-weight: 600;
+            color: #1f344c;
+        }
+
+        #code_block-5-8980 {
+            text-wrap: nowrap;
+        }
+
+        hr {
+            margin: 40px 0 35px 0;
+            border: 1px solid #dee2e7;
+        }
+
+        input.dollar-width {
+            width: calc(100% - 13px);
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 2px;
+            font-size: 16px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .oxy-expand-collapse-icon {
+            display: flex;
+            width: auto;
+            height: auto;
+            text-align: center;
+            margin-right: 0;
+        }
+
+        .oxy-expand-collapse-icon::before,
+        .oxy-expand-collapse-icon::after {
+            background-color: unset;
+            position: static;
+            width: auto;
+            height: auto;
+            border-radius: 0;
+        }
+
+        .oxy-expand-collapse-icon::before {
+            content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwb2x5bGluZSBwb2ludHM9IjkgNiAxNCAxMiA5IDE4Ii8+PC9zdmc+");
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            position: static;
+            height: 30px;
+            width: 30px;
+            border-radius: 20px;
+            border: 1.5px solid #d2d8de;
+            color: #bcc2cb;
+            background-color: rgb(0, 0, 0, 0);
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .oxy-expand-collapse-icon:hover::before {
+            background-color: #f5f8fa;
+        }
+
+        .t-flow-2 {
+            display: flex !important;
+            width: auto;
+            min-width: 0;
+            min-height: 0;
+            min-height: 0;
+            max-height: 0;
+            max-width: 0;
+            padding-left: 0;
+            padding-right: 0;
+            overflow: hidden;
+            transition: all 0.5s ease, opacity 0.5s ease, height 0s;
+            opacity: 0;
+            margin: 0;
+        }
+
+        .t-flow-2 * {
+            opacity: 0;
+            transition: all ease-in-out 0.5s;
+        }
+
+        .oxy-toggle[class$="expanded"]+.t-flow-2 {
+            max-width: 800px;
+            min-width: 300px;
+            max-height: 100%;
+            padding: 30px;
+            opacity: 1;
+            margin-right: 20px;
+        }
+
+        .oxy-toggle[class$="expanded"] {
+            transform: rotate(0deg);
+        }
+
+        .oxy-toggle[class$="expanded"]+.t-flow-2 * {
+            opacity: 1;
+        }
+
+        .crossed-out {
+            position: relative;
+            display: inline-block;
+            color: #f76300;
+            font-size: 15px;
+            margin-left: 5px;
+        }
+
+        .crossed-out::before {
+            content: "";
+            position: absolute;
+            top: 8.5px;
+            left: 0px;
+            width: 102%;
+            height: 100%;
+            border-top: 2px solid #f76300;
+            transform: rotate(0deg);
+            opacity: 0.4;
+        }
+
+        .orange-text {
+            color: #f76300;
+        }
+
+        /* Rounded sliders */
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 38px;
+            height: 22px;
+            margin-bottom: 0px;
+            text-wrap: nowrap;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            margin-left: 52px;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #d2d8de;
+            -webkit-transition: 0.4s;
+            transition: 0.4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            top: 3px;
+            background-color: white;
+            -webkit-transition: 0.4s;
+            transition: 0.4s;
+        }
+
+        input:checked+.slider {
+            background-color: #f76300;
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px #2196f3;
+        }
+
+        input:checked+.slider:before {
+            -webkit-transform: translateX(16px);
+            -ms-transform: translateX(16px);
+            transform: translateX(16px);
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        @media screen and (max-width: 979px) {
+
+            .t-flow-2 {
+                height: auto;
+                min-height: 0;
+                max-height: 0;
+                padding-top: 0;
+                padding-bottom: 0;
+                padding-left: 30px;
+                padding-right: 30px;
+                width: 100%;
+                max-width: 100%;
+                margin-bottom: 0;
+                transition: all 0.5s ease, opacity 0.5s ease, height 0.5s;
+            }
+
+            .oxy-toggle[class$="expanded"]+.t-flow-2 {
+                max-height: 980px;
+                padding-top: 30px !important;
+                padding-bottom: 30px !important;
+                min-width: 0;
+                margin-bottom: 10px;
+            }
+
+            .oxy-toggle[class$="expanded"] {
+                transform: rotate(90deg);
+            }
+        }
+
+        @media screen and (min-width: 980px) and (max-width: 1000px) {
+            #quote-container {
+                gap: 30px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            h3 {
+                font-size: 26px !important;
+            }
+        }
+
+        body,
+        h1,
+        h2,
+        h3 {
+            margin: 0;
+        }
+
+        #section-3-8980>.ct-section-inner-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            align-content: center;
+            justify-content: flex-start;
+            gap: 30px;
+        }
+
+        #section-3-8980 {
+            min-height: 100vh;
+            background-color: #e9edf1;
+            text-align: center;
+        }
+
+        @media (max-width: 767px) {
+            #section-3-8980>.ct-section-inner-wrap {
+                padding-top: 50px;
+            }
+        }
+
+        @media (max-width: 479px) {
+            #section-3-8980>.ct-section-inner-wrap {
+                padding-top: 30px;
+                gap: 20px;
+            }
+        }
+
+        #div_block-9-8980 {
+            text-align: left;
+            align-items: center;
+            gap: 30px;
+        }
+
+        #div_block-11-8980 {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: center;
+            text-align: left;
+            width: 100%;
+        }
+
+        #div_block-76-8980 {
+            position: relative;
+            max-width: 340px;
+        }
+
+        #div_block-194-8980 {
+            flex-direction: column;
+            display: flex;
+            text-align: left;
+            align-items: stretch;
+            gap: 20px;
+            width: 100%;
+            max-width: 780px;
+        }
+
+        #quote-container {
+            background-color: #ffffff;
+            border-radius: 30px;
+            padding-top: 50px;
+            padding-right: 50px;
+            padding-bottom: 50px;
+            padding-left: 50px;
+            transition-timing-function: ease-in-out;
+            transition-property: all;
+            transition-duration: 0.5s;
+            display: flex;
+            align-items: stretch;
+            width: 100%;
+            gap: 50px;
+        }
+
+        #div_block-236-9228 {
+            gap: 50px;
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+        }
+
+        #div_block-105-8980 {
+            width: 100%;
+            max-width: 254px;
+            gap: 25px;
+        }
+
+        #div_block-19-8980 {
+            display: flex;
+            align-items: flex-start;
+            padding-left: 0px;
+            width: 100%;
+            gap: 5px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+
+        #div_block-111-8980 {
+            flex-direction: column;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            text-align: right;
+            text-wrap: nowrap;
+        }
+
+        #outputTimeBillingUsers {
+            flex-direction: row;
+            display: flex;
+            width: 100%;
+            line-height: 1.2;
+        }
+
+        #div_block-118-8980 {
+            flex-direction: column;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            text-align: right;
+            text-wrap: nowrap;
+        }
+
+        #div_block-59-8980 {
+            flex-direction: row;
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            text-align: left;
+            line-height: 1.2;
+        }
+
+        #div_block-123-8980 {
+            flex-direction: column;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            text-align: right;
+            text-wrap: nowrap;
+        }
+
+        #div_block-130-8980 {
+            flex-direction: row;
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            text-align: left;
+            line-height: 1.2;
+        }
+
+        #div_block-132-8980 {
+            flex-direction: column;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            text-align: right;
+            text-wrap: nowrap;
+        }
+
+        #outputMMS {
+            flex-direction: row;
+            display: flex;
+            width: 100%;
+            line-height: 1.2;
+        }
+
+        #div_block-265-9512 {
+            flex-direction: column;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            text-align: right;
+            text-wrap: nowrap;
+        }
+
+        #div_block-46-8980 {
+            width: 100%;
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        #essential-bullets {
+            gap: 5px;
+            width: 100%;
+        }
+
+        #div_block-30-8980 {
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        #div_block-33-8980 {
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        #div_block-36-8980 {
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        #div_block-39-8980 {
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        #div_block-139-8980 {
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        #premium-bullets {
+            gap: 5px;
+            width: 100%;
+        }
+
+        #div_block-213-9007 {
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        #div_block-216-9007 {
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        #div_block-219-9007 {
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        #div_block-222-9007 {
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        #div_block-225-9007 {
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        #div_block-228-9007 {
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        #div_block-142-8980 {
+            width: 1px;
+            min-width: 0px;
+            min-height: 0px;
+            border-right-width: 1;
+            border-right-style: solid;
+            border-right-color: #e9edf1;
+        }
+
+        #div_block-144-8980 {
+            gap: 25px;
+            width: 100%;
+            min-width: 260px;
+        }
+
+        #div_block-193-8980 {
+            width: 100%;
+            gap: 25px;
+            flex-grow: 1;
+        }
+
+        #div_block-154-8980 {
+            width: 100%;
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 8px;
+            padding-right: 8px;
+            background-color: #e9edf1;
+            border-radius: 4px;
+        }
+
+        #outputTimeBillingUsersRight {
+            width: 100%;
+            gap: 10px;
+        }
+
+        #div_block-170-8980 {
+            width: 100%;
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 8px;
+            padding-right: 8px;
+            background-color: #e9edf1;
+            border-radius: 4px;
+        }
+
+        #additionalContactsBreakdown {
+            width: 100%;
+            gap: 10px;
+        }
+
+        #div_block-180-8980 {
+            width: 100%;
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 8px;
+            padding-right: 8px;
+            background-color: #e9edf1;
+            border-radius: 4px;
+        }
+
+        #additionalSMSBreakdown {
+            width: 100%;
+            gap: 10px;
+        }
+
+        #div_block-185-8980 {
+            width: 100%;
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 8px;
+            padding-right: 8px;
+            background-color: #e9edf1;
+            border-radius: 4px;
+        }
+
+        #additionalMMSBreakdown {
+            width: 100%;
+            gap: 10px;
+        }
+
+        #div_block-256-9512 {
+            width: 100%;
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 8px;
+            padding-right: 8px;
+            background-color: #e9edf1;
+            border-radius: 4px;
+        }
+
+        #div_block-189-8980 {
+            width: 100%;
+            gap: 10px;
+        }
+
+        #div_block-190-8980 {
+            width: 100%;
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 8px;
+            padding-right: 8px;
+            background-color: #e9edf1;
+            border-radius: 4px;
+        }
+
+        #migratorPricingBreakdown {
+            width: 100%;
+            gap: 10px;
+        }
+
+        #div_block-233-9150 {
+            width: 100%;
+            text-align: left;
+            flex-direction: row;
+            display: flex;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 8px;
+            padding-right: 8px;
+            background-color: #e9edf1;
+            border-radius: 4px;
+        }
+
+        #div_block-196-8980 {
+            border-radius: 15px;
+            background-color: #d2d8de;
+            text-align: left;
+            align-items: center;
+            justify-content: center;
+            padding-top: 10px;
+            padding-right: 10px;
+            padding-bottom: 10px;
+            padding-left: 10px;
+        }
+
+        @media (max-width: 979px) {
+            #div_block-11-8980 {
+                text-align: left;
+                flex-direction: column;
+                display: flex;
+                max-width: 450px;
+            }
+        }
+
+        @media (max-width: 979px) {
+            #div_block-76-8980 {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 979px) {
+            #div_block-194-8980 {
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 979px) {
+            #quote-container {
+                flex-direction: column;
+                display: flex;
+                width: 100%;
+                min-width: 0px;
+                padding-right: 30px;
+                padding-bottom: 40px;
+                padding-left: 30px;
+                padding-top: 40px;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 979px) {
+            #div_block-236-9228 {
+                flex-direction: column;
+                display: flex;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 979px) {
+            #div_block-105-8980 {
+                min-width: 0px;
+                width: 100%;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 979px) {
+            #div_block-19-8980 {
+                gap: 3px;
+                margin-bottom: 15px;
+            }
+        }
+
+        @media (max-width: 979px) {
+            #div_block-142-8980 {
+                display: none;
+            }
+        }
+
+        @media (max-width: 979px) {
+            #div_block-144-8980 {
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 979px) {
+            #div_block-193-8980 {
+                gap: 20px;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 479px) {
+            #div_block-9-8980 {
+                gap: 21px;
+            }
+        }
+
+        @media (max-width: 479px) {
+            #quote-container {
+                gap: 20px;
+            }
+        }
+
+        #calculator-heading {
+            font-size: 52px;
+        }
+
+        #headline-146-8980 {
+            margin-top: 0px;
+            margin-bottom: 0px;
+            text-wrap: nowrap;
+        }
+
+        #headline-249-9228 {
+            margin-top: 0px;
+            margin-bottom: -2px;
+        }
+
+        @media (max-width: 979px) {
+            #calculator-heading {
+                font-size: 50px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            #calculator-heading {
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 479px) {
+            #calculator-heading {
+                font-size: 40px;
+            }
+        }
+
+        #text_block-197-8980 {
+            color: #1f344c;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        #code_block-5-8980 {
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            z-index: 0;
+            background-color: #ffffff;
+            padding-top: 30px;
+        }
+
+        #outputAdditionalSMS {
+            text-align: left;
+        }
+
+        #outputAdditionalMMS {
+            text-align: left;
+        }
+
+        #annualToggle {
+            font-weight: 700;
+            line-height: 1.2;
+            transition-duration: 0.1s;
+            transition-timing-function: ease-in-out;
+            transition-property: all;
+        }
+
+        #code_block-158-8980 {
+            font-weight: 600;
+            color: #1f344c;
+            line-height: 1;
+            font-size: 16px;
+        }
+
+        #code_block-117-8980 {
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+
+        #code_block-171-8980 {
+            font-weight: 600;
+            color: #1f344c;
+            line-height: 1;
+            font-size: 16px;
+        }
+
+        #code_block-122-8980 {
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+
+        #code_block-181-8980 {
+            font-weight: 600;
+            color: #1f344c;
+            line-height: 1;
+            font-size: 16px;
+        }
+
+        #code-block-1234 {
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+
+        #code_block-186-8980 {
+            font-weight: 600;
+            color: #1f344c;
+            line-height: 1;
+            font-size: 16px;
+        }
+
+        #code_block-134-8980 {
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+
+        #code_block-257-9512 {
+            font-weight: 600;
+            color: #1f344c;
+            line-height: 1;
+            font-size: 16px;
+        }
+
+        #code_block-258-9512 {
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+
+        #code_block-191-8980 {
+            font-weight: 600;
+            color: #1f344c;
+            line-height: 1;
+            font-size: 16px;
+        }
+
+        #code_block-192-8980 {
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+
+        #code_block-234-9150 {
+            font-weight: 600;
+            color: #1f344c;
+            line-height: 1;
+            font-size: 16px;
+        }
+
+        #code_block-235-9150 {
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+
+        #code_block-7-8980 {
+            width: 100%;
+        }
+
+        @media (max-width: 979px) {
+            #code_block-5-8980 {
+                padding-top: 0px;
+                padding-bottom: 0px;
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+        }
+
+        .ct-section {
+            width: 100%;
+            background-size: cover;
+            background-repeat: repeat;
+        }
+
+        .ct-section>.ct-section-inner-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .ct-div-block {
+            display: flex;
+            flex-wrap: nowrap;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        @media screen and (-ms-high-contrast: active),
+        (-ms-high-contrast: none) {
+
+            .ct-div-block,
+            .ct-text-block,
+            .ct-headline {
+                max-width: 100%;
+            }
+
+            body * {
+                min-height: 1px;
+            }
+        }
+
+        .oxy-site-navigation>ul:not(.open)>li[data-cta="true"]:nth-last-child(2):not(:hover)>img {
+            filter: invert(0) !important;
+        }
+
+        .ct-section-inner-wrap {
+            max-width: 1320px;
+        }
+
+        body {
+            line-height: 1.5;
+            font-size: 18px;
+            font-weight: 400;
+            color: #455463;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 2.6rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #1f344c;
+        }
+
+        h2,
+        h3 {
+            font-size: 40px;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #1f344c;
+        }
+
+        h3 {
+            font-size: 1.715363rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #1f344c;
+        }
+
+        .ct-section-inner-wrap {
+            padding-top: 75px;
+            padding-right: 20px;
+            padding-bottom: 75px;
+            padding-left: 20px;
+        }
+
+        .checkbox_pricing-calc {
+            padding-bottom: 0px;
+            position: absolute;
+            left: 0px;
+            border-top-color: #bcc2cb;
+            border-right-color: #bcc2cb;
+            border-bottom-color: #bcc2cb;
+            border-left-color: #bcc2cb;
+            border-top-width: 1px;
+            border-right-width: 1px;
+            border-bottom-width: 1px;
+            border-left-width: 1px;
+            border-top-style: solid;
+            border-right-style: solid;
+            border-bottom-style: solid;
+            border-left-style: solid;
+            padding-right: 0px;
+        }
+
+        .checkbox_pricing-calc:not(.ct-section):not(.oxy-easy-posts) {
+            display: block;
+        }
+
+        .check-headers_pricing-calc {
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .check-headers_pricing-calc:not(.ct-section):not(.oxy-easy-posts) {
+            display: block;
+        }
+
+        .toggle-1939 {
+            position: absolute;
+            right: 40px;
+            top: 20px;
+            z-index: 1;
+        }
+
+        @media (max-width: 979px) {
+            .toggle-1939 {
+                right: 20px;
+            }
+        }
+
+        .calc-checklist-text {
+            color: #1f344c;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 1.1;
+            padding-top: 1px;
+            padding-bottom: 4px;
+        }
+
+        .per-unit-cost {
+            margin-top: 2px;
+            width: 100%;
+            line-height: 1;
+        }
+
+        .per-unit-cost:not(.ct-section):not(.oxy-easy-posts) {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        html,
+        body,
+        span,
+        em,
+        b {
+            font-family: "barlow", system-ui, sans-serif;
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            -webkit-font-feature-settings: "pnum";
+            font-feature-settings: "pnum";
+            font-variant-numeric: proportional-nums;
+        }
+
+        b {
+            font-weight: 700;
+            color: #1f344c;
+        }
+
+        body {
+            font-size: 17px;
+            color: #455463;
+            background-color: #fff;
+            line-height: 1.5;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #1f344c;
+            font-family: "barlow", system-ui, sans-serif;
+            line-height: 1.1;
+            font-weight: 700;
+            margin-bottom: 1.45rem;
+            text-rendering: optimizeLegibility;
+        }
+
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 35px;
+            }
+
+            h2 {
+                font-size: 30px;
+            }
+
+            h3 {
+                font-size: 27px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            h1 {
+                font-size: 30px;
+            }
+
+            h2 {
+                font-size: 26px;
+            }
+
+            h3 {
+                font-size: 22px;
+            }
+        }
+
+        body:not(:-moz-handler-blocked) fieldset {
+            display: table-cell;
+        }
+
+        .post-template-default.single-post .ct-inner-content ul li::marker {
+            color: #f76300;
+            content: "—";
+        }
+
+        .post-template-default.single-post .ct-inner-content ol li::marker {
+            color: #f76300;
+            font-weight: 600;
+        }
+
+        b {
+            font-family: "barlow", system-ui, sans-serif !important;
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            -webkit-font-feature-settings: "pnum";
+            font-feature-settings: "pnum";
+            font-variant-numeric: proportional-nums;
+        }
+
+        .check-headers_pricing-calc {
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .check-headers_pricing-calc input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkbox_pricing-calc {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: white;
+        }
+
+        .check-headers_pricing-calc:hover input~.checkbox_pricing-calc {
+            background-color: #f5f8fa;
+        }
+
+        .check-headers_pricing-calc input:checked~.checkbox_pricing-calc {
+            background-color: #f76300;
+            border: 1px solid #f76300;
+        }
+
+        .checkbox_pricing-calc:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .check-headers_pricing-calc input:checked~.checkbox_pricing-calc:after {
+            display: block;
+        }
+
+        .check-headers_pricing-calc .checkbox_pricing-calc:after {
+            left: 9px;
+            top: 2px;
+            width: 10px;
+            height: 20px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+    </style>
+</body>
+
+</html>

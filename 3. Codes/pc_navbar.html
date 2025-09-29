@@ -72,10 +72,29 @@
                 document.documentElement.style.setProperty('--offset-top', $('.announcements-bar').outerHeight() + 'px');
             }
 
+            function setNavTabLink() {
+                // Only run on desktop (width > 991px)
+                if (window.innerWidth > 991) {
+                    const $currentNavLink = $('[nav-link].w--current');
+                    if ($currentNavLink.length) {
+                        const navLinkId = $currentNavLink.attr('nav-link');
+                        if (navLinkId) {
+                            const $tabToSelect = $(`[nav-tab-link="${navLinkId}"]`);
+                            if ($tabToSelect.length) {
+                                setTimeout(function () {
+                                    $tabToSelect.trigger('click');
+                                }, 100);
+                            }
+                        }
+                    }
+                }
+            }
+
             duplicateTabContent();
             preventMenuClosingOnTabClick();
             resetMobileTabs();
             setAnnouncementBar();
+            setNavTabLink();
         }
     });
 </script>
