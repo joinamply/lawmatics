@@ -1,0 +1,57 @@
+<style>
+    body:not(.wf-design-mode) {
+        & dialog {
+            border: none;
+            border-radius: 8px;
+            padding: 0;
+            background: transparent;
+        }
+
+        & dialog::backdrop {
+            background: color-mix(in srgb, var(--_color-palette---graphite-grey-shade-02) 80%, transparent);
+        }
+
+        & dialog:not([open]) {
+            display: none;
+        }
+    }
+
+    .wf-design-mode {
+        & dialog {
+            display: none;
+        }
+
+        & dialog[view-modal='true'] {
+            display: flex !important;
+            opacity: 1 !important;
+            transform: scale(1) !important;
+            pointer-events: auto;
+        }
+    }
+
+    dialog {
+        opacity: 0;
+        transform: scale(0.9);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    dialog[open] {
+        animation: slide-in-up 0.3s ease forwards;
+        opacity: 1;
+    }
+
+    dialog:not([open]) {
+        pointer-events: none;
+        opacity: 0;
+    }
+
+    @keyframes slide-in-up {
+        from {
+            transform: translateY(100%);
+        }
+
+        to {
+            transform: translateY(0);
+        }
+    }
+</style>

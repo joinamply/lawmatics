@@ -3,6 +3,21 @@
     window.Webflow.push(() => {
         const $cards = $('.video-anim-card');
 
+        // Safe play function that handles the play promise
+        function safePlay(video) {
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    // Automatic playback started!
+                    // Video is now playing
+                }).catch(error => {
+                    // Auto-play was prevented
+                    // Ensure video is paused
+                    video.pause();
+                });
+            }
+        }
+
         $cards.each(function () {
             const $card = $(this);
             const videoEl = $card.find('.video-anim-card_video').get(0);
@@ -21,8 +36,8 @@
                 trigger: $card[0],
                 start: "top bottom",
                 end: "bottom top",
-                onEnter: () => videoEl.play(),
-                onEnterBack: () => videoEl.play(),
+                onEnter: () => safePlay(videoEl),
+                onEnterBack: () => safePlay(videoEl),
                 onLeave: () => videoEl.pause(),
                 onLeaveBack: () => videoEl.pause()
             });

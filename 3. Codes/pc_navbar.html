@@ -51,7 +51,7 @@
             }
 
             function resetMobileTabs() {
-                if (window.innerWidth <= 767) {
+                if (window.innerWidth <= 991) {
                     $('.nav-dd-tabs').each(function () {
                         let tabLinks = $(this).find('.w-tab-link');
                         let tabPanes = $(this).find('.w-tab-pane');
@@ -65,11 +65,16 @@
                 $('.announcements-bar_close').on('click', function () {
                     $('.announcements-bar_accordion').removeClass('cc-active');
                     // Set the offset-top to 0
-                    document.documentElement.style.setProperty('--offset-top', 0 + 'px');
+                    document.documentElement.style.setProperty('--offset-top', '0px');
                 });
 
-                // Update offset-top based on the .announcements-bar height
-                document.documentElement.style.setProperty('--offset-top', $('.announcements-bar').outerHeight() + 'px');
+                // Update offset-top based on the .announcements-bar height, but set to 0 if display is none
+                const $annBar = $('.announcements-bar');
+                let offsetTop = 0;
+                if ($annBar.length && $annBar.css('display') !== 'none') {
+                    offsetTop = $annBar.outerHeight() || 0;
+                }
+                document.documentElement.style.setProperty('--offset-top', offsetTop + 'px');
             }
 
             function setNavTabLink() {

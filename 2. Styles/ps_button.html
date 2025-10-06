@@ -6,14 +6,38 @@
         --start: var(--_themes---button-primary--background-1);
         --end: var(--_themes---button-primary--background-2);
 
-        background: linear-gradient(90deg, var(--start), var(--end), var(--start));
-        background-size: 200% 100%;
+        background: var(--start);
+        background-image: linear-gradient(90deg, var(--start), var(--end));
+        background-size: 101% 100%;
         background-position: 0% 50%;
+        position: relative;
+    }
+
+    [data-wf--button--button-type="primary"]::before,
+    [data-wf--button--button-type="primary-small"]::before,
+    .hs-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(90deg, transparent, #757CF6);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: inherit;
     }
 
     [data-wf--button--button-type="primary"]:hover,
-    [data-wf--button--button-type="primary-small"]:hover {
-        background-position: 100% 50%;
+    [data-wf--button--button-type="primary-small"]:hover,
+    .hs-button:hover {
+        background-position: 101% 50%;
+    }
+
+    [data-wf--button--button-type="primary"]:hover::before,
+    [data-wf--button--button-type="primary-small"]:hover::before,
+    .hs-button:hover::before {
+        opacity: 1;
     }
 
     /* Text */
