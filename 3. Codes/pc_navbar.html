@@ -45,7 +45,7 @@
                     });
                 });
 
-                $('.nav-dd-tabs_tab-link a').on('click', function (e) {
+                $('.nav-dd-tabs_tab-link').add('.nav-dd-tabs_tab-link a').on('click', function (e) {
                     e.stopPropagation();
                 });
             }
@@ -95,11 +95,44 @@
                 }
             }
 
+            function setNavTabHover() {
+                // Only run on desktop (width > 991px)
+                if (window.innerWidth > 991) {
+                    $('.nav-dd-tabs_tab-link').on('mouseenter', function () {
+                        $(this).trigger('click');
+                    });
+                }
+            }
+
+            function handleDropdownCloseOnMouseLeave() {
+                // Only run on desktop (width > 991px)
+                if (window.innerWidth > 991) {
+                    $('.nav_dd').each(function () {
+                        const $dropdown = $(this);
+                        const $dropdownToggle = $dropdown.find('.nav_dd-toggle');
+                        const $dropdownList = $dropdown.find('.nav_dd-list');
+
+                        // Handle mouse leave on the dropdown container
+                        $dropdownList.on('mouseleave', function () {
+                            // Close the dropdown by removing w--open class
+                            $dropdownList.removeClass('w--open');
+                            $dropdownToggle.removeClass('w--open');
+                            jQuery($dropdown).data()[".wDropdown"].open = false;
+                            jQuery($dropdown).data()[".wDropdown"].mouseLeave();
+                            jQuery($dropdown).data()[".wDropdown"].complete();
+                            console.log("closed", jQuery(this).data()[".wDropdown"]);
+                        });
+                    });
+                }
+            }
+
             duplicateTabContent();
             preventMenuClosingOnTabClick();
             resetMobileTabs();
             setAnnouncementBar();
             setNavTabLink();
+            setNavTabHover();
+            handleDropdownCloseOnMouseLeave();
         }
     });
 </script>

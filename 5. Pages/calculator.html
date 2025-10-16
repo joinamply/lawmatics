@@ -1,37 +1,25 @@
 <script>
     window.Webflow ||= [];
     window.Webflow.push(() => {
-        const calculatorUrl = "https://joinamply.github.io/lawmatics/calculator/calculator-upd.html";
-        const tachyonsUrl = "https://joinamply.github.io/lawmatics/calculator/tachyons.css";
+        // Append a cache-busting query param to the calculator URL
+        const calculatorUrlBase = "https://static-assets.lawmatics.com/pricing-calculator/calculator.html";
+        const cacheBuster = "_cb=" + Date.now();
+        const calculatorUrl = calculatorUrlBase + (calculatorUrlBase.includes("?") ? "&" : "?") + cacheBuster;
 
-        // Create a container for the calculator
+        // Create a container for the iframe
         const $calculatorContainer = $('<div id="calculator-embed-container"></div>');
         $('body').append($calculatorContainer);
 
-        // Dynamically load tachyons.css if not already present
-        function ensureTachyonsCss(url) {
-            if (!$('link[href="' + url + '"]').length) {
-                $('<link>', {
-                    rel: 'stylesheet',
-                    type: 'text/css',
-                    href: url
-                }).appendTo('head');
-            }
-        }
-
-        ensureTachyonsCss(tachyonsUrl);
-
-        // Fetch and inject the calculator HTML
-        $.get(calculatorUrl, function (data) {
-            // Extract only the content inside <body> to avoid duplicating <html>, <head>, etc.
-            const bodyContent = data.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
-            if (bodyContent && bodyContent[1]) {
-                $calculatorContainer.html(bodyContent[1]);
-            } else {
-                $calculatorContainer.html("<p>Failed to load calculator.</p>");
-            }
-        }).fail(function () {
-            $calculatorContainer.html("<p>Failed to load calculator.</p>");
+        // Create the iframe element pointing to the calculator URL
+        const $iframe = $('<iframe>', {
+            src: calculatorUrl,
+            id: 'calculator-embed-iframe',
+            style: 'width:100%;min-height:600px;border:none;display:block;',
+            allowfullscreen: true,
+            loading: 'lazy'
         });
+
+        // Append the iframe to the container
+        $calculatorContainer.append($iframe);
     });
 </script>

@@ -6,6 +6,9 @@
     4. Add [modal] attribute to the dialog element
     5. Add the same value to all elements attributes to link them to the same modal and have multiple instances
     6. Add [modal-exit-intent="true"] to dialog elements to enable exit intent detection
+    7. Programmatic control: Use $(document).trigger('closeModal', 'modalId') to close modals by ID
+    8. Programmatic control: Use $(document).trigger('openModal', 'modalId') to open modals by ID
+    9. Programmatic control: Use $(document).trigger('toggleModal', 'modalId') to toggle modals by ID
     */
     window.Webflow ||= [];
     window.Webflow.push(() => {
@@ -14,7 +17,41 @@
 
         // Initialize exit intent modals
         initializeExitIntentModals();
+
+        // Initialize event listeners for programmatic modal control
+        initializeModalEventListeners();
     });
+
+    // Cookie management functions
+    function isModalBlockedByCookie($trigger) {
+        if ($trigger.attr('modal-cookie') !== 'true') {
+            return false;
+        }
+
+        const cookieName = $trigger.attr('modal-cookie-name') || 'modal-shown';
+        return getCookie(cookieName) === 'true';
+    }
+
+    function setModalCookie($trigger) {
+        if ($trigger.attr('modal-cookie') !== 'true') {
+            return;
+        }
+
+        const cookieName = $trigger.attr('modal-cookie-name') || 'modal-shown';
+        const cookieExpire = parseInt($trigger.attr('modal-cookie-expire')) || 365;
+
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + cookieExpire);
+
+        document.cookie = `${cookieName}=true; expires=${expirationDate.toUTCString()}; path=/`;
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+    }
 
     function initializeModals() {
         $('[modal-open]').each(function () {
@@ -24,7 +61,17 @@
             const $closeModal = $modal.find(`[modal-close="${attr}"]`);
 
             $openModal.on('click', function () {
+                // Check if modal is blocked by cookie
+                if (isModalBlockedByCookie($openModal)) {
+                    return;
+                }
+
                 $modal[0].showModal();
+                // Remove focus from any element to prevent unwanted focus
+                // document.activeElement.blur();
+
+                // Set cookie after modal is shown
+                setModalCookie($openModal);
             });
 
             $closeModal.on('click', function () {
@@ -46,10 +93,28 @@
         });
     }
 
+    // Device detection function
+    function isDesktopDevice() {
+        // Check for touch capability
+        const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+        // Check screen size (optional additional check)
+        const isLargeScreen = window.innerWidth >= 768;
+
+        // Consider it desktop if no touch capability and large screen
+        return !hasTouch && isLargeScreen;
+    }
+
     function initializeExitIntentModals() {
         const exitIntentTriggers = $('[modal-open][modal-exit-intent="true"]');
 
         if (exitIntentTriggers.length === 0) return;
+
+        // Only initialize exit intent on desktop devices
+        if (!isDesktopDevice()) {
+            console.log('Exit intent modals disabled on mobile/tablet devices');
+            return;
+        }
 
         let hasTriggeredExitIntent = false;
         let exitIntentThreshold = 50; // Distance from top to trigger exit intent
@@ -76,6 +141,12 @@
 
             exitIntentTriggers.each(function () {
                 const $trigger = $(this);
+
+                // Check if modal is blocked by cookie
+                if (isModalBlockedByCookie($trigger)) {
+                    return;
+                }
+
                 const attr = $trigger.attr('modal-open');
                 const $modal = $(`dialog[modal="${attr}"]`);
 
@@ -83,6 +154,11 @@
                     // Add a small delay for better UX
                     setTimeout(() => {
                         $modal[0].showModal();
+                        // Remove focus from any element to prevent unwanted focus
+                        // document.activeElement.blur();
+
+                        // Set cookie after modal is shown
+                        setModalCookie($trigger);
 
                         // Optional: Add entrance animation
                         if (window.gsap) {
@@ -98,5 +174,46 @@
             // Remove event listeners to prevent multiple triggers
             $(document).off('mousemove mouseleave');
         }
+    }
+
+    function initializeModalEventListeners() {
+        // Listen for custom events to close modals by ID
+        $(document).on('closeModal', function (event, modalId) {
+            if (modalId) {
+                const $modal = $(`dialog[modal="${modalId}"]`);
+                if ($modal.length > 0) {
+                    console.log('closeModal', modalId);
+                    $modal[0].close();
+                }
+            }
+        });
+
+        // Listen for custom events to open modals by ID
+        $(document).on('openModal', function (event, modalId) {
+            if (modalId) {
+                const $modal = $(`dialog[modal="${modalId}"]`);
+                if ($modal.length > 0) {
+                    $modal[0].showModal();
+                    // Remove focus from any element to prevent unwanted focus
+                    // document.activeElement.blur();
+                }
+            }
+        });
+
+        // Listen for custom events to toggle modals by ID
+        $(document).on('toggleModal', function (event, modalId) {
+            if (modalId) {
+                const $modal = $(`dialog[modal="${modalId}"]`);
+                if ($modal.length > 0) {
+                    if ($modal[0].open) {
+                        $modal[0].close();
+                    } else {
+                        $modal[0].showModal();
+                        // Remove focus from any element to prevent unwanted focus
+                        // document.activeElement.blur();
+                    }
+                }
+            }
+        });
     }
 </script>
